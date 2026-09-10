@@ -948,51 +948,133 @@ button {
    ============================================ */
 
 .categories {
-  background: var(--color-bg-white);
+  background: #0a0a0a;
+  color: #f5f5f5;
+}
+
+.categories__header {
+  max-width: 720px;
+  margin-bottom: 48px;
+}
+
+.categories__header .section__eyebrow {
+  color: var(--color-accent);
+}
+
+.categories__header .section__title {
+  color: #f5f5f5;
+}
+
+.categories__header .section__lead {
+  color: #b8b8b8;
+  margin-inline: auto;
 }
 
 .categories__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
 }
 
 .cat-card {
+  position: relative;
   display: flex;
   flex-direction: column;
-  border-radius: var(--radius);
+  border-radius: 20px;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--color-border);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   text-decoration: none;
   transition: transform 0.45s var(--ease-out-expo), box-shadow 0.4s ease, border-color 0.35s ease;
 }
 
 .cat-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 40px rgba(11, 18, 32, 0.08);
-  border-color: rgba(11, 18, 32, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
+  border-color: rgba(46, 196, 182, 0.35);
 }
 
 .cat-card__media {
   position: relative;
-  aspect-ratio: 16 / 11;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--color-bg-mid);
+  background: #141414;
 }
 
 .cat-card__img {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
   transition: transform 0.9s var(--ease-out-expo);
 }
 
 .cat-card:hover .cat-card__img {
-  transform: scale(1.06);
+  transform: scale(1.08);
 }
 
+.cat-card__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+.cat-card__badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(46, 196, 182, 0.92);
+  color: #071110;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cat-card__body {
+  padding: 18px 20px 22px;
+  background: transparent;
+}
+
+.cat-card__title {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.cat-card__desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+  margin: 0 0 12px;
+}
+
+.cat-card__cta {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.cat-card:hover .cat-card__cta {
+  color: var(--color-accent-hover);
+}
+
+/* legacy background-image helpers (other pages) */
 .cat-card__img--phone { background-image: url("../images/phone.jpg"); }
 .cat-card__img--tv { background-image: url("../images/tv.jpg"); }
 .cat-card__img--sound { background-image: url("../images/soundbar.jpg"); }
@@ -1000,27 +1082,6 @@ button {
 .cat-card__img--appliance { background-image: url("../images/appliance.jpg"); }
 .cat-card__img--laptop { background-image: url("../images/laptop.jpg"); }
 .cat-card__img--accessories { background-image: url("../images/accessories.jpg"); }
-
-.cat-card__body {
-  padding: 20px 22px 24px;
-  background: #fff;
-}
-
-.cat-card__title {
-  font-family: var(--font-title);
-  font-size: 1.125rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--color-ink);
-  margin-bottom: 6px;
-}
-
-.cat-card__desc {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
 
 /* ============================================
    Showcase
@@ -1906,6 +1967,7 @@ button {
 
   .categories__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 
   .global__cards {

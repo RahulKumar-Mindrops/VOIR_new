@@ -44,6 +44,20 @@
   color: var(--color-text-primary);
 }
 
+.categories .cat-card,
+.categories .cat-card__body {
+  background: transparent;
+  color: #fff;
+}
+
+.categories .cat-card__title {
+  color: #fff;
+}
+
+.categories .cat-card__desc {
+  color: rgba(255, 255, 255, 0.65);
+}
+
 .featured-slider .feat-slide,
 .featured-slider .feat-slide--zenith,
 .featured-slider .feat-slide--core {
@@ -1081,11 +1095,11 @@
   color: var(--color-accent);
 }
 
-.cat-card__img--zenith { background-image: url("../images/zenith-32.jpg"); background-size: contain; background-repeat: no-repeat; background-color: #fff; }
+.cat-card__img--zenith { background-image: url("../images/category-tvs.jpg"); background-size: cover; background-repeat: no-repeat; background-color: #111; }
 .cat-card__img--core { background-image: url("../images/core-40.jpg"); background-size: contain; background-repeat: no-repeat; background-color: #fff; }
-.cat-card__img--coolers { background-image: url("../images/tv-hero.jpg"); }
-.cat-card__img--washers { background-image: url("../images/tv-angle.jpg"); }
-.cat-card__img--accessories-voir { background-image: url("../images/remote.jpg"); background-size: contain; background-repeat: no-repeat; background-color: #fff; }
+.cat-card__img--coolers { background-image: url("../images/category-coolers.jpg"); background-size: cover; }
+.cat-card__img--washers { background-image: url("../images/category-washers.jpg"); background-size: cover; }
+.cat-card__img--accessories-voir { background-image: url("../images/category-accessories.jpg"); background-size: cover; }
 
 @media (max-width: 1100px) {
   .model-grid,
