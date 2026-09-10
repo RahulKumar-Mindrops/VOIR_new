@@ -13,7 +13,10 @@
 .technology [data-reveal="fade"],
 .technology [data-reveal="card"],
 .lifestyle [data-reveal="fade"],
-.lifestyle [data-reveal="card"] {
+.lifestyle [data-reveal="card"],
+.showcase [data-reveal="fade"],
+.showcase [data-reveal="card"],
+.showcase__item {
   opacity: 1;
   transform: none;
 }
@@ -77,7 +80,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  background: #fff;
+  background: var(--color-accent, #f06824);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   will-change: transform;
@@ -87,7 +90,7 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(240, 104, 36, 0.55);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
@@ -115,13 +118,13 @@
   width: 64px;
   height: 64px;
   border-color: transparent;
-  background: rgba(10, 10, 10, 0.92);
+  background: rgba(240, 104, 36, 0.92);
 }
 
 .cursor.has-label .cursor__ring {
   width: 88px;
   height: 88px;
-  background: #0a0a0a;
+  background: #f06824;
   border-color: transparent;
 }
 
@@ -137,7 +140,7 @@
 .cursor.is-drag .cursor__ring {
   width: 72px;
   height: 72px;
-  background: rgba(10, 10, 10, 0.95);
+  background: rgba(240, 104, 36, 0.95);
   border-color: transparent;
 }
 
@@ -232,12 +235,18 @@ body.is-loading {
   display: inline-block;
 }
 
-.showcase__chips span {
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease;
+.showcase__sizes span,
+.showcase__tags span {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
 }
 
-.showcase__item:hover .showcase__chips span {
+.showcase__item:hover .showcase__sizes span,
+.showcase__item:hover .showcase__tags span {
   transform: translateY(-2px);
+}
+
+.showcase__item:hover .tv3d__glare {
+  opacity: 0.9;
 }
 
 .tech-visual__shape--display,

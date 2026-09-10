@@ -35,7 +35,7 @@
       '" id="nav">' +
       '<div class="nav__inner">' +
       '<a href="index.html" class="nav__logo" data-magnetic aria-label="VOIR home">' +
-      '<img src="images/voir-logo.png" alt="VOIR" class="nav__logo-img" />' +
+      '<img src="images/voir-logo-mark.png?v=4" alt="VOIR" class="nav__logo-img" />' +
       "</a>" +
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
@@ -58,7 +58,7 @@
       '<div class="container footer__top">' +
       '<div class="footer__col footer__col--brand">' +
       '<a href="index.html" class="footer__logo">' +
-      '<img src="images/voir-logo.png" alt="VOIR" class="footer__logo-img" />' +
+      '<img src="images/voir-logo.png?v=4" alt="VOIR" class="footer__logo-img" />' +
       "</a>" +
       '<p class="footer__tagline">SEE IT. LOVE IT. LIVE IT.</p>' +
       '<p class="footer__about">VOIR Appliances Private Limited</p>' +
@@ -78,9 +78,9 @@
       '<h4 class="footer__heading">Products</h4>' +
       '<ul class="footer__links">' +
       '<li><a href="tvs.html">TVs</a></li>' +
-      '<li><a href="air-coolers.html">Air Coolers</a></li>' +
-      '<li><a href="washing-machines.html">Washing Machines</a></li>' +
-      '<li><a href="accessories.html">Accessories</a></li>' +
+      // '<li><a href="air-coolers.html">Air Coolers</a></li>' +
+      // '<li><a href="washing-machines.html">Washing Machines</a></li>' +
+      // '<li><a href="accessories.html">Accessories</a></li>' +
       "</ul></div>" +
       '<div class="footer__col">' +
       '<h4 class="footer__heading">Company</h4>' +

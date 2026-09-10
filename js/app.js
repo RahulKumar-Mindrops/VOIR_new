@@ -336,44 +336,54 @@
     const ctas = document.querySelector(".hero__ctas");
     const scrollHint = document.querySelector(".hero__scroll");
     const bgImage = document.querySelector(".hero__bg-image");
+    const overlay = document.querySelector(".hero__bg-overlay");
 
     if (prefersReduced) {
       revealImmediate();
       return;
     }
 
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     if (bgImage) {
-      gsap.fromTo(bgImage, { scale: 1.2, opacity: 0.6 }, { scale: 1.08, opacity: 1, duration: 2, ease: "power2.out" });
+      gsap.fromTo(
+        bgImage,
+        { scale: 1.28, opacity: 0.35, filter: "brightness(0.7)" },
+        { scale: 1.06, opacity: 1, filter: "brightness(1)", duration: 2.6, ease: "power2.out" }
+      );
+    }
+
+    if (overlay) {
+      gsap.fromTo(overlay, { opacity: 0.3 }, { opacity: 1, duration: 1.8, ease: "power2.out" });
     }
 
     if (eyebrow) {
-      gsap.set(eyebrow, { opacity: 0, y: 20 });
-      tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.7 }, 0.1);
+      gsap.set(eyebrow, { opacity: 0, y: 28, letterSpacing: "0.28em" });
+      tl.to(eyebrow, { opacity: 1, y: 0, letterSpacing: "0.14em", duration: 1 }, 0.15);
     }
 
     if (titleWords.length) {
       tl.to(
         titleWords,
-        { y: 0, duration: 1.05, stagger: 0.08, ease: "power4.out" },
-        0.2
+        { y: 0, duration: 1.25, stagger: 0.1, ease: "expo.out" },
+        0.28
       );
     }
 
     if (desc) {
-      gsap.set(desc, { opacity: 0, y: 24 });
-      tl.to(desc, { opacity: 1, y: 0, duration: 0.8 }, 0.55);
+      gsap.set(desc, { opacity: 0, y: 32, filter: "blur(6px)" });
+      tl.to(desc, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1 }, 0.72);
     }
 
     if (ctas) {
-      gsap.set(ctas, { opacity: 0, y: 24 });
-      tl.to(ctas, { opacity: 1, y: 0, duration: 0.8 }, 0.7);
+      const buttons = ctas.querySelectorAll(".btn");
+      gsap.set(buttons, { opacity: 0, y: 28 });
+      tl.to(buttons, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.9);
     }
 
     if (scrollHint) {
-      gsap.set(scrollHint, { opacity: 0 });
-      tl.to(scrollHint, { opacity: 1, duration: 0.6 }, 1.0);
+      gsap.set(scrollHint, { opacity: 0, y: 12 });
+      tl.to(scrollHint, { opacity: 1, y: 0, duration: 0.8 }, 1.2);
     }
   }
 
@@ -385,13 +395,24 @@
     const track = el("featTrack");
     if (!track || !window.VOIR) return;
     const picks = window.VOIR.models.filter(function (m) {
-      return ["VR55FLG14KQ", "VR32FLG12KQ", "VTN55CU2EB", "VTQ43CF2EB", "VTQ40CF2EB", "VTQ32CH2EB"].indexOf(m.id) !== -1;
+      return (
+        [
+          "VR55FLG14KQ",
+          "VR43FLG12KQ",
+          "VR32FLG12KQ",
+          "VTN65CH2EB",
+          "VTN55CH2EB",
+          "VTQ43CH2EB",
+          "VTQ40CH2EB",
+          "VTQ32CH2EB",
+        ].indexOf(m.id) !== -1
+      );
     });
     track.innerHTML = picks
       .map(function (m) {
         const seriesName = window.VOIR.series[m.series].name;
         const seriesClass =
-          m.series === "additional" || m.series === "core" ? "feat-slide--core" : "feat-slide--zenith";
+          m.series === "core" || m.series === "vantage" ? "feat-slide--core" : "feat-slide--zenith";
         return (
           '<article class="feat-slide ' +
           seriesClass +
@@ -661,7 +682,6 @@
       return;
     }
 
-    // Fade reveals (skip hero + cards handled by stagger)
     gsap.utils
       .toArray('[data-reveal="fade"], [data-reveal="card"]')
       .filter(
@@ -670,37 +690,44 @@
           !el.closest(".technology") &&
           !el.closest(".lifestyle") &&
           !el.classList.contains("cat-card") &&
-          !el.classList.contains("feature-card")
+          !el.classList.contains("feature-card") &&
+          !el.classList.contains("showcase__item")
       )
       .forEach((el) => {
         const isCard = el.getAttribute("data-reveal") === "card";
         gsap.fromTo(
           el,
-          { opacity: 0, y: isCard ? 56 : 40 },
+          {
+            opacity: 0,
+            y: isCard ? 72 : 48,
+            scale: isCard ? 0.96 : 1,
+            filter: isCard ? "blur(8px)" : "blur(0px)",
+          },
           {
             opacity: 1,
             y: 0,
-            duration: isCard ? 0.95 : 0.85,
-            ease: "power3.out",
+            scale: 1,
+            filter: "blur(0px)",
+            duration: isCard ? 1.2 : 1,
+            ease: "expo.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 88%",
+              start: "top 86%",
               toggleActions: "play none none none",
             },
           }
         );
       });
 
-    // Clip-path image reveals (skip hero — handled in animateHero)
     gsap.utils.toArray('[data-reveal="clip"]').forEach((el) => {
       if (el.closest(".hero")) return;
       gsap.fromTo(
         el,
-        { clipPath: "inset(12% 12% 12% 12% round 24px)", opacity: 0.4 },
+        { clipPath: "inset(14% 14% 14% 14% round 28px)", opacity: 0.35 },
         {
           clipPath: "inset(0% 0% 0% 0% round 0px)",
           opacity: 1,
-          duration: 1.6,
+          duration: 1.75,
           ease: "expo.out",
           scrollTrigger: {
             trigger: el,
@@ -718,7 +745,7 @@
         { clipPath: "inset(0 100% 0 0)" },
         {
           clipPath: "inset(0 0% 0 0)",
-          duration: 1.55,
+          duration: 1.65,
           ease: "expo.inOut",
           scrollTrigger: {
             trigger: el,
@@ -730,11 +757,11 @@
       if (img) {
         gsap.fromTo(
           img,
-          { scale: 1.12, x: -30 },
+          { scale: 1.14, x: -36 },
           {
             scale: 1,
             x: 0,
-            duration: 1.9,
+            duration: 2,
             ease: "expo.out",
             scrollTrigger: {
               trigger: el,
@@ -753,7 +780,7 @@
         { clipPath: "inset(0 0 0 100%)" },
         {
           clipPath: "inset(0 0 0 0%)",
-          duration: 1.55,
+          duration: 1.65,
           ease: "expo.inOut",
           scrollTrigger: {
             trigger: el,
@@ -765,11 +792,11 @@
       if (img) {
         gsap.fromTo(
           img,
-          { scale: 1.12, x: 30 },
+          { scale: 1.14, x: 36 },
           {
             scale: 1,
             x: 0,
-            duration: 1.9,
+            duration: 2,
             ease: "expo.out",
             scrollTrigger: {
               trigger: el,
@@ -781,16 +808,15 @@
       }
     });
 
-    // Smooth image fades for lifestyle / category media
     gsap.utils.toArray(".cat-card__img, .lifestyle__media img").forEach((img) => {
       gsap.fromTo(
         img,
-        { scale: 1.06, opacity: 0.85 },
+        { scale: 1.12, opacity: 0.55 },
         {
           scale: 1,
           opacity: 1,
-          duration: 1.1,
-          ease: "power2.out",
+          duration: 1.45,
+          ease: "power3.out",
           scrollTrigger: {
             trigger: img.closest(".cat-card, .lifestyle__card") || img,
             start: "top 88%",
@@ -800,22 +826,21 @@
       );
     });
 
-    // Split lines / words on scroll
     document.querySelectorAll('[data-split="lines"], [data-split="words"]').forEach((el) => {
-      if (el.closest(".hero")) return; // hero handled separately
+      if (el.closest(".hero")) return;
       const inners = el.querySelectorAll(".split-word > span, .split-line > span");
       if (!inners.length) return;
       gsap.fromTo(
         inners,
-        { y: "110%" },
+        { y: "120%" },
         {
           y: "0%",
-          duration: 1.15,
-          stagger: 0.05,
+          duration: 1.3,
+          stagger: 0.06,
           ease: "expo.out",
           scrollTrigger: {
             trigger: el,
-            start: "top 85%",
+            start: "top 84%",
             toggleActions: "play none none none",
           },
         }
@@ -991,20 +1016,63 @@
 
     gsap.fromTo(
       cards,
-      { opacity: 0, y: 60 },
+      { opacity: 0, y: 80, scale: 0.94, rotateX: 6 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.08,
-        ease: "power3.out",
+        scale: 1,
+        rotateX: 0,
+        duration: 1.15,
+        stagger: 0.16,
+        ease: "expo.out",
+        transformOrigin: "center bottom",
         scrollTrigger: {
           trigger: ".categories__grid",
-          start: "top 80%",
+          start: "top 78%",
           toggleActions: "play none none none",
         },
       }
     );
+
+    cards.forEach((card) => {
+      const badge = card.querySelector(".cat-card__badge");
+      const cta = card.querySelector(".cat-card__cta");
+      if (badge) {
+        gsap.fromTo(
+          badge,
+          { opacity: 0, y: -12 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 75%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+      if (cta) {
+        gsap.fromTo(
+          cta,
+          { opacity: 0, x: -10 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.7,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 75%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+    });
   }
 
   /* ------------------------------------------
@@ -1036,16 +1104,17 @@
   function initExtraMotion() {
     if (prefersReduced) return;
 
-    // Section eyebrows slide-in from left
+    // Section eyebrows — premium letter-spacing settle
     gsap.utils.toArray(".section__eyebrow").forEach((el) => {
       if (el.closest(".hero") || el.closest(".technology")) return;
       gsap.fromTo(
         el,
-        { opacity: 0, x: -28 },
+        { opacity: 0, y: 18, letterSpacing: "0.28em" },
         {
           opacity: 1,
-          x: 0,
-          duration: 0.8,
+          y: 0,
+          letterSpacing: "0.14em",
+          duration: 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: el,
@@ -1055,6 +1124,121 @@
         }
       );
     });
+
+    /* Featured slider entrance */
+    gsap.utils.toArray("#featTrack .feat-slide").slice(0, 6).forEach((slide, i) => {
+      gsap.fromTo(
+        slide,
+        { opacity: 0, y: 48, scale: 0.94 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          delay: i * 0.06,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: "#featured-slider",
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    });
+
+    /* Feature panel settle */
+    const featurePanel = document.getElementById("featurePanel");
+    if (featurePanel) {
+      gsap.fromTo(
+        featurePanel,
+        { opacity: 0, y: 56, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.2,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: featurePanel,
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    /* Showcase 3D series rows — never hide content; only enhance */
+    gsap.utils.toArray(".showcase__item").forEach((item, i) => {
+      const stage = item.querySelector(".showcase__stage");
+      const copy = item.querySelector(".showcase__copy");
+      const unit = item.querySelector(".tv3d__unit");
+      const fromLeft = i % 2 === 0;
+
+      gsap.set([stage, copy].filter(Boolean), { clearProps: "opacity" });
+      if (copy) gsap.set(copy.children, { clearProps: "opacity" });
+
+      if (stage) {
+        gsap.from(stage, {
+          x: fromLeft ? -48 : 48,
+          duration: 1.1,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      if (unit) {
+        const endY = fromLeft ? -18 : 18;
+        gsap.fromTo(
+          unit,
+          { rotateY: fromLeft ? -28 : 28, rotateX: 12 },
+          {
+            rotateY: endY,
+            rotateX: 8,
+            duration: 1.25,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+
+      if (copy) {
+        gsap.from(copy.children, {
+          y: 22,
+          duration: 0.75,
+          stagger: 0.06,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+    });
+
+    /* Promise cards */
+    const promiseCards = gsap.utils.toArray("#promiseGrid > *");
+    if (promiseCards.length) {
+      gsap.from(promiseCards, {
+        y: 40,
+        duration: 0.95,
+        stagger: 0.12,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: "#promiseGrid",
+          start: "top 82%",
+          toggleActions: "play none none none",
+        },
+      });
+    }
 
     // Lifestyle — simple fade up (VIZIO-style)
     const lifestyleHeader = document.querySelector(".lifestyle__title");
@@ -1201,18 +1385,38 @@
     }
 
     // Final CTA buttons pop
+    const finalCta = document.querySelector(".final-cta");
+    if (finalCta) {
+      gsap.fromTo(
+        finalCta.querySelectorAll(".section__eyebrow, .final-cta__title, .final-cta__desc"),
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.15,
+          stagger: 0.14,
+          ease: "expo.out",
+          scrollTrigger: {
+            trigger: finalCta,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
     const ctaActions = document.querySelector(".final-cta__actions");
     if (ctaActions) {
       gsap.fromTo(
         ctaActions.querySelectorAll(".btn"),
-        { opacity: 0, y: 24, scale: 0.92 },
+        { opacity: 0, y: 28, scale: 0.9 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.75,
-          stagger: 0.1,
-          ease: "back.out(1.4)",
+          duration: 0.9,
+          stagger: 0.12,
+          ease: "back.out(1.5)",
           scrollTrigger: {
             trigger: ctaActions,
             start: "top 88%",
@@ -1240,30 +1444,25 @@
       }
     );
 
-    // Showcase chips polish
-    document.querySelectorAll(".showcase__chips").forEach((list) => {
+    // Showcase size pills — keep visible, add soft rise only
+    document.querySelectorAll(".showcase__sizes").forEach((list) => {
       const items = list.querySelectorAll("span");
-      gsap.fromTo(
-        items,
-        { opacity: 0, y: 12 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          stagger: 0.08,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: list,
-            start: "top 88%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
+      gsap.from(items, {
+        y: 8,
+        duration: 0.45,
+        stagger: 0.05,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: list,
+          start: "top 90%",
+          toggleActions: "play none none none",
+        },
+      });
     });
 
-    // Soft scrub on section titles (desktop)
+    // Soft scrub on promo title only (desktop)
     if (!isMobile) {
-      gsap.utils.toArray(".showcase__heading, .promo__title").forEach((title) => {
+      gsap.utils.toArray(".promo__title").forEach((title) => {
         gsap.to(title, {
           y: -18,
           ease: "none",
@@ -1350,7 +1549,7 @@
   function modelCardHtml(m) {
     const seriesMeta = window.VOIR.series[m.series] || {};
     const qled = m.qled ? "QLED" : "Non-QLED";
-    const chip = m.series === "additional" ? "chip--orange" : "chip--teal";
+    const chip = m.series === "core" || m.series === "vantage" ? "chip--orange" : "chip--teal";
     const highlights = [
       "Resolution: " + (m.resolution || ""),
       "Panel: " + (m.panelType || "Pixel Pure Panel"),
@@ -1500,26 +1699,41 @@
   function renderPromise() {
     const grid = el("promiseGrid");
     if (!grid || !window.VOIR) return;
+    const marks = ["01", "02", "03"];
     grid.innerHTML = window.VOIR.catalogue.pillars
-      .map(function (col) {
+      .map(function (col, i) {
         const items = col.items
           .map(function (it) {
             return (
-              '<div class="promise-item"><strong>' +
+              '<li class="promise-item">' +
+              '<span class="promise-item__name">' +
               escapeHtml(it.name) +
-              "</strong><span>" +
+              "</span>" +
+              '<span class="promise-item__text">' +
               escapeHtml(it.text) +
-              "</span></div>"
+              "</span>" +
+              "</li>"
             );
           })
           .join("");
         return (
-          '<article class="promise-col"><h3>' +
+          '<article class="promise-col" data-promise="' +
+          (i + 1) +
+          '">' +
+          '<div class="promise-col__top">' +
+          '<span class="promise-col__index">' +
+          marks[i] +
+          "</span>" +
+          '<h3 class="promise-col__title">' +
           escapeHtml(col.title) +
-          "</h3><p>" +
+          "</h3>" +
+          '<p class="promise-col__lead">' +
           escapeHtml(col.text) +
           "</p>" +
+          "</div>" +
+          '<ul class="promise-col__list">' +
           items +
+          "</ul>" +
           "</article>"
         );
       })
@@ -1714,6 +1928,17 @@
   function renderModelGrid(seriesId) {
     const grid = el("modelGrid");
     if (!grid || !window.VOIR) return;
+    const meta = window.VOIR.series[seriesId] || {};
+    if (meta.comingSoon) {
+      grid.innerHTML =
+        '<div class="coming-soon-panel" data-reveal="card">' +
+        '<p class="section__eyebrow">Vantage Series</p>' +
+        '<h2 class="section__title" style="font-size:clamp(1.6rem,3vw,2.2rem)">Coming soon</h2>' +
+        '<p class="section__lead">Models, sizes, and full specifications for Vantage Series will appear here first.</p>' +
+        '<a href="index.html#cinema" class="btn btn--primary" data-magnetic>Back to homepage</a>' +
+        "</div>";
+      return;
+    }
     const list = window.VOIR.modelsBySeries(seriesId);
     grid.innerHTML = list.map(modelCardHtml).join("");
   }
@@ -1772,7 +1997,7 @@
       '<span class="chip">' +
       escapeHtml(m.size) +
       '</span><span class="chip ' +
-      (m.series === "additional" ? "chip--orange" : "chip--teal") +
+      (m.series === "core" || m.series === "vantage" ? "chip--orange" : "chip--teal") +
       '">' +
       (m.qled ? "QLED" : "Non-QLED") +
       '</span><span class="chip">' +
@@ -1951,6 +2176,111 @@
     show("service");
   }
 
+  function initCinemaVideo() {
+    const video = el("cinemaVideo");
+    const toggle = el("cinemaToggle");
+    if (!video) return;
+
+    const tryPlay = function () {
+      const p = video.play();
+      if (p && typeof p.catch === "function") p.catch(function () {});
+    };
+    tryPlay();
+
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        const muted = !video.muted;
+        video.muted = muted;
+        toggle.textContent = muted ? "Sound on" : "Sound off";
+        toggle.setAttribute("aria-pressed", muted ? "false" : "true");
+        tryPlay();
+      });
+    }
+
+    if (window.ScrollTrigger && window.gsap) {
+      ScrollTrigger.create({
+        trigger: "#cinema",
+        start: "top 70%",
+        end: "bottom 20%",
+        onEnter: tryPlay,
+        onEnterBack: tryPlay,
+        onLeave: function () {
+          video.pause();
+        },
+        onLeaveBack: function () {
+          video.pause();
+        },
+      });
+    }
+  }
+
+  function initTv3dTilt() {
+    if (!window.gsap) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+
+    document.querySelectorAll("[data-tv-tilt]").forEach(function (stage) {
+      const unit = stage.querySelector(".tv3d__unit");
+      if (!unit) return;
+      const flip = !!stage.closest(".showcase__item--flip");
+      const baseY = flip ? 16 : -16;
+      const baseX = 7;
+
+      gsap.set(unit, {
+        rotateY: baseY,
+        rotateX: baseX,
+        transformPerspective: 1000,
+        transformOrigin: "50% 55%",
+      });
+
+      const toY = gsap.quickTo(unit, "rotateY", { duration: 0.4, ease: "power3.out" });
+      const toX = gsap.quickTo(unit, "rotateX", { duration: 0.4, ease: "power3.out" });
+
+      stage.addEventListener("pointermove", function (e) {
+        const rect = stage.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        stage.classList.add("is-tilting");
+        toY(baseY + px * 24);
+        toX(baseX + py * -14);
+      });
+
+      stage.addEventListener("pointerleave", function () {
+        stage.classList.remove("is-tilting");
+        toY(baseY);
+        toX(baseX);
+      });
+    });
+  }
+
+  function initShowcaseRail() {
+    const links = Array.from(document.querySelectorAll(".showcase__rail-link"));
+    const items = Array.from(document.querySelectorAll(".showcase__item[id]"));
+    if (!links.length || !items.length || !window.ScrollTrigger) return;
+
+    items.forEach(function (item) {
+      ScrollTrigger.create({
+        trigger: item,
+        start: "top 55%",
+        end: "bottom 45%",
+        onEnter: function () {
+          setActive(item.id);
+        },
+        onEnterBack: function () {
+          setActive(item.id);
+        },
+      });
+    });
+
+    function setActive(id) {
+      links.forEach(function (link) {
+        link.classList.toggle("is-active", link.getAttribute("href") === "#" + id);
+      });
+    }
+
+    setActive(items[0].id);
+  }
+
   /* ------------------------------------------
      Boot
   ------------------------------------------ */
@@ -1965,6 +2295,9 @@
     renderAbout();
     initRecruitForm();
     initSupportTabs();
+    initCinemaVideo();
+    initTv3dTilt();
+    initShowcaseRail();
 
     prepareSplits();
     initNav();
