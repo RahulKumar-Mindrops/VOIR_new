@@ -330,12 +330,14 @@
   ------------------------------------------ */
 
   function animateHero() {
-    const titleWords = document.querySelectorAll(".hero__title .split-word > span");
+    const title = document.querySelector(".hero__title");
     const eyebrow = document.querySelector(".hero__eyebrow");
     const desc = document.querySelector(".hero__desc");
-    const ctas = document.querySelector(".hero__ctas");
+    const features = document.querySelector(".hero__features");
     const scrollHint = document.querySelector(".hero__scroll");
-    const bgImage = document.querySelector(".hero__bg-image, .hero__bg-slide.is-active");
+    const deck = document.querySelector(".hero__deck");
+    const rail = document.querySelector(".hero__rail");
+    const bgImage = document.querySelector(".hero__bg-slide.is-active");
     const overlay = document.querySelector(".hero__bg-overlay");
 
     if (prefersReduced) {
@@ -348,42 +350,49 @@
     if (bgImage) {
       gsap.fromTo(
         bgImage,
-        { scale: 1.28, opacity: 0.35, filter: "brightness(0.7)" },
-        { scale: 1, opacity: 1, filter: "brightness(1)", duration: 2.6, ease: "power2.out" }
+        { scale: 1.2, opacity: 0.4, filter: "brightness(0.7)" },
+        { scale: 1, opacity: 1, filter: "brightness(1)", duration: 2.4, ease: "power2.out" }
       );
     }
 
     if (overlay) {
-      gsap.fromTo(overlay, { opacity: 0.3 }, { opacity: 1, duration: 1.8, ease: "power2.out" });
+      gsap.fromTo(overlay, { opacity: 0.35 }, { opacity: 1, duration: 1.6, ease: "power2.out" });
     }
 
     if (eyebrow) {
-      gsap.set(eyebrow, { opacity: 0, y: 28, letterSpacing: "0.28em" });
-      tl.to(eyebrow, { opacity: 1, y: 0, letterSpacing: "0.14em", duration: 1 }, 0.15);
+      gsap.set(eyebrow, { opacity: 0, y: 24, letterSpacing: "0.28em" });
+      tl.to(eyebrow, { opacity: 1, y: 0, letterSpacing: "0.18em", duration: 0.9 }, 0.12);
     }
 
-    if (titleWords.length) {
-      tl.to(
-        titleWords,
-        { y: 0, duration: 1.25, stagger: 0.1, ease: "expo.out" },
-        0.28
-      );
+    if (title) {
+      gsap.set(title, { opacity: 0, y: 36 });
+      tl.to(title, { opacity: 1, y: 0, duration: 1.05 }, 0.22);
     }
 
     if (desc) {
-      gsap.set(desc, { opacity: 0, y: 32, filter: "blur(6px)" });
-      tl.to(desc, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1 }, 0.72);
+      gsap.set(desc, { opacity: 0, y: 24, filter: "blur(6px)" });
+      tl.to(desc, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9 }, 0.45);
     }
 
-    if (ctas) {
-      const buttons = ctas.querySelectorAll(".btn");
-      gsap.set(buttons, { opacity: 0, y: 28 });
-      tl.to(buttons, { opacity: 1, y: 0, duration: 0.9, stagger: 0.12 }, 0.9);
+    if (features) {
+      const items = features.querySelectorAll("li");
+      gsap.set(items, { opacity: 0, y: 16 });
+      tl.to(items, { opacity: 1, y: 0, duration: 0.7, stagger: 0.06 }, 0.62);
+    }
+
+    if (rail) {
+      gsap.set(rail, { opacity: 0 });
+      tl.to(rail, { opacity: 1, duration: 0.8 }, 0.7);
     }
 
     if (scrollHint) {
-      gsap.set(scrollHint, { opacity: 0, y: 12 });
-      tl.to(scrollHint, { opacity: 1, y: 0, duration: 0.8 }, 1.2);
+      gsap.set(scrollHint, { opacity: 0, y: 10 });
+      tl.to(scrollHint, { opacity: 1, y: 0, duration: 0.7 }, 0.9);
+    }
+
+    if (deck) {
+      gsap.set(deck, { opacity: 0, y: 24 });
+      tl.to(deck, { opacity: 1, y: 0, duration: 0.85 }, 0.85);
     }
   }
 
@@ -393,53 +402,77 @@
 
   function renderFeaturedSlider() {
     const track = el("featTrack");
+    const dotsHost = el("featDots");
     if (!track || !window.VOIR) return;
-    const picks = window.VOIR.models.filter(function (m) {
-      return (
-        [
-          "VR55FLG14KQ",
-          "VR43FLG12KQ",
-          "VR32FLG12KQ",
-          "VTN65CH2EB",
-          "VTN55CH2EB",
-          "VTQ43CH2EB",
-          "VTQ40CH2EB",
-          "VTQ32CH2EB",
-        ].indexOf(m.id) !== -1
-      );
+    const popularId = "VTN65CH2EB";
+    const order = [
+      "VR32FLG12KQ",
+      "VR43FLG12KQ",
+      "VR55FLG14KQ",
+      "VR65FLG14KQ",
+      "VTQ32CH2EB",
+      "VTQ40CH2EB",
+      "VTQ43CH2EB",
+      "VTN55CH2EB",
+      "VTN65CH2EB",
+    ];
+    const byId = {};
+    window.VOIR.models.forEach(function (m) {
+      byId[m.id] = m;
     });
+    const picks = order
+      .map(function (id) {
+        return byId[id];
+      })
+      .filter(Boolean);
+
     track.innerHTML = picks
       .map(function (m) {
         const seriesName = window.VOIR.series[m.series].name;
         const seriesClass =
           m.series === "core" || m.series === "vantage" ? "feat-slide--core" : "feat-slide--zenith";
+        const isPopular = m.id === popularId;
+        const osChip = m.os.indexOf("Google") !== -1 ? "Google TV" : "Android 14";
+        const chips =
+          '<div class="feat-slide__chips">' +
+          (m.qled ? "<span>QLED " + escapeHtml(m.resolutionLabel) + "</span>" : "") +
+          "<span>" +
+          escapeHtml(osChip) +
+          "</span>" +
+          (m.series === "zenith" ? "<span>Dolby</span>" : "<span>Cloud TV</span>") +
+          "</div>";
+
         return (
           '<article class="feat-slide ' +
           seriesClass +
+          (isPopular ? " feat-slide--popular" : "") +
           '" data-model="' +
           escapeHtml(m.id) +
           '">' +
+          '<span class="feat-slide__size">' +
+          escapeHtml(m.size) +
+          "</span>" +
+          (isPopular ? '<span class="feat-slide__badge">★ Most Popular</span>' : "") +
           '<div class="feat-slide__media"><img src="' +
           escapeHtml(m.image) +
           '" alt="' +
           escapeHtml(m.id) +
-          '" /></div>' +
+          '" loading="lazy" /></div>' +
           '<div class="feat-slide__body">' +
-          "<span>" +
+          '<span class="feat-slide__series">' +
           escapeHtml(seriesName) +
           "</span>" +
-          "<h3>" +
-          escapeHtml(m.size) +
-          " " +
+          '<h3 class="feat-slide__model">' +
           escapeHtml(m.id) +
           "</h3>" +
-          "<p>" +
-          (m.qled ? "QLED" : "Non-QLED") +
+          '<p class="feat-slide__specs">' +
+          (m.qled ? "QLED" : "LED") +
           " · " +
           escapeHtml(m.resolutionLabel) +
           " · " +
           escapeHtml(m.os) +
           "</p>" +
+          chips +
           '<a href="tv.html?model=' +
           encodeURIComponent(m.id) +
           '" class="feat-slide__link">View Specifications →</a>' +
@@ -447,6 +480,23 @@
         );
       })
       .join("");
+
+    if (dotsHost) {
+      const dotCount = Math.min(4, picks.length);
+      dotsHost.innerHTML = Array.from({ length: dotCount })
+        .map(function (_, i) {
+          return (
+            '<button type="button" class="featured-slider__dot' +
+            (i === 0 ? " is-active" : "") +
+            '" data-feat-dot="' +
+            i +
+            '" aria-label="Slide group ' +
+            (i + 1) +
+            '"></button>'
+          );
+        })
+        .join("");
+    }
   }
 
   function initFeaturedSlider() {
@@ -494,16 +544,17 @@
       const viewCenter = -x + wrap.clientWidth / 2;
       let best = null;
       let bestAbs = Infinity;
+      let bestIndex = 0;
 
-      slides.forEach(function (slide) {
+      slides.forEach(function (slide, i) {
         const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
         const offset = (slideCenter - viewCenter) / Math.max(wrap.clientWidth * 0.42, 1);
         const t = Math.max(-1, Math.min(1, offset));
         const abs = Math.abs(t);
-        const scale = 1.04 - abs * 0.16;
-        const opacity = 1 - abs * 0.38;
-        const rotateY = t * -16;
-        const lift = (1 - abs) * 12;
+        const scale = 1.05 - abs * 0.17;
+        const opacity = 1 - abs * 0.36;
+        const rotateY = t * -18;
+        const lift = (1 - abs) * 14;
 
         slide.style.transform =
           "translateY(" +
@@ -519,12 +570,24 @@
         if (abs < bestAbs) {
           bestAbs = abs;
           best = slide;
+          bestIndex = i % count;
         }
       });
 
       slides.forEach(function (slide) {
         slide.classList.toggle("is-active", slide === best);
       });
+
+      const dots = document.querySelectorAll("#featDots .featured-slider__dot");
+      if (dots.length) {
+        const activeDot = Math.min(
+          dots.length - 1,
+          Math.floor((bestIndex / Math.max(count, 1)) * dots.length)
+        );
+        dots.forEach(function (dot, d) {
+          dot.classList.toggle("is-active", d === activeDot);
+        });
+      }
     }
 
     function nearestTarget() {
@@ -585,6 +648,25 @@
     const next = document.getElementById("featNext");
     prev && prev.addEventListener("click", function () { stepBy(-1); });
     next && next.addEventListener("click", function () { stepBy(1); });
+
+    const dotsHost = document.getElementById("featDots");
+    if (dotsHost) {
+      dotsHost.addEventListener("click", function (e) {
+        const dot = e.target.closest("[data-feat-dot]");
+        if (!dot || !count) return;
+        const di = Number(dot.getAttribute("data-feat-dot"));
+        const targetIndex = Math.min(
+          count - 1,
+          Math.round((di / Math.max(dotsHost.children.length - 1, 1)) * (count - 1))
+        );
+        snapMode = true;
+        pauseAuto(2800);
+        const slide = slides[targetIndex];
+        if (!slide) return;
+        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+        targetX = wrapX(-(slideCenter - wrap.clientWidth / 2));
+      });
+    }
 
     wrap.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
@@ -1706,12 +1788,15 @@
           .map(function (it) {
             return (
               '<li class="promise-item">' +
+              '<span class="promise-item__dot" aria-hidden="true"></span>' +
+              '<div class="promise-item__body">' +
               '<span class="promise-item__name">' +
               escapeHtml(it.name) +
               "</span>" +
               '<span class="promise-item__text">' +
               escapeHtml(it.text) +
               "</span>" +
+              "</div>" +
               "</li>"
             );
           })
@@ -1720,6 +1805,9 @@
           '<article class="promise-col" data-promise="' +
           (i + 1) +
           '">' +
+          '<span class="promise-col__watermark" aria-hidden="true">' +
+          marks[i] +
+          "</span>" +
           '<div class="promise-col__top">' +
           '<span class="promise-col__index">' +
           marks[i] +
@@ -2175,13 +2263,158 @@
 
   function initHeroBgSlider() {
     const slides = Array.from(document.querySelectorAll("#heroBgSlider .hero__bg-slide"));
-    if (slides.length < 2) return;
+    const cardsHost = el("heroCards");
+    const dotsHost = el("heroDots");
+    const prev = el("heroPrev");
+    const next = el("heroNext");
+    const eyebrow = el("heroEyebrow");
+    const title = el("heroTitle");
+    const desc = el("heroDesc");
+    if (!slides.length || !cardsHost) return;
+
+    const deck = [
+      {
+        kicker: "QLED TV",
+        title: "Bigger Pictures. Brighter Tomorrows.",
+        eyebrow: "QLED TV | Zenith Series",
+        headline: 'Bigger Pictures. <span class="hero__title-accent">Brighter</span> Tomorrows.',
+        desc: "Experience a smarter, brighter way to watch.",
+        image: "images/tv-hero.jpg",
+      },
+      {
+        kicker: "Zenith Series",
+        title: "Colour Tells a Brighter Story.",
+        eyebrow: "Zenith Series | Google TV",
+        headline: 'Colour Tells a <span class="hero__title-accent">Brighter</span> Story.',
+        desc: "Premium Google TV QLED with Dolby Vision.Atmos and AI Quantum Core.",
+        image: "images/zenith-55.jpg",
+      },
+      {
+        kicker: "Google TV",
+        title: "More Than a TV. A Smarter Life.",
+        eyebrow: "Google TV | Live & Stream",
+        headline: 'More Than a TV. A <span class="hero__title-accent">Smarter</span> Life.',
+        desc: "Apps, live channels, and voice search — ready the moment you sit down.",
+        image: "images/showcase-tv.jpg",
+      },
+      {
+        kicker: "Dolby Atmos",
+        title: "Sound That Brings You Closer.",
+        eyebrow: "Dolby Atmos | Cinema Sound",
+        headline: 'Sound That Brings You <span class="hero__title-accent">Closer</span>.',
+        desc: "Immersive audio tuned with the picture, so every scene feels finished.",
+        image: "images/showcase-sound.jpg",
+      },
+    ];
+
     let index = 0;
-    setInterval(function () {
-      slides[index].classList.remove("is-active");
-      index = (index + 1) % slides.length;
-      slides[index].classList.add("is-active");
-    }, 5000);
+    let timer = null;
+
+    cardsHost.innerHTML = deck
+      .map(function (item, i) {
+        return (
+          '<button type="button" class="hero__card' +
+          (i === 0 ? " is-active" : "") +
+          '" role="tab" aria-selected="' +
+          (i === 0 ? "true" : "false") +
+          '" data-hero-card="' +
+          i +
+          '">' +
+          '<span class="hero__card-copy">' +
+          '<span class="hero__card-kicker">' +
+          escapeHtml(item.kicker) +
+          "</span>" +
+          '<span class="hero__card-title">' +
+          escapeHtml(item.title) +
+          "</span>" +
+          "</span>" +
+          '<span class="hero__card-media"><img src="' +
+          escapeHtml(item.image) +
+          '" alt="" loading="lazy" /></span>' +
+          "</button>"
+        );
+      })
+      .join("");
+
+    if (dotsHost) {
+      dotsHost.innerHTML = deck
+        .map(function (_, i) {
+          return (
+            '<button type="button" class="hero__dot' +
+            (i === 0 ? " is-active" : "") +
+            '" data-hero-dot="' +
+            i +
+            '" aria-label="Go to slide ' +
+            (i + 1) +
+            '"></button>'
+          );
+        })
+        .join("");
+    }
+
+    function show(i) {
+      index = (i + deck.length) % deck.length;
+      const item = deck[index];
+
+      slides.forEach(function (slide, s) {
+        slide.classList.toggle("is-active", s === index);
+      });
+
+      cardsHost.querySelectorAll(".hero__card").forEach(function (card, c) {
+        const on = c === index;
+        card.classList.toggle("is-active", on);
+        card.setAttribute("aria-selected", on ? "true" : "false");
+      });
+
+      if (dotsHost) {
+        dotsHost.querySelectorAll(".hero__dot").forEach(function (dot, d) {
+          dot.classList.toggle("is-active", d === index);
+        });
+      }
+
+      if (eyebrow) eyebrow.textContent = item.eyebrow;
+      if (title) title.innerHTML = item.headline;
+      if (desc) desc.textContent = item.desc;
+    }
+
+    function restart() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(function () {
+        show(index + 1);
+      }, 6000);
+    }
+
+    cardsHost.addEventListener("click", function (e) {
+      const card = e.target.closest("[data-hero-card]");
+      if (!card) return;
+      show(Number(card.getAttribute("data-hero-card")));
+      restart();
+    });
+
+    if (dotsHost) {
+      dotsHost.addEventListener("click", function (e) {
+        const dot = e.target.closest("[data-hero-dot]");
+        if (!dot) return;
+        show(Number(dot.getAttribute("data-hero-dot")));
+        restart();
+      });
+    }
+
+    if (prev) {
+      prev.addEventListener("click", function () {
+        show(index - 1);
+        restart();
+      });
+    }
+    if (next) {
+      next.addEventListener("click", function () {
+        show(index + 1);
+        restart();
+      });
+    }
+
+    show(0);
+    restart();
   }
 
   function initCinemaVideo() {

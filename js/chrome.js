@@ -35,7 +35,7 @@
       '" id="nav">' +
       '<div class="nav__inner">' +
       '<a href="index.html" class="nav__logo" data-magnetic aria-label="VOIR home">' +
-      '<img src="images/voir-logo-mark.png?v=4" alt="VOIR" class="nav__logo-img" />' +
+      '<img src="images/logo.png?v=1" alt="VOIR" class="nav__logo-img" />' +
       "</a>" +
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
@@ -58,7 +58,7 @@
       '<div class="container footer__top">' +
       '<div class="footer__col footer__col--brand">' +
       '<a href="index.html" class="footer__logo">' +
-      '<img src="images/voir-logo.png?v=4" alt="VOIR" class="footer__logo-img" />' +
+      '<img src="images/logo.png?v=1" alt="VOIR" class="footer__logo-img" />' +
       "</a>" +
       '<p class="footer__tagline">SEE IT. LOVE IT. LIVE IT.</p>' +
       '<p class="footer__about">VOIR Appliances Private Limited</p>' +

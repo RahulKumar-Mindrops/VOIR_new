@@ -136,7 +136,7 @@ window.VOIR = {
     pillars: [
       {
         title: "See it.",
-        text: "Every VOIR is QLED. A quantum-dot layer converts the backlight into purer red, green and blue — so why QLED? Colour stays true at full brightness, contrast holds in a sunlit room, and the picture ages far better than plain LED.",
+        text: "Every VOIR is QLED. Quantum-dot colour stays true at full brightness, contrast holds in a sunlit room, and the picture ages far better than plain LED.",
         items: [
           { name: "Quantum Color Optimizer", text: "Wider gamut, tuned per scene so colour reads true, not loud." },
           { name: "Infinity Display", text: "Edgeless bezel — the room reads the picture, not the frame." },
