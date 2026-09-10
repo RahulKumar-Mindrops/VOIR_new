@@ -335,7 +335,7 @@
     const desc = document.querySelector(".hero__desc");
     const ctas = document.querySelector(".hero__ctas");
     const scrollHint = document.querySelector(".hero__scroll");
-    const bgImage = document.querySelector(".hero__bg-image");
+    const bgImage = document.querySelector(".hero__bg-image, .hero__bg-slide.is-active");
     const overlay = document.querySelector(".hero__bg-overlay");
 
     if (prefersReduced) {
@@ -349,7 +349,7 @@
       gsap.fromTo(
         bgImage,
         { scale: 1.28, opacity: 0.35, filter: "brightness(0.7)" },
-        { scale: 1.06, opacity: 1, filter: "brightness(1)", duration: 2.6, ease: "power2.out" }
+        { scale: 1, opacity: 1, filter: "brightness(1)", duration: 2.6, ease: "power2.out" }
       );
     }
 
@@ -873,7 +873,7 @@
         });
 
         // Soft parallax on hero background
-        const heroBg = document.querySelector(".hero__bg-image");
+        const heroBg = document.querySelector(".hero__bg-slide.is-active, .hero__bg-image");
         if (heroBg) {
           gsap.to(heroBg, {
             y: 80,
@@ -1747,12 +1747,12 @@
     const meta = {
       Picture: {
         role: "hero",
-        image: "images/lifestyle-1.jpg",
+        image: "images/tv-hero.jpg",
         className: "ptr--hero",
       },
       Sound: {
         role: "stack",
-        image: "images/soundbar.jpg",
+        image: "images/showcase-sound.jpg",
         className: "ptr--stack ptr--sound",
       },
       Processor: {
@@ -1832,7 +1832,7 @@
         return (
           '<article class="ptr ' +
           m.className +
-          '" data-reveal="card">' +
+          '">' +
           media +
           body +
           "</article>"
@@ -2176,6 +2176,17 @@
     show("service");
   }
 
+  function initHeroBgSlider() {
+    const slides = Array.from(document.querySelectorAll("#heroBgSlider .hero__bg-slide"));
+    if (slides.length < 2) return;
+    let index = 0;
+    setInterval(function () {
+      slides[index].classList.remove("is-active");
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("is-active");
+    }, 5000);
+  }
+
   function initCinemaVideo() {
     const video = el("cinemaVideo");
     const toggle = el("cinemaToggle");
@@ -2296,6 +2307,7 @@
     initRecruitForm();
     initSupportTabs();
     initCinemaVideo();
+    initHeroBgSlider();
     initTv3dTilt();
     initShowcaseRail();
 

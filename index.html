@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css?v=10" />
+  <link rel="stylesheet" href="css/main.css?v=12" />
   <link rel="stylesheet" href="css/animations.css?v=10" />
-  <link rel="stylesheet" href="css/pages.css?v=10" />
+  <link rel="stylesheet" href="css/pages.css?v=11" />
 </head>
 <body>
   <div class="cursor" id="cursor" aria-hidden="true">
@@ -35,7 +35,12 @@
 
     <section class="hero" id="hero">
       <div class="hero__bg" aria-hidden="true">
-        <div class="hero__bg-image" id="heroBgImage"></div>
+        <div class="hero__bg-slider" id="heroBgSlider">
+          <div class="hero__bg-slide is-active" style="background-image:url('images/tv-hero.jpg')"></div>
+          <div class="hero__bg-slide" style="background-image:url('images/showcase-tv.jpg')"></div>
+          <div class="hero__bg-slide" style="background-image:url('images/zenith-55.jpg')"></div>
+          <div class="hero__bg-slide" style="background-image:url('images/core-43.jpg')"></div>
+        </div>
         <div class="hero__bg-overlay"></div>
         <div class="hero__grain"></div>
       </div>
@@ -327,8 +332,9 @@
     <section class="section pointers" id="pointers">
       <div class="container">
         <div class="pointers__header">
+          <p class="section__eyebrow" data-reveal="fade">Built around six pillars</p>
           <h2 class="section__title" data-split="lines">Everything you need in one television.</h2>
-          <p class="section__lead" data-reveal="fade">Six pillars — picture, sound, processor, smart features, panel and aesthetics — tuned so a VOIR feels finished the moment it lands in the room.</p>
+          <p class="section__lead" data-reveal="fade">Picture, sound, processor, smart features, panel and aesthetics — tuned so a VOIR feels finished the moment it lands in the room.</p>
         </div>
         <div class="pointer-groups" id="pointerGroups"></div>
       </div>
@@ -385,6 +391,6 @@
   <script src="js/data.js?v=6"></script>
   <script src="js/chrome.js?v=6"></script>
   <script src="js/cursor.js?v=3"></script>
-  <script src="js/app.js?v=9"></script>
+  <script src="js/app.js?v=12"></script>
 </body>
 </html>
