@@ -28,6 +28,21 @@
       })
       .join("");
 
+    const drawerItems = links
+      .map(function (l) {
+        const isActive = l.id === active;
+        return (
+          '<a href="' +
+          l.href +
+          '" class="nav-drawer__link' +
+          (isActive ? " is-active" : "") +
+          '">' +
+          l.label +
+          "</a>"
+        );
+      })
+      .join("");
+
     const solid = active !== "home" ? " is-scrolled nav--inner" : "";
     return (
       '<header class="nav' +
@@ -40,10 +55,15 @@
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
       "</nav>" +
-      '<button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">' +
+      '<button type="button" class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrawer">' +
       "<span></span><span></span><span></span>" +
       "</button>" +
-      "</div></header>"
+      "</div></header>" +
+      '<div class="nav-drawer" id="navDrawer" hidden>' +
+      '<nav class="nav-drawer__list" aria-label="Mobile">' +
+      drawerItems +
+      "</nav>" +
+      "</div>"
     );
   }
 

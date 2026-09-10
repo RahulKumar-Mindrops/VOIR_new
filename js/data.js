@@ -237,6 +237,11 @@ window.VOIR = {
   team: [
     {
       name: "Mr. Gandharv Daga",
+      role: "Key Leader",
+      org: "Touchstone Group",
+      title: "Key Leader — Touchstone Group",
+      focus: "Telecom · Consumer Electronics · Financial Services",
+      initials: "GD",
       paragraphs: [
         "Mr. Gandharv Daga is a seasoned entrepreneur with over 14+ years of experience across Telecom, Consumer Electronics, and Financial Services. As a key leader at Touchstone Group—one of the region’s leading distribution networks, representing top national and global brands with a strong market presence and significant turnover—he spearheads telecom and consumer electronics operations, driving sustainable growth, operational excellence, and market expansion.",
         "He has a proven track record of delivering innovative sell-out growth strategies, enabling consistent business performance in competitive markets. Backed by his expertise in investments and financial planning, he brings a strategic and scalable approach to business building.",
@@ -245,6 +250,11 @@ window.VOIR = {
     },
     {
       name: "Mr. Mohit Goyal",
+      role: "Core Leader",
+      org: "Voir India Electronics Private Limited",
+      title: "Core Leader — Voir India Electronics",
+      focus: "Operations · Manufacturing · Brand Building",
+      initials: "MG",
       paragraphs: [
         "Mr. Mohit Goyal is an accomplished entrepreneur and business strategist with over 15+ years of experience spanning consumer electronics, manufacturing, and business development. As a core leader at Voir India Electronics Private Limited, he has played a pivotal role in establishing and expanding the organization, driving high-impact growth and operational transformation.",
         "He has a proven track record in profit centre operations, go-to-market strategy, and brand building, with the ability to identify untapped opportunities and convert them into scalable business outcomes. His expertise extends across product innovation, manufacturing processes, and sales strategy, enabling end-to-end business leadership.",
@@ -253,6 +263,11 @@ window.VOIR = {
     },
     {
       name: "Mr. Tarun Kalani",
+      role: "Business Leader",
+      org: "Surya Marketing",
+      title: "Business Leader — Surya Marketing",
+      focus: "Distribution · Market Development · Rural Growth",
+      initials: "TK",
       paragraphs: [
         "Mr. Tarun Kalani is an entrepreneur and business leader in the consumer electronics and home appliances industry, currently driving growth at Surya Marketing, one of Rajasthan’s leading and most established distribution houses with a strong presence across all 33 districts and 500+ towns and villages.",
         "He brings strong expertise in B2B distribution, dealer network expansion, and market development, with a sharp focus on rural and emerging markets. His approach centers on building scalable, system-driven frameworks that enable consistent and sustainable growth.",

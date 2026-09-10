@@ -281,7 +281,7 @@
   function initNav() {
     const nav = document.getElementById("nav");
     const toggle = document.getElementById("navToggle");
-    const links = document.getElementById("navLinks");
+    const drawer = document.getElementById("navDrawer");
     if (!nav) return;
 
     let lastY = 0;
@@ -291,8 +291,14 @@
       end: "max",
       onUpdate: (self) => {
         const y = self.scroll();
+        if (nav.classList.contains("is-menu-open")) {
+          nav.classList.remove("is-hidden");
+          lastY = y;
+          return;
+        }
+
         if (y > 60) nav.classList.add("is-scrolled");
-        else nav.classList.remove("is-scrolled");
+        else if (!nav.classList.contains("nav--inner")) nav.classList.remove("is-scrolled");
 
         if (y > lastY + 4 && y > 120) nav.classList.add("is-hidden");
         else if (y < lastY - 4) nav.classList.remove("is-hidden");
@@ -300,29 +306,52 @@
       },
     });
 
-    if (toggle && links) {
-      toggle.addEventListener("click", () => {
-        const open = toggle.classList.toggle("is-open");
-        links.classList.toggle("is-open", open);
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        document.body.style.overflow = open ? "hidden" : "";
+    if (toggle && drawer) {
+      toggle.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const open = !drawer.classList.contains("is-open");
+        setMobileNavOpen(open);
       });
 
-      links.querySelectorAll("a").forEach((a) => {
+      drawer.querySelectorAll("a").forEach(function (a) {
         a.addEventListener("click", closeMobileNav);
       });
     }
   }
 
-  function closeMobileNav() {
+  function setMobileNavOpen(open) {
+    const nav = document.getElementById("nav");
     const toggle = document.getElementById("navToggle");
-    const links = document.getElementById("navLinks");
-    if (toggle) {
-      toggle.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
+    const drawer = document.getElementById("navDrawer");
+    if (!drawer) return;
+
+    if (open) {
+      drawer.hidden = false;
+      requestAnimationFrame(function () {
+        drawer.classList.add("is-open");
+      });
+    } else {
+      drawer.classList.remove("is-open");
+      window.setTimeout(function () {
+        if (!drawer.classList.contains("is-open")) drawer.hidden = true;
+      }, 280);
     }
-    if (links) links.classList.remove("is-open");
-    document.body.style.overflow = "";
+
+    if (toggle) {
+      toggle.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+    if (nav) {
+      nav.classList.toggle("is-menu-open", open);
+      if (open) nav.classList.remove("is-hidden");
+    }
+    document.body.classList.toggle("nav-drawer-open", open);
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
+  function closeMobileNav() {
+    setMobileNavOpen(false);
   }
 
   /* ------------------------------------------
@@ -2283,22 +2312,6 @@
 
   function renderAbout() {
     if (!window.VOIR) return;
-    const copy = el("aboutCopy");
-    if (copy) {
-      const story = (window.VOIR.about.storyline || [])
-        .map(function (p) {
-          return "<p style=\"margin-bottom:16px\">" + escapeHtml(p) + "</p>";
-        })
-        .join("");
-      const aboutUs =
-        '<h3 style="margin:32px 0 16px;font-size:1.25rem">About Us</h3>' +
-        (window.VOIR.about.aboutUs || [])
-          .map(function (p) {
-            return "<p style=\"margin-bottom:16px\">" + escapeHtml(p) + "</p>";
-          })
-          .join("");
-      copy.innerHTML = story + aboutUs;
-    }
     const values = el("valuesGrid");
     if (values) {
       values.innerHTML = window.VOIR.about.values
@@ -2320,22 +2333,164 @@
     const team = el("teamGrid");
     if (team) {
       team.innerHTML = window.VOIR.team
-        .map(function (person) {
-          const paras = person.paragraphs
-            .map(function (p) {
-              return "<p>" + escapeHtml(p) + "</p>";
-            })
-            .join("");
+        .map(function (person, index) {
+          const summary = escapeHtml((person.paragraphs && person.paragraphs[0]) || "");
+          const num = String(index + 1).padStart(2, "0");
+          const title = escapeHtml(person.title || person.role || "");
+          const focus = escapeHtml(person.focus || "");
+          const initials = escapeHtml(person.initials || person.name.slice(0, 2));
           return (
-            '<article class="team-card"><h3>' +
+            '<article class="lead-card" data-leader-index="' +
+            index +
+            '">' +
+            '<span class="lead-card__index" aria-hidden="true">' +
+            num +
+            "</span>" +
+            '<div class="lead-card__photo">' +
+            '<span class="lead-card__shape" aria-hidden="true"></span>' +
+            '<span class="lead-card__avatar" aria-hidden="true">' +
+            initials +
+            "</span>" +
+            "</div>" +
+            '<p class="lead-card__role">' +
+            title +
+            "</p>" +
+            "<h3 class=\"lead-card__name\">" +
             escapeHtml(person.name) +
             "</h3>" +
-            paras +
+            (focus ? '<p class="lead-card__tags">' + focus + "</p>" : "") +
+            '<p class="lead-card__bio">' +
+            summary +
+            "</p>" +
+            '<button type="button" class="lead-card__cta" data-leader-open="' +
+            index +
+            '"><span aria-hidden="true">→</span> View Profile</button>' +
             "</article>"
           );
         })
         .join("");
+      initLeadershipSlider();
+      initLeaderModal();
     }
+  }
+
+  function initLeadershipSlider() {
+    const track = el("teamGrid");
+    const prev = el("leadPrev");
+    const next = el("leadNext");
+    if (!track || !prev || !next) return;
+    if (track.dataset.sliderReady === "true") return;
+    track.dataset.sliderReady = "true";
+
+    const stage = track.parentElement;
+    const cards = Array.from(track.querySelectorAll(".lead-card"));
+    if (!cards.length || !stage) return;
+    let index = Math.min(1, cards.length - 1);
+
+    function cardStep() {
+      const card = cards[0];
+      if (!card) return 320;
+      const styles = window.getComputedStyle(track);
+      const gap = parseFloat(styles.columnGap || styles.gap) || 20;
+      return card.getBoundingClientRect().width + gap;
+    }
+
+    function paint() {
+      const maxIndex = Math.max(0, cards.length - 1);
+      index = Math.max(0, Math.min(index, maxIndex));
+      const step = cardStep();
+      const stageW = stage.clientWidth;
+      const cardW = cards[0].getBoundingClientRect().width;
+      const ideal = index * step - (stageW - cardW) / 2;
+      const max = Math.max(0, track.scrollWidth - stageW);
+      const offset = Math.max(0, Math.min(ideal, max));
+      track.style.transform = "translate3d(" + -offset + "px,0,0)";
+      cards.forEach(function (card, i) {
+        card.classList.toggle("is-active", i === index);
+        card.classList.toggle("is-near", Math.abs(i - index) === 1);
+      });
+      prev.disabled = index <= 0;
+      next.disabled = index >= maxIndex;
+    }
+
+    prev.addEventListener("click", function () {
+      index -= 1;
+      paint();
+    });
+    next.addEventListener("click", function () {
+      index += 1;
+      paint();
+    });
+
+    let startX = 0;
+    let dragging = false;
+    track.addEventListener(
+      "pointerdown",
+      function (e) {
+        if (e.target.closest("[data-leader-open]")) return;
+        dragging = true;
+        startX = e.clientX;
+        track.setPointerCapture(e.pointerId);
+      },
+      { passive: true }
+    );
+    track.addEventListener("pointerup", function (e) {
+      if (!dragging) return;
+      dragging = false;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) {
+        index += dx < 0 ? 1 : -1;
+        paint();
+      }
+    });
+
+    window.addEventListener("resize", paint);
+    paint();
+  }
+
+  function initLeaderModal() {
+    const modal = el("leaderModal");
+    if (!modal || modal.dataset.ready === "true") return;
+    modal.dataset.ready = "true";
+
+    const roleEl = el("leaderModalRole");
+    const titleEl = el("leaderModalTitle");
+    const focusEl = el("leaderModalFocus");
+    const copyEl = el("leaderModalCopy");
+
+    function openLeader(index) {
+      const person = window.VOIR.team[index];
+      if (!person) return;
+      if (roleEl) roleEl.textContent = person.title || person.role || "";
+      if (titleEl) titleEl.textContent = person.name;
+      if (focusEl) focusEl.textContent = person.focus || "";
+      if (copyEl) {
+        copyEl.innerHTML = (person.paragraphs || [])
+          .map(function (p) {
+            return "<p>" + escapeHtml(p) + "</p>";
+          })
+          .join("");
+      }
+      modal.hidden = false;
+      document.body.classList.add("leader-modal-open");
+    }
+
+    function closeLeader() {
+      modal.hidden = true;
+      document.body.classList.remove("leader-modal-open");
+    }
+
+    document.querySelectorAll("[data-leader-open]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        openLeader(Number(btn.getAttribute("data-leader-open")));
+      });
+    });
+    modal.querySelectorAll("[data-leader-close]").forEach(function (btn) {
+      btn.addEventListener("click", closeLeader);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) closeLeader();
+    });
   }
 
   function initRecruitForm() {

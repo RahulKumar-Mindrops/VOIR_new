@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About VOIR</title>
-  <meta name="description" content="See it. Love it. Live it. VOIR brand manifesto and team." />
+  <title>About VOIR — Leadership</title>
+  <meta name="description" content="Meet the leadership behind VOIR — Mr. Gandharv Daga, Mr. Mohit Goyal, and Mr. Tarun Kalani." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css?v=4" />
-  <link rel="stylesheet" href="css/animations.css?v=4" />
-  <link rel="stylesheet" href="css/pages.css?v=4" />
+  <link rel="stylesheet" href="css/main.css?v=36" />
+  <link rel="stylesheet" href="css/animations.css?v=10" />
+  <link rel="stylesheet" href="css/pages.css?v=34" />
 </head>
-<body>
+<body class="page-about">
   <div class="cursor" id="cursor" aria-hidden="true">
     <div class="cursor__dot"></div>
     <div class="cursor__ring"></div>
@@ -21,52 +21,42 @@
   <div id="site-nav"></div>
   <main id="main">
 
-    <section class="hero page-hero" id="hero">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="hero__bg-image"></div>
-        <div class="hero__bg-overlay"></div>
-      </div>
-      <div class="hero__content">
-        <p class="hero__eyebrow">About</p>
-        <h1 class="hero__title" data-split="words">SEE IT. LOVE IT. LIVE IT.</h1>
-        <p class="hero__desc">Brand heritage since 2008  |  Incorporated 2023</p>
-      </div>
-    </section>
-    <section class="section" id="manifesto">
-      <div class="container">
-        <div class="section__header">
-          <p class="section__eyebrow">Brand manifesto</p>
-          <h2 class="section__title">See it. Love it. Live it.</h2>
+    <section class="leadership" id="team" aria-labelledby="leadershipTitle">
+      <div class="leadership__glow" aria-hidden="true"></div>
+      <div class="container leadership__inner">
+        <div class="leadership__top">
+          <div class="leadership__intro">
+            <p class="leadership__eyebrow">About</p>
+            <h1 class="leadership__title" id="leadershipTitle">Leadership</h1>
+            <p class="leadership__lead">The people leading VOIR’s vision, innovation and sustainable growth.</p>
+          </div>
+          <div class="leadership__nav" aria-label="Leadership carousel">
+            <button type="button" class="leadership__nav-btn" id="leadPrev" aria-label="Previous leader">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M15.4 4.6 8 12l7.4 7.4 1.2-1.2L10.4 12l6.2-6.2z"/></svg>
+            </button>
+            <button type="button" class="leadership__nav-btn leadership__nav-btn--accent" id="leadNext" aria-label="Next leader">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="m8.6 4.6-1.2 1.2L13.6 12l-6.2 6.2 1.2 1.2L16 12z"/></svg>
+            </button>
+          </div>
         </div>
-        <div class="legal-copy" id="aboutCopy"></div>
-      </div>
-    </section>
-    <section class="section lifestyle" id="lifestyle">
-      <div class="container">
-        <div class="lifestyle__header">
-          <h2 class="lifestyle__title" data-reveal="fade">Categories we live with.</h2>
-          <p class="section__lead" data-reveal="fade" style="margin-inline:auto;margin-top:12px;color:rgba(255,255,255,0.65)">TVs are here today.</p>
-        </div>
-        <div class="lifestyle__grid">
-          <article class="lifestyle__card" data-reveal="card">
-            <div class="lifestyle__media"><img src="images/tv-hero.jpg" alt="VOIR QLED TV" /></div>
-            <h3 class="lifestyle__card-title">TVs</h3>
-            <p class="lifestyle__card-desc">Core Series and Zenith Series available now. Vantage Series — coming soon.</p>
-            <a href="tvs.html" class="feat-slide__link">Explore TVs →</a>
-          </article>
-          <!-- Air Coolers / Washing Machines / Accessories — hidden for now
-          <article class="lifestyle__card lifestyle__card--soon" data-reveal="card">
-            <div class="lifestyle__media lifestyle__media--soon">
-              <img src="images/lifestyle-2.jpg" alt="" />
-              <span class="lifestyle__badge">Coming soon</span>
-            </div>
-            <h3 class="lifestyle__card-title">Air Coolers</h3>
-            <p class="lifestyle__card-desc">Details to be shared. Series and models will appear here later.</p>
-          </article>
-          -->
+
+        <div class="leadership__stage">
+          <div class="leadership__track" id="teamGrid"></div>
         </div>
       </div>
     </section>
+
+    <div class="leader-modal" id="leaderModal" hidden>
+      <div class="leader-modal__backdrop" data-leader-close></div>
+      <div class="leader-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="leaderModalTitle">
+        <button type="button" class="leader-modal__close" data-leader-close aria-label="Close">&times;</button>
+        <p class="leader-modal__role" id="leaderModalRole"></p>
+        <h2 class="leader-modal__title" id="leaderModalTitle"></h2>
+        <p class="leader-modal__focus" id="leaderModalFocus"></p>
+        <div class="leader-modal__copy" id="leaderModalCopy"></div>
+      </div>
+    </div>
+
     <section class="section" id="values">
       <div class="container">
         <div class="section__header">
@@ -76,12 +66,13 @@
         <div class="values-grid" id="valuesGrid"></div>
       </div>
     </section>
-    <section class="section" id="mission" style="background:var(--color-bg-mid)">
+
+    <section class="section" id="mission">
       <div class="container">
         <div class="section__header">
           <h2 class="section__title">Mission &amp; Vision</h2>
         </div>
-        <div class="promise-grid">
+        <div class="promise-grid about-mission-grid">
           <article class="promise-col">
             <h3>Our Mission</h3>
             <p id="missionText"></p>
@@ -93,16 +84,25 @@
         </div>
       </div>
     </section>
-    <section class="section" id="team">
+
+    <section class="section lifestyle" id="lifestyle">
       <div class="container">
-        <div class="section__header">
-          <p class="section__eyebrow">Team</p>
-          <h2 class="section__title">Leadership</h2>
+        <div class="lifestyle__header">
+          <h2 class="lifestyle__title" data-reveal="fade">Categories we live with.</h2>
+          <p class="section__lead" data-reveal="fade" style="margin-inline:auto;margin-top:12px;color:rgba(255,255,255,0.65)">TVs are here today.</p>
         </div>
-        <div class="team-grid" id="teamGrid"></div>
+        <div class="lifestyle__grid">
+          <article class="lifestyle__card" data-reveal="card">
+            <div class="lifestyle__media"><img src="images/tv-hero.jpg" alt="VOIR QLED TV" /></div>
+            <h3 class="lifestyle__card-title">TVs</h3>
+            <p class="lifestyle__card-desc">Core Series, Zenith Series, and Vantage Series.</p>
+            <a href="tvs.html" class="feat-slide__link">Explore TVs →</a>
+          </article>
+        </div>
       </div>
     </section>
-    <section class="section" id="recruit" style="background:var(--color-bg-mid)">
+
+    <section class="section" id="recruit">
       <div class="container">
         <div class="section__header">
           <h2 class="section__title">Find Your Fit in Our Team</h2>
@@ -134,9 +134,9 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="js/data.js?v=8"></script>
-  <script src="js/chrome.js?v=11"></script>
+  <script src="js/data.js?v=10"></script>
+  <script src="js/chrome.js?v=12"></script>
   <script src="js/cursor.js"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/app.js?v=27"></script>
 </body>
 </html>
