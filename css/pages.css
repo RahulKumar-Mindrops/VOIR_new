@@ -219,9 +219,16 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(244, 241, 236, 0.88) 0%, rgba(244, 241, 236, 0.78) 50%, rgba(244, 241, 236, 0.92) 100%),
-    url("../images/lifestyle-1.jpg") center / cover no-repeat;
+  overflow: hidden;
+}
+
+.feature-intro__bg::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  background: url("../images/lifestyle-2.jpg") center right / cover no-repeat;
+  filter: blur(14px);
+  transform: scale(1.06);
 }
 
 .feature-intro__bg::after {
@@ -229,8 +236,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 42% 36% at 88% 12%, rgba(240, 104, 36, 0.16), transparent 62%),
-    radial-gradient(ellipse 36% 30% at 8% 90%, rgba(80, 140, 70, 0.08), transparent 60%);
+    linear-gradient(180deg, rgba(247, 244, 239, 0.9) 0%, rgba(247, 244, 239, 0.86) 50%, rgba(247, 244, 239, 0.92) 100%),
+    radial-gradient(ellipse 48% 40% at 88% 35%, rgba(240, 104, 36, 0.06), transparent 62%);
 }
 
 .feature-intro__rail {
@@ -300,10 +307,15 @@
   gap: 8px;
   margin: 0 auto 36px;
   max-width: 1100px;
-  padding: 4px 4px 10px;
+  padding: 12px 14px 14px;
   overflow-x: auto;
   scrollbar-width: thin;
   -webkit-overflow-scrolling: touch;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(11, 18, 32, 0.06);
+  box-shadow: 0 12px 32px rgba(11, 18, 32, 0.06);
+  backdrop-filter: blur(10px);
 }
 
 .feature-tab {
@@ -318,7 +330,7 @@
   border: 0;
   border-radius: 16px;
   background: transparent;
-  color: #4b5563;
+  color: #374151;
   font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.25;
@@ -333,8 +345,8 @@
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: rgba(11, 18, 32, 0.04);
-  color: #6b7280;
+  background: rgba(11, 18, 32, 0.06);
+  color: #4b5563;
   transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
