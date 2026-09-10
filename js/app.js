@@ -139,7 +139,13 @@
       const preloader = document.getElementById("preloader");
       const progress = document.getElementById("preloaderProgress");
       const percent = document.getElementById("preloaderPercent");
-      const brandText = document.querySelector(".preloader__brand-text");
+      const brand = preloader
+        ? preloader.querySelector(".preloader__brand")
+        : null;
+      const logoFill = document.getElementById("preloaderLogoFill");
+      const progressWrap = preloader
+        ? preloader.querySelector(".preloader__progress-wrap")
+        : null;
 
       if (!preloader || prefersReduced) {
         if (preloader) preloader.remove();
@@ -160,43 +166,111 @@
         resolve();
       };
 
-      const tl = gsap.timeline({
-        onComplete: finish,
-      });
+      const setLoadProgress = (raw) => {
+        const v = Math.max(0, Math.min(100, Math.round(raw)));
+        const remain = 100 - v;
+        if (logoFill) {
+          gsap.set(logoFill, { clipPath: "inset(0 " + remain + "% 0 0)" });
+        }
+        if (progress) gsap.set(progress, { scaleX: v / 100 });
+        if (percent) percent.textContent = v + "%";
+      };
 
-      tl.to(brandText, {
-        clipPath: "inset(0 0% 0 0)",
-        duration: 0.9,
+      gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
+      gsap.set(progressWrap, { opacity: 0, scaleX: 0.88 });
+      gsap.set(percent, { opacity: 0, y: 10 });
+      gsap.set(brand, { opacity: 0, y: 18 });
+      setLoadProgress(0);
+
+      const counter = { value: 0 };
+      const tl = gsap.timeline({ onComplete: finish });
+
+      /* Brand settles in (ghost visible first) */
+      tl.to(brand, {
+        opacity: 1,
+        y: 0,
+        duration: 0.75,
         ease: "power3.out",
       });
 
-      const counter = { value: 0 };
+      /* Progress track + percent */
+      tl.to(
+        progressWrap,
+        {
+          opacity: 1,
+          scaleX: 1,
+          duration: 0.55,
+          ease: "power2.out",
+        },
+        "-=0.3"
+      );
+
+      tl.to(
+        percent,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+        },
+        "<0.05"
+      );
+
+      /* Fill white through VOIR + bar + % together */
       tl.to(
         counter,
         {
           value: 100,
-          duration: 1.6,
+          duration: 2.35,
           ease: "power2.inOut",
-          onUpdate: () => {
-            const v = Math.round(counter.value);
-            if (progress) progress.style.width = v + "%";
-            if (percent) percent.textContent = v + "%";
-          },
+          onUpdate: () => setLoadProgress(counter.value),
         },
-        "-=0.4"
+        "-=0.15"
+      );
+
+      /* Soft flash at full */
+      tl.to(brand, {
+        opacity: 0.92,
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "sine.inOut",
+      });
+
+      /* Exit */
+      tl.to(
+        brand,
+        {
+          y: -22,
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        "+=0.18"
+      );
+
+      tl.to(
+        [progressWrap, percent],
+        {
+          opacity: 0,
+          y: -12,
+          duration: 0.4,
+          ease: "power2.in",
+        },
+        "<"
       );
 
       tl.to(
         preloader,
         {
           clipPath: "inset(0 0 100% 0)",
-          duration: 1.05,
+          duration: 0.95,
           ease: "power4.inOut",
         },
-        "+=0.15"
+        "-=0.12"
       );
 
-      window.setTimeout(finish, 4200);
+      window.setTimeout(finish, 6000);
     });
   }
 

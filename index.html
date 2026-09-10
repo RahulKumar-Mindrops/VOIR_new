@@ -18,10 +18,11 @@
     <div class="cursor__ring"></div>
     <span class="cursor__label"></span>
   </div>
-  <div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader" id="preloader" aria-hidden="true" role="status" aria-live="polite" aria-label="Loading">
     <div class="preloader__inner">
-      <div class="preloader__brand">
-        <span class="preloader__brand-text">VOIR</span>
+      <div class="preloader__brand" aria-label="VOIR">
+        <span class="preloader__brand-ghost" aria-hidden="true">VOIR</span>
+        <span class="preloader__brand-fill" id="preloaderLogoFill" aria-hidden="true">VOIR</span>
       </div>
       <div class="preloader__progress-wrap">
         <div class="preloader__progress" id="preloaderProgress"></div>
