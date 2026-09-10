@@ -316,7 +316,8 @@
     track.innerHTML = picks
       .map(function (m) {
         const seriesName = window.VOIR.series[m.series].name;
-        const seriesClass = m.series === "zenith" ? "feat-slide--zenith" : "feat-slide--core";
+        const seriesClass =
+          m.series === "additional" || m.series === "core" ? "feat-slide--core" : "feat-slide--zenith";
         return (
           '<article class="feat-slide ' +
           seriesClass +
@@ -1020,26 +1021,87 @@
       );
     });
 
-    // Promo content scale + fade
+    // Promo: cinematic bg parallax + content presence
+    const promoSection = document.querySelector(".promo");
+    const promoBgImage = document.querySelector(".promo__bg-image");
     const promoInner = document.querySelector(".promo__inner");
-    if (promoInner) {
+    if (promoSection && promoBgImage && !prefersReduced) {
       gsap.fromTo(
-        promoInner.children,
-        { opacity: 0, y: 36, scale: 0.96 },
+        promoBgImage,
+        { scale: 1.18, yPercent: -4 },
         {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.9,
-          stagger: 0.12,
-          ease: "power3.out",
+          scale: 1.02,
+          yPercent: 4,
+          ease: "none",
           scrollTrigger: {
-            trigger: promoInner,
-            start: "top 80%",
-            toggleActions: "play none none none",
+            trigger: promoSection,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.1,
           },
         }
       );
+    }
+    if (promoInner) {
+      const promoCopy = promoInner.querySelectorAll(".promo__copy > *");
+      const promoPanel = promoInner.querySelector(".promo__panel");
+      if (promoCopy.length) {
+        gsap.fromTo(
+          promoCopy,
+          { opacity: 0, y: 40, filter: "blur(6px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 1,
+            stagger: 0.12,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: promoInner,
+              start: "top 78%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
+      if (promoPanel) {
+        gsap.fromTo(
+          promoPanel,
+          { opacity: 0, x: 48, rotateY: -6 },
+          {
+            opacity: 1,
+            x: 0,
+            rotateY: 0,
+            duration: 1.05,
+            delay: 0.15,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: promoInner,
+              start: "top 78%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+        const rows = promoPanel.querySelectorAll(".emi-table tbody tr");
+        if (rows.length) {
+          gsap.fromTo(
+            rows,
+            { opacity: 0, x: 16 },
+            {
+              opacity: 1,
+              x: 0,
+              duration: 0.55,
+              stagger: 0.07,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: promoPanel,
+                start: "top 85%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
+      }
     }
 
     // Explore tiles cascade
@@ -1212,15 +1274,21 @@
   }
 
   function modelCardHtml(m) {
+    const seriesMeta = window.VOIR.series[m.series] || {};
     const qled = m.qled ? "QLED" : "Non-QLED";
-    const chip = m.series === "core" ? "chip--orange" : "chip--teal";
-    const keys = (m.keyFeatures || []).slice(0, 5).map(escapeHtml).join(" · ");
-    const extras = [];
-    if (m.emi) extras.push("EMI from " + m.emi);
-    if (m.freeInstallation) extras.push("Free installation");
+    const chip = m.series === "additional" ? "chip--orange" : "chip--teal";
+    const highlights = [
+      "Resolution: " + (m.resolution || ""),
+      "Panel: " + (m.panelType || "Pixel Pure Panel"),
+      "OS: " + (m.os || ""),
+      "Brightness: " + (m.peakBrightness || ""),
+      "RAM & Storage: " + (m.ramStorage || ""),
+    ]
+      .map(escapeHtml)
+      .join("<br>");
     return (
       '<article class="model-card model-card--' +
-      m.series +
+      escapeHtml(m.series) +
       '">' +
       '<div class="model-card__media"><img src="' +
       escapeHtml(m.image) +
@@ -1229,6 +1297,11 @@
       '" /></div>' +
       '<div class="model-card__body">' +
       '<div class="model-card__meta">' +
+      '<span class="chip ' +
+      chip +
+      '">' +
+      escapeHtml(seriesMeta.name || m.series) +
+      "</span>" +
       '<span class="chip">' +
       escapeHtml(m.size) +
       "</span>" +
@@ -1244,19 +1317,16 @@
       escapeHtml(m.id) +
       "</h3>" +
       '<p class="model-card__facts">' +
-      escapeHtml(m.os) +
-      "<br>" +
-      escapeHtml(m.processor) +
-      "<br>" +
-      escapeHtml(m.resolution) +
-      (extras.length ? "<br>" + extras.map(escapeHtml).join(" · ") : "") +
+      highlights +
       "</p>" +
-      '<p class="model-card__features">' +
-      keys +
-      "</p>" +
-      '<a class="btn btn--primary" href="tv.html?model=' +
+      '<button type="button" class="btn btn--primary js-view-specs" data-series="' +
+      escapeHtml(m.series) +
+      '" data-model="' +
+      escapeHtml(m.id) +
+      '" data-cursor="Explore">View Specifications</button>' +
+      '<a class="model-card__spec-link" href="tv.html?model=' +
       encodeURIComponent(m.id) +
-      '" data-cursor="Explore">View Specifications</a>' +
+      '">Open full page →</a>' +
       "</div></article>"
     );
   }
@@ -1483,6 +1553,90 @@
       .join("");
   }
 
+  function renderCompareTable(seriesId, focusModelId) {
+    const panel = el("comparePanel");
+    if (!panel || !window.VOIR) return;
+    const models = window.VOIR.modelsBySeries(seriesId);
+    if (!models.length) {
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+    const seriesName = window.VOIR.series[seriesId].name;
+    const groupOrder = ["Display", "Sound", "Features", "Hardware", "Smart Features", "Additional"];
+    const groupsHtml = groupOrder
+      .map(function (group) {
+        const labelSet = [];
+        models.forEach(function (m) {
+          const rows = (m.specs && m.specs[group]) || [];
+          rows.forEach(function (row) {
+            if (labelSet.indexOf(row[0]) === -1) labelSet.push(row[0]);
+          });
+        });
+        if (!labelSet.length) return "";
+        const head =
+          "<thead><tr><th>Specification</th>" +
+          models
+            .map(function (m) {
+              const active = m.id === focusModelId ? " is-focus" : "";
+              return '<th class="' + active.trim() + '">' + escapeHtml(m.id) + "</th>";
+            })
+            .join("") +
+          "</tr></thead>";
+        const body =
+          "<tbody>" +
+          labelSet
+            .map(function (label) {
+              return (
+                "<tr><th>" +
+                escapeHtml(label) +
+                "</th>" +
+                models
+                  .map(function (m) {
+                    const rows = (m.specs && m.specs[group]) || [];
+                    const found = rows.find(function (r) {
+                      return r[0] === label;
+                    });
+                    const val = found ? found[1] : "—";
+                    const display = val === "" ? "—" : val;
+                    return "<td>" + escapeHtml(display) + "</td>";
+                  })
+                  .join("") +
+                "</tr>"
+              );
+            })
+            .join("") +
+          "</tbody>";
+        return (
+          '<div class="compare-group"><h3>' +
+          escapeHtml(group) +
+          '</h3><div class="compare-wrap"><table class="compare-table">' +
+          head +
+          body +
+          "</table></div></div>"
+        );
+      })
+      .join("");
+
+    panel.hidden = false;
+    panel.innerHTML =
+      '<div class="compare-panel__head">' +
+      "<div><p class=\"section__eyebrow\">Compare</p><h2 class=\"section__title\" style=\"font-size:1.5rem\">" +
+      escapeHtml(seriesName) +
+      " specifications</h2></div>" +
+      '<button type="button" class="btn btn--secondary" id="compareClose">Close</button>' +
+      "</div>" +
+      groupsHtml;
+    panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    const closeBtn = el("compareClose");
+    if (closeBtn) {
+      closeBtn.onclick = function () {
+        panel.hidden = true;
+        panel.innerHTML = "";
+      };
+    }
+  }
+
   function renderModelGrid(seriesId) {
     const grid = el("modelGrid");
     if (!grid || !window.VOIR) return;
@@ -1493,8 +1647,7 @@
   function initSeriesTabs() {
     const tabs = el("seriesTabs");
     if (!tabs) return;
-    let series = "zenith";
-    if (location.hash === "#core") series = "core";
+    let series = window.VOIR.resolveSeriesId(location.hash || "zenith");
     tabs.querySelectorAll(".series-tab").forEach(function (btn) {
       btn.classList.toggle("is-active", btn.getAttribute("data-series") === series);
     });
@@ -1508,8 +1661,24 @@
       });
       history.replaceState(null, "", "#" + series);
       renderModelGrid(series);
+      const panel = el("comparePanel");
+      if (panel) {
+        panel.hidden = true;
+        panel.innerHTML = "";
+      }
       if (window.ScrollTrigger) ScrollTrigger.refresh();
     });
+
+    const products = el("products");
+    if (products) {
+      products.addEventListener("click", function (e) {
+        const btn = e.target.closest(".js-view-specs");
+        if (!btn) return;
+        const sid = btn.getAttribute("data-series");
+        const mid = btn.getAttribute("data-model");
+        renderCompareTable(sid, mid);
+      });
+    }
   }
 
   function renderSpecPage() {
@@ -1524,11 +1693,25 @@
       return;
     }
     document.title = m.id + " — VOIR Specifications";
+    const chips =
+      '<div class="model-card__meta" style="margin:16px 0">' +
+      '<span class="chip">' +
+      escapeHtml(m.size) +
+      '</span><span class="chip ' +
+      (m.series === "additional" ? "chip--orange" : "chip--teal") +
+      '">' +
+      (m.qled ? "QLED" : "Non-QLED") +
+      '</span><span class="chip">' +
+      escapeHtml(m.resolutionLabel) +
+      '</span><span class="chip">' +
+      escapeHtml(m.os) +
+      "</span></div>";
     const groups = Object.keys(m.specs)
       .map(function (group) {
         const rows = m.specs[group]
           .map(function (row) {
-            return "<tr><th>" + escapeHtml(row[0]) + "</th><td>" + escapeHtml(row[1]) + "</td></tr>";
+            const value = row[1] === "" || row[1] == null ? "—" : row[1];
+            return "<tr><th>" + escapeHtml(row[0]) + "</th><td>" + escapeHtml(value) + "</td></tr>";
           })
           .join("");
         return (
@@ -1540,17 +1723,6 @@
         );
       })
       .join("");
-    const chips =
-      '<div class="model-card__meta" style="margin:16px 0">' +
-      '<span class="chip">' +
-      escapeHtml(m.size) +
-      "</span><span class=\"chip chip--teal\">" +
-      (m.qled ? "QLED" : "Non-QLED") +
-      "</span><span class=\"chip\">" +
-      escapeHtml(m.resolutionLabel) +
-      "</span><span class=\"chip\">" +
-      escapeHtml(m.os) +
-      "</span></div>";
     root.innerHTML =
       '<div class="spec-hero">' +
       '<div class="spec-hero__media"><img src="' +

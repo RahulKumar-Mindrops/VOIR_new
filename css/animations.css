@@ -300,6 +300,7 @@ body.is-loading {
   .tech-visual__shape--wave,
   .final-cta__inner::before,
   .promo__bg,
+  .promo__bg-glow,
   .promo__badge {
     animation: none !important;
   }

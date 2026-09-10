@@ -167,7 +167,7 @@ window.VOIR = {
     ],
     closingLine: "The best brands aren't the loudest. They're the ones that keep showing up.",
     emiNote:
-      "Free installation applies to all models in Zenith series and on models of 40 inch and above in Core series. EMI amounts are indicative starting values, subject to approval by financing partners and the applicable tenure.",
+      "Free installation applies to all models in Zenith Series and on models of 40 inch and above in Additional Models. EMI amounts are indicative starting values, subject to approval by financing partners and the applicable tenure.",
     freeInstallBox: {
       title: "Free installation. EMI from ₹1,499 / month.",
       text: "Installation and wall-mount fitting are included in selective models only. EMI plans start at the tenure your financing partner approves.",
@@ -268,12 +268,21 @@ window.VOIR = {
       name: "Zenith Series",
       osLine: "GOOGLE TV",
       accent: "teal",
+      panel: "QLED",
     },
     core: {
       id: "core",
       name: "Core Series",
+      osLine: "GOOGLE TV",
+      accent: "teal",
+      panel: "Non-QLED",
+    },
+    additional: {
+      id: "additional",
+      name: "Additional Models",
       osLine: "CLOUD TV",
       accent: "orange",
+      panel: "QLED",
     },
   },
 
@@ -281,7 +290,7 @@ window.VOIR = {
 };
 
 (function () {
-  const keyZenithQled = [
+  const keyG = [
     "AI Quantum Core Processor",
     "Google TV - Google Assistant, Google Chromecast, Easy Access to More than 1000 Apps, Build Your Watchlist, Virtual Remote",
     "OTT Apps",
@@ -292,9 +301,8 @@ window.VOIR = {
     "Dynamic Picture Optimiser",
     "Edgeless Design",
     "Ergonomic Remote",
-    "Pixel Pure Panel",
   ];
-  const keyZenithLed = [
+  const keyC = [
     "Processor",
     "Pixel Pure Panel",
     "Google TV - Google Assistant, Google Chromecast, Easy Access to More than 1000 Apps, Build Your Watchlist, Virtual Remote",
@@ -306,7 +314,7 @@ window.VOIR = {
     "Edgeless Design",
     "Ergonomic Remote",
   ];
-  const keyCore = [
+  const keyAdditional = [
     "Pixel Pure Panel",
     "Quantum Core Processor",
     "OTT Apps",
@@ -323,6 +331,9 @@ window.VOIR = {
     return groups;
   }
 
+  const appsGC = "Netflix, Prime Video, JioHotstar, YouTube, Google Play, FastCast, Smart Player";
+  const appsAdd = "Prime Video, JioHotstar, YouTube, Sony Live, Zee5";
+
   window.VOIR.models = [
     {
       id: "VR32FLG12KQ",
@@ -334,11 +345,14 @@ window.VOIR = {
       os: "Google TV",
       image: "images/zenith-32.jpg",
       processor: "Quantam Core Ai Processor",
-      keyFeatures: keyZenithQled,
+      peakBrightness: "325 nits",
+      ramStorage: "1.5GB + 8GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyG,
       emi: "₹1,499/-",
       freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "1.07 Billion QLED"],
           ["Resolution", "1366*768"],
           ["Panel Type", "Pixel Pure Panel"],
@@ -349,48 +363,44 @@ window.VOIR = {
           ["Digital Noise Reduction", "Yes"],
           ["Intelligent Frame Stabilization Engine", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Pro"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quantam Core Ai Processor"],
-          ["Picture Processor", "HyperNex AI"],
-          ["RAM & Storage", "1.5GB + 8GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G31"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["AI Contrast Enhancer", "Yes"],
           ["AI Motion Enhancer", "Yes"],
           ["Live Color & Clarity Enhancer", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Dolby Audio Format", "Dolby Digital Plus"],
           ["Thunderwave Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio Bass", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Google TV"],
           ["Voice Assistant", "Yes"],
-          ["Pre Installed Applications", "Netflix, Prime Video, JioHotstar, Youtube, Google Play, FastCast, Smart Player"],
+          ["WiFi", "Dual Band WiFi 2.4GHz + 5GHz"],
+          ["Casting", "Built-in Chromecast"],
+          ["Bluetooth", "2 way Bluetooth"],
+          ["Pre Installed Applications", appsGC],
         ],
-        "SMART FEATURES": [
+        Hardware: [
+          ["Processor", "Quantam Core Ai Processor"],
+          ["USB", "USB2.0 X 2"],
+          ["HDMI", "HDMI 1.4 X 3"],
+          ["RAM & Storage", "1.5GB + 8GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G31"],
+        ],
+        "Smart Features": [
           ["Voice Assistant", "Yes"],
           ["Virtual Remote", "Yes"],
           ["Smart Home Ready", "Yes"],
-          ["Casting", "Built-in Chromecast"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Dual Band Wifi  2.4GHz + 5GHz"],
-          ["Bluetooth", "2 way Bluetooth"],
-          ["USB", "USB2.0 X 2"],
-          ["HDMI", "HDMI 1.4 X 3"],
-        ],
-        DESIGN: [
-          ["Bezel Design", "Infinity Design"],
           ["Remote Name", "Eco Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio Bass", "Sonic Boom"],
+          ["Speakers", ""],
+          ["Picture", "PQx Pro"],
+          ["Processor", "HyperNex AI"],
         ],
       }),
     },
@@ -404,11 +414,14 @@ window.VOIR = {
       os: "Google TV",
       image: "images/zenith-55.jpg",
       processor: "Quantam Core Ai Processor",
-      keyFeatures: keyZenithQled,
+      peakBrightness: "325 nits",
+      ramStorage: "2GB + 16GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyG,
       emi: "₹3,499/-",
       freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "1.07 Billion QLED"],
           ["Resolution", "3840*2160"],
           ["Panel Type", "Pixel Pure Panel"],
@@ -419,48 +432,44 @@ window.VOIR = {
           ["Digital Noise Reduction", "Yes"],
           ["Intelligent Frame Stabilization Engine", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Pro"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quantam Core Ai Processor"],
-          ["Picture Processor", "HyperNex AI"],
-          ["RAM & Storage", "2GB + 16GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "Yes"],
           ["AI Contrast Enhancer", "Yes"],
           ["AI Motion Enhancer", "Yes"],
           ["Live Color & Clarity Enhancer", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Dolby Audio Format", "Dolby Atmos"],
           ["Thunderwave Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio Bass", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Google TV"],
           ["Voice Assistant", "Yes"],
-          ["Pre Installed Applications", "Netflix, Prime Video, JioHotstar, Youtube, Google Play, FastCast, Smart Player"],
+          ["WiFi", "Dual Band WiFi 2.4GHz + 5GHz"],
+          ["Casting", "Built-in Chromecast"],
+          ["Bluetooth", "2 way Bluetooth"],
+          ["Pre Installed Applications", appsGC],
         ],
-        "SMART FEATURES": [
+        Hardware: [
+          ["Processor", "Quantam Core Ai Processor"],
+          ["USB", "USB2.0 X 2"],
+          ["HDMI", "HDMI 2.0 X 3"],
+          ["RAM & Storage", "2GB + 16GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
+        ],
+        "Smart Features": [
           ["Voice Assistant", "Yes"],
           ["Virtual Remote", "Yes"],
           ["Smart Home Ready", "Yes"],
-          ["Casting", "Built-in Chromecast"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Dual Band Wifi  2.4GHz + 5GHz"],
-          ["Bluetooth", "2 way Bluetooth"],
-          ["USB", "USB2.0 X 2"],
-          ["HDMI", "HDMI 2.0 X 3"],
-        ],
-        DESIGN: [
-          ["Bezel Design", "Infinity Design"],
           ["Remote Name", "Eco Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio Bass", "Sonic Boom"],
+          ["Speakers", ""],
+          ["Picture", "PQx Pro"],
+          ["Processor", "HyperNex AI"],
         ],
       }),
     },
@@ -474,9 +483,13 @@ window.VOIR = {
       os: "Google TV",
       image: "images/zenith-65.jpg",
       processor: "Quantam Core Ai Processor",
-      keyFeatures: keyZenithQled,
+      peakBrightness: "325 nits",
+      ramStorage: "2GB + 16GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyG,
+      freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "1.07 Billion QLED"],
           ["Resolution", "3840*2160"],
           ["Panel Type", "Pixel Pure Panel"],
@@ -487,54 +500,50 @@ window.VOIR = {
           ["Digital Noise Reduction", "Yes"],
           ["Intelligent Frame Stabilization Engine", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Pro"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quantam Core Ai Processor"],
-          ["Picture Processor", "HyperNex AI"],
-          ["RAM & Storage", "2GB + 16GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "Yes"],
           ["AI Contrast Enhancer", "Yes"],
           ["AI Motion Enhancer", "Yes"],
           ["Live Color & Clarity Enhancer", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Dolby Audio Format", "Dolby Atmos"],
           ["Thunderwave Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio Bass", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Google TV"],
           ["Voice Assistant", "Yes"],
-          ["Pre Installed Applications", "Netflix, Prime Video, JioHotstar, Youtube, Google Play, FastCast, Smart Player"],
+          ["WiFi", "Dual Band WiFi 2.4GHz + 5GHz"],
+          ["Casting", "Built-in Chromecast"],
+          ["Bluetooth", "2 way Bluetooth"],
+          ["Pre Installed Applications", appsGC],
         ],
-        "SMART FEATURES": [
+        Hardware: [
+          ["Processor", "Quantam Core Ai Processor"],
+          ["USB", "USB2.0 X 2"],
+          ["HDMI", "HDMI 2.0 X 3"],
+          ["RAM & Storage", "2GB + 16GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
+        ],
+        "Smart Features": [
           ["Voice Assistant", "Yes"],
           ["Virtual Remote", "Yes"],
           ["Smart Home Ready", "Yes"],
-          ["Casting", "Built-in Chromecast"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Dual Band Wifi  2.4GHz + 5GHz"],
-          ["Bluetooth", "2 way Bluetooth"],
-          ["USB", "USB2.0 X 2"],
-          ["HDMI", "HDMI 2.0 X 3"],
-        ],
-        DESIGN: [
-          ["Bezel Design", "Infinity Design"],
           ["Remote Name", "Eco Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio Bass", "Sonic Boom"],
+          ["Speakers", ""],
+          ["Picture", "PQx Pro"],
+          ["Processor", "HyperNex AI"],
         ],
       }),
     },
     {
       id: "VR32FLG12KN",
-      series: "zenith",
+      series: "core",
       size: '32"',
       qled: false,
       resolution: "1366*768",
@@ -542,9 +551,12 @@ window.VOIR = {
       os: "Google TV",
       image: "images/zenith-32.jpg",
       processor: "Quantam Core Ai Processor",
-      keyFeatures: keyZenithLed,
+      peakBrightness: "300 nits",
+      ramStorage: "1.5GB + 8GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyC,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million"],
           ["Resolution", "1366*768"],
           ["Panel Type", "Pixel Pure Panel"],
@@ -555,54 +567,48 @@ window.VOIR = {
           ["Digital Noise Reduction", "Yes"],
           ["Intelligent Frame Stabilization Engine", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Pro"],
+          ["Dolby Vision", "NA"],
+          ["AI Contrast Enhancer", "Yes"],
+          ["AI Motion Enhancer", "Yes"],
         ],
-        CONFIGURATION: [
+        Sound: [
+          ["Dolby Audio Format", "Dolby Digital Plus"],
+          ["Thunderwave Surround Sound", "Yes"],
+          ["Sound Balance & Sound Reset", "Yes"],
+        ],
+        Features: [
+          ["OS", "Google TV"],
+          ["Voice Assistant", "Yes"],
+          ["WiFi", "Dual Band WiFi 2.4GHz + 5GHz"],
+          ["Casting", "Built-in Chromecast"],
+          ["Bluetooth", "2 way Bluetooth"],
+          ["Pre Installed Applications", appsGC],
+        ],
+        Hardware: [
           ["Processor", "Quantam Core Ai Processor"],
-          ["Picture Processor", "HyperNex AI"],
+          ["USB", "USB2.0 X 2"],
+          ["HDMI", "HDMI 1.4 X 3"],
           ["RAM & Storage", "1.5GB + 8GB"],
           ["GPU", "Quad core, 1.5GHz"],
           ["CPU", "Mali G31"],
         ],
-        VIDEO: [
-          ["Dolby Vision", "NA"],
-          ["AI Contrast Enhancer", "Yes"],
-          ["AI Motion Enhancer", "Yes"],
-          ["Live Color & Clarity Enhancer", "Yes"],
-        ],
-        SOUND: [
-          ["Dolby Audio Format", "Dolby Digital Plus"],
-          ["Thunderwave Surround Sound", "Yes"],
-          ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio Bass", "Sonic Boom"],
-        ],
-        "SMART SERVICE": [
-          ["OS", "Google TV"],
-          ["Voice Assistant", "Yes"],
-          ["Pre Installed Applications", "Netflix, Prime Video, JioHotstar, Youtube, Google Play, FastCast, Smart Player"],
-        ],
-        "SMART FEATURES": [
+        "Smart Features": [
           ["Voice Assistant", "Yes"],
           ["Virtual Remote", "Yes"],
           ["Smart Home Ready", "Yes"],
-          ["Casting", "Built-in Chromecast"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Dual Band Wifi  2.4GHz + 5GHz"],
-          ["Bluetooth", "2 way Bluetooth"],
-          ["USB", "USB2.0 X 2"],
-          ["HDMI", "HDMI 1.4 X 3"],
-        ],
-        DESIGN: [
-          ["Bezel Design", "Infinity Design"],
           ["Remote Name", "Eco Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio Bass", "Sonic Boom"],
+          ["Picture", "PQx Pro"],
+          ["Processor", "HyperNex AI"],
         ],
       }),
     },
     {
       id: "VR43FLG12KN",
-      series: "zenith",
+      series: "core",
       size: '43"',
       qled: false,
       resolution: "1920*1080",
@@ -610,9 +616,12 @@ window.VOIR = {
       os: "Google TV",
       image: "images/core-43.jpg",
       processor: "Quantam Core Ai Processor",
-      keyFeatures: keyZenithLed,
+      peakBrightness: "300 nits",
+      ramStorage: "1.5GB + 8GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyC,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million"],
           ["Resolution", "1920*1080"],
           ["Panel Type", "Pixel Pure Panel"],
@@ -623,54 +632,48 @@ window.VOIR = {
           ["Digital Noise Reduction", "Yes"],
           ["Intelligent Frame Stabilization Engine", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Pro"],
+          ["Dolby Vision", "NA"],
+          ["AI Contrast Enhancer", "Yes"],
+          ["AI Motion Enhancer", "Yes"],
         ],
-        CONFIGURATION: [
+        Sound: [
+          ["Dolby Audio Format", "Dolby Digital Plus"],
+          ["Thunderwave Surround Sound", "Yes"],
+          ["Sound Balance & Sound Reset", "Yes"],
+        ],
+        Features: [
+          ["OS", "Google TV"],
+          ["Voice Assistant", "Yes"],
+          ["WiFi", "Dual Band WiFi 2.4GHz + 5GHz"],
+          ["Casting", "Built-in Chromecast"],
+          ["Bluetooth", "2 way Bluetooth"],
+          ["Pre Installed Applications", appsGC],
+        ],
+        Hardware: [
           ["Processor", "Quantam Core Ai Processor"],
-          ["Picture Processor", "HyperNex AI"],
+          ["USB", "USB2.0 X 2"],
+          ["HDMI", "HDMI 1.4 X 3"],
           ["RAM & Storage", "1.5GB + 8GB"],
           ["GPU", "Quad core, 1.5GHz"],
           ["CPU", "Mali G31"],
         ],
-        VIDEO: [
-          ["Dolby Vision", "NA"],
-          ["AI Contrast Enhancer", "Yes"],
-          ["AI Motion Enhancer", "Yes"],
-          ["Live Color & Clarity Enhancer", "Yes"],
-        ],
-        SOUND: [
-          ["Dolby Audio Format", "Dolby Digital Plus"],
-          ["Thunderwave Surround Sound", "Yes"],
-          ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio Bass", "Sonic Boom"],
-        ],
-        "SMART SERVICE": [
-          ["OS", "Google TV"],
-          ["Voice Assistant", "Yes"],
-          ["Pre Installed Applications", "Netflix, Prime Video, JioHotstar, Youtube, Google Play, FastCast, Smart Player"],
-        ],
-        "SMART FEATURES": [
+        "Smart Features": [
           ["Voice Assistant", "Yes"],
           ["Virtual Remote", "Yes"],
           ["Smart Home Ready", "Yes"],
-          ["Casting", "Built-in Chromecast"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Dual Band Wifi  2.4GHz + 5GHz"],
-          ["Bluetooth", "2 way Bluetooth"],
-          ["USB", "USB2.0 X 2"],
-          ["HDMI", "HDMI 1.4 X 3"],
-        ],
-        DESIGN: [
-          ["Bezel Design", "Infinity Design"],
           ["Remote Name", "Eco Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio Bass", "Sonic Boom"],
+          ["Picture", "PQx Pro"],
+          ["Processor", "HyperNex AI"],
         ],
       }),
     },
     {
       id: "VTN32CH2EB",
-      series: "core",
+      series: "additional",
       size: '32"',
       qled: true,
       resolution: "1366*768",
@@ -678,65 +681,63 @@ window.VOIR = {
       os: "Cloud TV, Android 14",
       image: "images/core-32.jpg",
       processor: "Quantum Core Processor",
-      keyFeatures: keyCore,
+      peakBrightness: "250 nits",
+      ramStorage: "512 MB + 4 GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyAdditional,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million QLED"],
           ["Resolution", "1366*768"],
           ["Panel Type", "Pixel Pure Panel"],
-          ["Bexel Design", "Infinity Design"],
+          ["Bezel Design", "Infinity Design"],
           ["Selectable Picture Modes", "7"],
           ["Peak Brightness", "250 nits"],
           ["Aspect Ratio", "16:9"],
           ["Digital Noise Reduction", "Yes"],
           ["Zoom Mode", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Core"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quad Core Processor"],
-          ["Picture Processor", "Quantum Core Processor"],
-          ["RAM & Storage", "512 MB + 4 GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G31"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["Dynamic Picture Optimizer", "Yes"],
           ["Live Color Booster", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Selectable Sound Modes", "7"],
           ["3D Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Cloud TV, Android 14"],
-          ["Pre Installed Applications", "Prime Video, JioHotstar, Youtube, Sony Live, Zee5"],
-          ["Free Channels", "100+ Live TV Channel Access"],
-          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
-        ],
-        "SMART FEATURES": [
+          ["WiFi", "Yes"],
           ["Screen Casting", "Yes"],
-          ["Universal Search", "Yes"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Yes"],
           ["Bluetooth", "NA"],
+          ["Pre Installed Applications", appsAdd],
+        ],
+        Hardware: [
+          ["Processor", "Quad Core Processor"],
           ["USB", "USB2.0 X 2"],
           ["HDMI", "HDMI 1.4 X 2"],
+          ["RAM & Storage", "512 MB + 4 GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G31"],
         ],
-        DESIGN: [
-          ["Bexel Design", "Infinity Design"],
+        "Smart Features": [
+          ["Free Channels", "100+ Live TV Channel Access"],
+          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
+          ["Universal Search", "Yes"],
           ["Remote Name", "Arc Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio", "Sonic Boom"],
+          ["Picture", "PQx Core"],
+          ["Processor", "Quantum Core Processor"],
         ],
       }),
     },
     {
       id: "VTQ32CH2EB",
-      series: "core",
+      series: "additional",
       size: '32"',
       qled: true,
       resolution: "1366*768",
@@ -744,65 +745,63 @@ window.VOIR = {
       os: "Cloud TV, Android 14",
       image: "images/core-32.jpg",
       processor: "Quantum Core Processor",
-      keyFeatures: keyCore,
+      peakBrightness: "250 nits",
+      ramStorage: "1 GB + 8 GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyAdditional,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million QLED"],
           ["Resolution", "1366*768"],
           ["Panel Type", "Pixel Pure Panel"],
-          ["Bexel Design", "Infinity Design"],
+          ["Bezel Design", "Infinity Design"],
           ["Selectable Picture Modes", "7"],
           ["Peak Brightness", "250 nits"],
           ["Aspect Ratio", "16:9"],
           ["Digital Noise Reduction", "Yes"],
           ["Zoom Mode", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Core"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quad Core Processor"],
-          ["Picture Processor", "Quantum Core Processor"],
-          ["RAM & Storage", "1 GB + 8 GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["Dynamic Picture Optimizer", "Yes"],
           ["Live Color Booster", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Selectable Sound Modes", "7"],
           ["3D Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Cloud TV, Android 14"],
-          ["Pre Installed Applications", "Prime Video, JioHotstar, Youtube, Sony Live, Zee5"],
-          ["Free Channels", "100+ Live TV Channel Access"],
-          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
-        ],
-        "SMART FEATURES": [
+          ["WiFi", "Yes"],
           ["Screen Casting", "Yes"],
-          ["Universal Search", "Yes"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Yes"],
           ["Bluetooth", "NA"],
+          ["Pre Installed Applications", appsAdd],
+        ],
+        Hardware: [
+          ["Processor", "Quad Core Processor"],
           ["USB", "USB2.0 X 2"],
           ["HDMI", "HDMI 1.4 X 2"],
+          ["RAM & Storage", "1 GB + 8 GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
         ],
-        DESIGN: [
-          ["Bexel Design", "Infinity Design"],
+        "Smart Features": [
+          ["Free Channels", "100+ Live TV Channel Access"],
+          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
+          ["Universal Search", "Yes"],
           ["Remote Name", "Arc Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio", "Sonic Boom"],
+          ["Picture", "PQx Core"],
+          ["Processor", "Quantum Core Processor"],
         ],
       }),
     },
     {
       id: "VTQ40CF2EB",
-      series: "core",
+      series: "additional",
       size: '40"',
       qled: true,
       resolution: "1920*1080",
@@ -810,66 +809,64 @@ window.VOIR = {
       os: "Cloud TV, Android 14",
       image: "images/core-40.jpg",
       processor: "Quantum Core Processor",
-      keyFeatures: keyCore,
+      peakBrightness: "300 nits",
+      ramStorage: "1 GB + 8 GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyAdditional,
       freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million QLED"],
           ["Resolution", "1920*1080"],
           ["Panel Type", "Pixel Pure Panel"],
-          ["Bexel Design", "Infinity Design"],
+          ["Bezel Design", "Infinity Design"],
           ["Selectable Picture Modes", "7"],
           ["Peak Brightness", "300 nits"],
           ["Aspect Ratio", "16:9"],
           ["Digital Noise Reduction", "Yes"],
           ["Zoom Mode", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Core"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quad Core Processor"],
-          ["Picture Processor", "Quantum Core Processor"],
-          ["RAM & Storage", "1 GB + 8 GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["Dynamic Picture Optimizer", "Yes"],
           ["Live Color Booster", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Selectable Sound Modes", "7"],
           ["3D Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Cloud TV, Android 14"],
-          ["Pre Installed Applications", "Prime Video, JioHotstar, Youtube, Sony Live, Zee5"],
-          ["Free Channels", "100+ Live TV Channel Access"],
-          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
-        ],
-        "SMART FEATURES": [
+          ["WiFi", "Yes"],
           ["Screen Casting", "Yes"],
-          ["Universal Search", "Yes"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Yes"],
           ["Bluetooth", "NA"],
+          ["Pre Installed Applications", appsAdd],
+        ],
+        Hardware: [
+          ["Processor", "Quad Core Processor"],
           ["USB", "USB2.0 X 2"],
           ["HDMI", "HDMI 1.4 X 2"],
+          ["RAM & Storage", "1 GB + 8 GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
         ],
-        DESIGN: [
-          ["Bexel Design", "Infinity Design"],
+        "Smart Features": [
+          ["Free Channels", "100+ Live TV Channel Access"],
+          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
+          ["Universal Search", "Yes"],
           ["Remote Name", "Arc Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio", "Sonic Boom"],
+          ["Picture", "PQx Core"],
+          ["Processor", "Quantum Core Processor"],
         ],
       }),
     },
     {
       id: "VTQ43CF2EB",
-      series: "core",
+      series: "additional",
       size: '43"',
       qled: true,
       resolution: "1920*1080",
@@ -877,66 +874,64 @@ window.VOIR = {
       os: "Cloud TV, Android 14",
       image: "images/core-43.jpg",
       processor: "Quantum Core Processor",
-      keyFeatures: keyCore,
+      peakBrightness: "300 nits",
+      ramStorage: "1 GB + 8 GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyAdditional,
       freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million QLED"],
           ["Resolution", "1920*1080"],
           ["Panel Type", "Pixel Pure Panel"],
-          ["Bexel Design", "Infinity Design"],
+          ["Bezel Design", "Infinity Design"],
           ["Selectable Picture Modes", "7"],
           ["Peak Brightness", "300 nits"],
           ["Aspect Ratio", "16:9"],
           ["Digital Noise Reduction", "Yes"],
           ["Zoom Mode", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Core"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quad Core Processor"],
-          ["Picture Processor", "Quantum Core Processor"],
-          ["RAM & Storage", "1 GB + 8 GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["Dynamic Picture Optimizer", "Yes"],
           ["Live Color Booster", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Selectable Sound Modes", "7"],
           ["3D Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Cloud TV, Android 14"],
-          ["Pre Installed Applications", "Prime Video, JioHotstar, Youtube, Sony Live, Zee5"],
-          ["Free Channels", "100+ Live TV Channel Access"],
-          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
-        ],
-        "SMART FEATURES": [
+          ["WiFi", "Yes"],
           ["Screen Casting", "Yes"],
-          ["Universal Search", "Yes"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Yes"],
           ["Bluetooth", "NA"],
+          ["Pre Installed Applications", appsAdd],
+        ],
+        Hardware: [
+          ["Processor", "Quad Core Processor"],
           ["USB", "USB2.0 X 2"],
           ["HDMI", "HDMI 1.4 X 2"],
+          ["RAM & Storage", "1 GB + 8 GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
         ],
-        DESIGN: [
-          ["Bexel Design", "Infinity Design"],
+        "Smart Features": [
+          ["Free Channels", "100+ Live TV Channel Access"],
+          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
+          ["Universal Search", "Yes"],
           ["Remote Name", "Arc Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio", "Sonic Boom"],
+          ["Picture", "PQx Core"],
+          ["Processor", "Quantum Core Processor"],
         ],
       }),
     },
     {
       id: "VTN55CU2EB",
-      series: "core",
+      series: "additional",
       size: '55"',
       qled: true,
       resolution: "3840*2160",
@@ -944,60 +939,58 @@ window.VOIR = {
       os: "Cloud TV, Android 14",
       image: "images/core-55.jpg",
       processor: "Quantum Core Processor",
-      keyFeatures: keyCore,
+      peakBrightness: "325 nits",
+      ramStorage: "1 GB + 8 GB",
+      panelType: "Pixel Pure Panel",
+      keyFeatures: keyAdditional,
       freeInstallation: true,
       specs: spec({
-        DISPLAY: [
+        Display: [
           ["Colours", "16.7 Million QLED"],
           ["Resolution", "3840*2160"],
           ["Panel Type", "Pixel Pure Panel"],
-          ["Bexel Design", "Infinity Design"],
+          ["Bezel Design", "Infinity Design"],
           ["Selectable Picture Modes", "7"],
           ["Peak Brightness", "325 nits"],
           ["Aspect Ratio", "16:9"],
           ["Digital Noise Reduction", "Yes"],
           ["Zoom Mode", "Yes"],
           ["Micro Dimming", "Yes"],
-          ["Picture", "PQx Core"],
-        ],
-        CONFIGURATION: [
-          ["Processor", "Quad Core Processor"],
-          ["Picture Processor", "Quantum Core Processor"],
-          ["RAM & Storage", "1 GB + 8 GB"],
-          ["GPU", "Quad core, 1.5GHz"],
-          ["CPU", "Mali G52"],
-        ],
-        VIDEO: [
           ["Dolby Vision", "NA"],
           ["Dynamic Picture Optimizer", "Yes"],
           ["Live Color Booster", "Yes"],
         ],
-        SOUND: [
+        Sound: [
           ["Selectable Sound Modes", "7"],
           ["3D Surround Sound", "Yes"],
           ["Sound Balance & Sound Reset", "Yes"],
-          ["Sound", "CineSound Experience"],
-          ["Audio", "Sonic Boom"],
         ],
-        "SMART SERVICE": [
+        Features: [
           ["OS", "Cloud TV, Android 14"],
-          ["Pre Installed Applications", "Prime Video, JioHotstar, Youtube, Sony Live, Zee5"],
-          ["Free Channels", "100+ Live TV Channel Access"],
-          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
-        ],
-        "SMART FEATURES": [
+          ["WiFi", "Yes"],
           ["Screen Casting", "Yes"],
-          ["Universal Search", "Yes"],
-        ],
-        CONNECTIVITY: [
-          ["Wifi", "Yes"],
           ["Bluetooth", "NA"],
+          ["Pre Installed Applications", appsAdd],
+        ],
+        Hardware: [
+          ["Processor", "Quad Core Processor"],
           ["USB", "USB2.0 X 2"],
           ["HDMI", "HDMI 1.4 X 2"],
+          ["RAM & Storage", "1 GB + 8 GB"],
+          ["GPU", "Quad core, 1.5GHz"],
+          ["CPU", "Mali G52"],
         ],
-        DESIGN: [
-          ["Bexel Design", "Infinity Design"],
+        "Smart Features": [
+          ["Free Channels", "100+ Live TV Channel Access"],
+          ["Free Movies", "10,000+ free movies, documentaries, and short films"],
+          ["Universal Search", "Yes"],
           ["Remote Name", "Arc Remote"],
+        ],
+        Additional: [
+          ["Sound", "CineSound Experience"],
+          ["Audio", "Sonic Boom"],
+          ["Picture", "PQx Core"],
+          ["Processor", "Quantum Core Processor"],
         ],
       }),
     },
@@ -1012,5 +1005,16 @@ window.VOIR = {
     return window.VOIR.models.filter(function (m) {
       return m.series === seriesId;
     });
+  };
+  window.VOIR.resolveSeriesId = function (raw) {
+    var map = {
+      zenith: "zenith",
+      core: "core",
+      g: "zenith",
+      c: "core",
+      additional: "additional",
+    };
+    var key = String(raw || "").replace(/^#/, "").toLowerCase();
+    return map[key] || "zenith";
   };
 })();
