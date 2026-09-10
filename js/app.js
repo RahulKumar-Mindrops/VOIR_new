@@ -406,15 +406,15 @@
     if (!track || !window.VOIR) return;
     const popularId = "VTN65CH2EB";
     const order = [
-      "VR32FLG12KQ",
-      "VR43FLG12KQ",
-      "VR55FLG14KQ",
-      "VR65FLG14KQ",
       "VTQ32CH2EB",
       "VTQ40CH2EB",
       "VTQ43CH2EB",
       "VTN55CH2EB",
       "VTN65CH2EB",
+      "VR32FLG12KQ",
+      "VR43FLG12KQ",
+      "VR55FLG14KQ",
+      "VR65FLG14KQ",
     ];
     const byId = {};
     window.VOIR.models.forEach(function (m) {
@@ -432,14 +432,37 @@
         const seriesClass =
           m.series === "core" || m.series === "vantage" ? "feat-slide--core" : "feat-slide--zenith";
         const isPopular = m.id === popularId;
-        const osChip = m.os.indexOf("Google") !== -1 ? "Google TV" : "Android 14";
+        const qledBadge =
+          m.resolutionLabel === "UHD"
+            ? "images/badges/qled-uhd.svg"
+            : m.resolutionLabel === "FHD"
+              ? "images/badges/qled-fhd.svg"
+              : "images/badges/qled-hd.svg";
+        const badges =
+          m.series === "zenith"
+            ? [
+                { src: qledBadge, alt: "QLED " + m.resolutionLabel },
+                { src: "images/badges/google-tv.svg", alt: "Google TV" },
+                { src: "images/badges/dolby-audio.svg", alt: "Dolby Audio" },
+              ]
+            : [
+                { src: qledBadge, alt: "QLED " + m.resolutionLabel },
+                { src: "images/badges/google-tv.svg", alt: "Google TV" },
+                { src: "images/badges/android-14.svg", alt: "Android 14" },
+              ];
         const chips =
           '<div class="feat-slide__chips">' +
-          (m.qled ? "<span>QLED " + escapeHtml(m.resolutionLabel) + "</span>" : "") +
-          "<span>" +
-          escapeHtml(osChip) +
-          "</span>" +
-          (m.series === "zenith" ? "<span>Dolby</span>" : "<span>Cloud TV</span>") +
+          badges
+            .map(function (b) {
+              return (
+                '<img class="feat-slide__logo" src="' +
+                escapeHtml(b.src) +
+                '" alt="' +
+                escapeHtml(b.alt) +
+                '" loading="lazy" />'
+              );
+            })
+            .join("") +
           "</div>";
 
         return (
@@ -538,7 +561,7 @@
       return value;
     }
 
-    // Use layout metrics (not getBoundingClientRect) so scale never fights itself
+    // Overlapping coverflow — center card on top, like the mock
     function paintSlides() {
       if (!setWidth) return;
       const viewCenter = -x + wrap.clientWidth / 2;
@@ -548,24 +571,27 @@
 
       slides.forEach(function (slide, i) {
         const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-        const offset = (slideCenter - viewCenter) / Math.max(wrap.clientWidth * 0.42, 1);
-        const t = Math.max(-1, Math.min(1, offset));
-        const abs = Math.abs(t);
-        const scale = 1.05 - abs * 0.17;
-        const opacity = 1 - abs * 0.36;
-        const rotateY = t * -18;
-        const lift = (1 - abs) * 14;
+        const offset = (slideCenter - viewCenter) / Math.max(wrap.clientWidth * 0.34, 1);
+        const t = Math.max(-1.2, Math.min(1.2, offset));
+        const abs = Math.min(1, Math.abs(t));
+        const scale = 1.14 - abs * 0.22;
+        const opacity = 1 - abs * 0.2;
+        const rotateY = t * -14;
+        const lift = (1 - abs) * 12;
+        const pull = t * -36;
 
         slide.style.transform =
-          "translateY(" +
+          "translateX(" +
+          pull +
+          "px) translateY(" +
           -lift +
           "px) rotateY(" +
           rotateY +
           "deg) scale(" +
           scale +
           ")";
-        slide.style.opacity = String(opacity);
-        slide.style.zIndex = String(Math.round((1 - abs) * 20));
+        slide.style.opacity = String(Math.max(0.7, opacity));
+        slide.style.zIndex = String(Math.round((1 - abs) * 40));
 
         if (abs < bestAbs) {
           bestAbs = abs;
@@ -633,8 +659,21 @@
     }
 
     measure();
-    x = wrapX(-setWidth * 0.12);
+    // Start like the mock: center card highlighted (65" Core)
+    const startId = "VTN65CH2EB";
+    let startSlide =
+      slides.find(function (s) {
+        return s.getAttribute("data-model") === startId;
+      }) || slides[Math.min(3, count - 1)];
+    if (startSlide) {
+      const slideCenter = startSlide.offsetLeft + startSlide.offsetWidth / 2;
+      x = wrapX(-(slideCenter - wrap.clientWidth / 2));
+    } else {
+      x = wrapX(-setWidth * 0.12);
+    }
     targetX = x;
+    snapMode = true;
+    pauseAuto(3600);
     paintSlides();
 
     window.addEventListener("resize", function () {
@@ -2031,7 +2070,7 @@
   function initSeriesTabs() {
     const tabs = el("seriesTabs");
     if (!tabs) return;
-    let series = window.VOIR.resolveSeriesId(location.hash || "zenith");
+    let series = window.VOIR.resolveSeriesId(location.hash || "core");
     tabs.querySelectorAll(".series-tab").forEach(function (btn) {
       btn.classList.toggle("is-active", btn.getAttribute("data-series") === series);
     });
@@ -2276,26 +2315,26 @@
       {
         kicker: "QLED TV",
         title: "Bigger Pictures. Brighter Tomorrows.",
-        eyebrow: "QLED TV | Zenith Series",
+        eyebrow: "QLED TV | Core Series",
         headline: 'Bigger Pictures. <span class="hero__title-accent">Brighter</span> Tomorrows.',
         desc: "Experience a smarter, brighter way to watch.",
         image: "images/tv-hero.jpg",
       },
       {
-        kicker: "Zenith Series",
+        kicker: "Core Series",
         title: "Colour Tells a Brighter Story.",
-        eyebrow: "Zenith Series | Google TV",
+        eyebrow: "Core Series | Cloud TV",
         headline: 'Colour Tells a <span class="hero__title-accent">Brighter</span> Story.',
-        desc: "Premium Google TV QLED with Dolby Vision.Atmos and AI Quantum Core.",
-        image: "images/zenith-55.jpg",
+        desc: "Brilliant Cloud TV QLED built for colour, clarity, and everyday viewing.",
+        image: "images/core-43.jpg",
       },
       {
-        kicker: "Google TV",
+        kicker: "Zenith Series",
         title: "More Than a TV. A Smarter Life.",
-        eyebrow: "Google TV | Live & Stream",
+        eyebrow: "Zenith Series | Google TV",
         headline: 'More Than a TV. A <span class="hero__title-accent">Smarter</span> Life.',
-        desc: "Apps, live channels, and voice search — ready the moment you sit down.",
-        image: "images/showcase-tv.jpg",
+        desc: "Premium Google TV QLED with Dolby Vision.Atmos and AI Quantum Core.",
+        image: "images/zenith-55.jpg",
       },
       {
         kicker: "Dolby Atmos",

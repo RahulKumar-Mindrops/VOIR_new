@@ -167,7 +167,7 @@ window.VOIR = {
     ],
     closingLine: "The best brands aren't the loudest. They're the ones that keep showing up.",
     emiNote:
-      "Free installation applies to all models in Zenith Series and on models of 40 inch and above in Core Series. EMI amounts are indicative starting values, subject to approval by financing partners and the applicable tenure.",
+      "Free installation applies to all models in Core Series of 40 inch and above, and on all models in Zenith Series. EMI amounts are indicative starting values, subject to approval by financing partners and the applicable tenure.",
     freeInstallBox: {
       title: "Free installation. EMI from ₹1,499 / month.",
       text: "Installation and wall-mount fitting are included in selective models only. EMI plans start at the tenure your financing partner approves.",
@@ -263,17 +263,17 @@ window.VOIR = {
   ],
 
   series: {
-    zenith: {
-      id: "zenith",
-      name: "Zenith Series",
-      osLine: "GOOGLE TV",
-      accent: "orange",
-      panel: "QLED",
-    },
     core: {
       id: "core",
       name: "Core Series",
       osLine: "CLOUD TV",
+      accent: "orange",
+      panel: "QLED",
+    },
+    zenith: {
+      id: "zenith",
+      name: "Zenith Series",
+      osLine: "GOOGLE TV",
       accent: "orange",
       panel: "QLED",
     },
@@ -1021,6 +1021,6 @@ window.VOIR = {
       additional: "core",
     };
     var key = String(raw || "").replace(/^#/, "").toLowerCase();
-    return map[key] || "zenith";
+    return map[key] || "core";
   };
 })();

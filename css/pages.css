@@ -58,18 +58,33 @@
   color: var(--color-text-primary);
 }
 
-.categories .cat-card,
-.categories .cat-card__body {
-  background: #ffffff;
-  color: var(--color-ink);
+.categories .cat-card.cat-card--zenith,
+.categories .cat-card.cat-card--vantage {
+  background: linear-gradient(165deg, #1a2332 0%, #0d121c 55%, #101820 100%);
+  color: #f5f7fa;
 }
 
-.categories .cat-card__title {
-  color: var(--color-ink);
+.categories .cat-card.cat-card--core {
+  background: linear-gradient(180deg, #f7f2ea 0%, #efe8dc 100%);
+  color: #0b1220;
 }
 
-.categories .cat-card__desc {
-  color: var(--color-text-secondary);
+.categories .cat-card--zenith .cat-card__title,
+.categories .cat-card--vantage .cat-card__title {
+  color: #f5f7fa;
+}
+
+.categories .cat-card--core .cat-card__title {
+  color: #0b1220;
+}
+
+.categories .cat-card--zenith .cat-card__desc,
+.categories .cat-card--vantage .cat-card__desc {
+  color: rgba(245, 247, 250, 0.78);
+}
+
+.categories .cat-card--core .cat-card__desc {
+  color: rgba(11, 18, 32, 0.72);
 }
 
 .featured-slider .feat-slide,
@@ -118,7 +133,7 @@
 }
 
 .featured-slider .feat-slide__media {
-  background: #f3f1ee;
+  background: #ffffff;
 }
 
 .featured-slider .feat-slide__media img {

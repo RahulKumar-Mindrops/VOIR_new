@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 40" role="img" aria-label="Google TV">
+  <rect x="1" y="1" width="86" height="38" rx="6" fill="#fff" stroke="#e5e7eb" stroke-width="1"/>
+  <g transform="translate(8,8)">
+    <rect width="24" height="24" rx="5" fill="#4285F4"/>
+    <path d="M7 7h10v3.2H11.5V11H16V14h-4.5v1.8H17V19H7V7z" fill="#fff"/>
+  </g>
+  <text x="40" y="17" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" fill="#202124">Google</text>
+  <text x="40" y="29" font-family="Arial, Helvetica, sans-serif" font-size="9" font-weight="700" fill="#202124">TV</text>
+</svg>

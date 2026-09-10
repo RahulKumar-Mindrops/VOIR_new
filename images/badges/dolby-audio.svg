@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 40" role="img" aria-label="Dolby Audio">
+  <rect x="1" y="1" width="106" height="38" rx="6" fill="#111"/>
+  <g fill="#fff" transform="translate(10,8)">
+    <path d="M2 4h7.2c4.4 0 7.6 2.8 7.6 8s-3.2 8-7.6 8H2V4zm4.2 3.2v9.6h2.8c2.4 0 3.8-1.7 3.8-4.8s-1.4-4.8-3.8-4.8H6.2z"/>
+    <path d="M30.8 4h-7.2c-4.4 0-7.6 2.8-7.6 8s3.2 8 7.6 8h7.2V4zm-4.2 3.2v9.6h-2.8c-2.4 0-3.8-1.7-3.8-4.8s1.4-4.8 3.8-4.8h2.8z"/>
+  </g>
+  <text x="52" y="24" font-family="Arial, Helvetica, sans-serif" font-size="10" font-weight="700" fill="#fff">Audio</text>
+</svg>
