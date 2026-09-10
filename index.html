@@ -8,9 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css?v=25" />
+  <link rel="stylesheet" href="css/main.css?v=31" />
   <link rel="stylesheet" href="css/animations.css?v=10" />
-  <link rel="stylesheet" href="css/pages.css?v=20" />
+  <link rel="stylesheet" href="css/pages.css?v=25" />
 </head>
 <body>
   <div class="cursor" id="cursor" aria-hidden="true">
@@ -174,34 +174,12 @@
       <div class="container">
         <div class="section__header section__header--center categories__header">
           <p class="section__eyebrow categories__eyebrow" data-reveal="fade">TV Series</p>
-          <h2 class="section__title"><span class="categories__accent">Core</span> · Zenith · Vantage</h2>
+          <h2 class="section__title">Core · <span class="categories__accent">Zenith</span> · Vantage</h2>
           <p class="section__lead" data-reveal="fade">Three series. Colour-first Cloud TV, premium Google TV, and Vantage — coming soon.</p>
         </div>
 
         <div class="categories__grid categories__grid--series">
-          <a href="tvs.html#zenith" class="cat-card cat-card--zenith cat-card--side cat-card--side-left" data-reveal="card" data-cursor="Explore">
-            <div class="cat-card__meta">
-              <span>Premium · Google TV</span>
-              <span>32" – 65"</span>
-            </div>
-            <h3 class="cat-card__title">Zenith Series</h3>
-            <p class="cat-card__desc">Stunning detail. A smarter way to watch.</p>
-            <div class="cat-card__visual">
-              <img class="cat-card__img" src="images/zenith-55.jpg" alt="VOIR Zenith Series QLED TV" loading="lazy" />
-              <span class="cat-card__pedestal" aria-hidden="true"></span>
-            </div>
-            <ul class="cat-card__feats">
-              <li><span class="cat-card__feat-icon" aria-hidden="true">◈</span>QLED UHD</li>
-              <li><span class="cat-card__feat-icon" aria-hidden="true">▣</span>Google TV</li>
-              <li><span class="cat-card__feat-icon" aria-hidden="true">♪</span>Dolby Atmos</li>
-            </ul>
-            <div class="cat-card__foot">
-              <span class="cat-card__cta">Explore Zenith →</span>
-              <span class="cat-card__go" aria-hidden="true">→</span>
-            </div>
-          </a>
-
-          <a href="tvs.html#core" class="cat-card cat-card--core cat-card--focus" data-reveal="card" data-cursor="Explore">
+          <a href="tvs.html#core" class="cat-card cat-card--core cat-card--side cat-card--side-left" data-reveal="card" data-cursor="Explore">
             <div class="cat-card__meta">
               <span>Cloud TV · QLED</span>
               <span>32" – 65"</span>
@@ -219,6 +197,28 @@
             </ul>
             <div class="cat-card__foot">
               <span class="cat-card__cta">Explore Core →</span>
+              <span class="cat-card__go" aria-hidden="true">→</span>
+            </div>
+          </a>
+
+          <a href="tvs.html#zenith" class="cat-card cat-card--zenith cat-card--focus" data-reveal="card" data-cursor="Explore">
+            <div class="cat-card__meta">
+              <span>Premium · Google TV</span>
+              <span>32" – 65"</span>
+            </div>
+            <h3 class="cat-card__title">Zenith Series</h3>
+            <p class="cat-card__desc">Stunning detail. A smarter way to watch.</p>
+            <div class="cat-card__visual">
+              <img class="cat-card__img" src="images/zenith-55.jpg" alt="VOIR Zenith Series QLED TV" loading="lazy" />
+              <span class="cat-card__pedestal" aria-hidden="true"></span>
+            </div>
+            <ul class="cat-card__feats">
+              <li><span class="cat-card__feat-icon" aria-hidden="true">◈</span>QLED UHD</li>
+              <li><span class="cat-card__feat-icon" aria-hidden="true">▣</span>Google TV</li>
+              <li><span class="cat-card__feat-icon" aria-hidden="true">♪</span>Dolby Atmos</li>
+            </ul>
+            <div class="cat-card__foot">
+              <span class="cat-card__cta">Explore Zenith →</span>
               <span class="cat-card__go" aria-hidden="true">→</span>
             </div>
           </a>
@@ -279,23 +279,47 @@
     </section>
 
     <section class="section feature-intro" id="features-intro">
+      <div class="feature-intro__bg" aria-hidden="true"></div>
+      <p class="feature-intro__rail" aria-hidden="true">See it. Love it. Live it.</p>
+
       <div class="container">
         <div class="section__header section__header--center feature-intro__header">
-          <h2 class="section__title" data-split="lines">Product features</h2>
-          <p class="section__lead" data-reveal="fade">Final locked feature names and taglines.</p>
+          <p class="section__eyebrow feature-intro__eyebrow" data-reveal="fade">Product Features</p>
+          <h2 class="section__title">Built for a Brighter Experience</h2>
+          <p class="section__lead" data-reveal="fade">Smart technology. Stunning visuals. Thoughtful features — everything you need for a better way to watch.</p>
         </div>
+
         <div class="feature-tabs" id="featureTabs" role="tablist" aria-label="VOIR features"></div>
-        <div class="feature-panel" id="featurePanel" data-reveal="card">
-          <div class="feature-panel__copy">
-            <p class="feature-panel__group" id="featureGroup"></p>
-            <h3 class="feature-panel__name" id="featureName"></h3>
-            <p class="feature-panel__tagline" id="featureTagline"></p>
-            <p class="feature-panel__count" id="featureCount"></p>
+
+        <div class="feature-stage">
+          <button type="button" class="feature-stage__nav feature-stage__nav--prev" id="featurePrev" aria-label="Previous feature">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M14.5 6.5L9 12l5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="feature-panel" id="featurePanel" data-reveal="card">
+            <div class="feature-panel__copy">
+              <p class="feature-panel__group" id="featureGroup"></p>
+              <h3 class="feature-panel__name" id="featureName"></h3>
+              <p class="feature-panel__tagline" id="featureTagline"></p>
+              <p class="feature-panel__desc" id="featureDesc"></p>
+              <a href="tvs.html" class="btn btn--primary feature-panel__cta" id="featureCta" data-magnetic data-cursor="Explore">Explore →</a>
+              <div class="feature-panel__progress">
+                <div class="feature-panel__dashes" id="featureDashes" aria-hidden="true"></div>
+                <p class="feature-panel__count" id="featureCount"></p>
+              </div>
+            </div>
+            <div class="feature-panel__visual">
+              <img id="featureImage" src="images/tv-hero.jpg" alt="" />
+              <ul class="feature-panel__pills" id="featurePills"></ul>
+            </div>
           </div>
-          <div class="feature-panel__visual">
-            <img id="featureImage" src="images/tv-hero.jpg" alt="" />
-          </div>
+
+          <button type="button" class="feature-stage__nav feature-stage__nav--next" id="featureNext" aria-label="Next feature">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M9.5 6.5L15 12l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
+
+        <p class="feature-intro__footline" data-reveal="fade"><span>Features that make a difference</span></p>
       </div>
     </section>
 
@@ -466,9 +490,10 @@
       </div>
     </section>
 
+    <!--
     <section class="promo" id="promo">
       <div class="promo__bg" aria-hidden="true">
-        <!-- <div class="promo__bg-image"></div> -->
+        <div class="promo__bg-image"></div>
         <div class="promo__bg-glow"></div>
         <div class="promo__bg-overlay"></div>
       </div>
@@ -495,6 +520,7 @@
         </div>
       </div>
     </section>
+    -->
 
     <section class="final-cta" id="final-cta">
       <div class="final-cta__bg" aria-hidden="true"></div>
@@ -515,8 +541,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="js/data.js?v=8"></script>
-  <script src="js/chrome.js?v=9"></script>
+  <script src="js/chrome.js?v=11"></script>
   <script src="js/cursor.js?v=3"></script>
-  <script src="js/app.js?v=24"></script>
+  <script src="js/app.js?v=25"></script>
 </body>
 </html>

@@ -1732,9 +1732,25 @@
     const groupEl = el("featureGroup");
     const countEl = el("featureCount");
     const imageEl = el("featureImage");
+    const descEl = el("featureDesc");
+    const ctaEl = el("featureCta");
+    const dashesEl = el("featureDashes");
+    const pillsEl = el("featurePills");
+    const prevBtn = el("featurePrev");
+    const nextBtn = el("featureNext");
     if (!tabs || !window.VOIR) return;
 
-    const features = window.VOIR.features;
+    const source = window.VOIR.features.slice();
+    const voiosIdx = source.findIndex(function (f) {
+      return f.id === "voios";
+    });
+    if (voiosIdx > 0) {
+      const [voios] = source.splice(voiosIdx, 1);
+      source.unshift(voios);
+    }
+    // Showcase row matches the mock density — first 10, still all via arrows if needed
+    const features = source.length > 10 ? source.slice(0, 10) : source;
+
     const images = [
       "images/tv-hero.jpg",
       "images/zenith-55.jpg",
@@ -1744,13 +1760,55 @@
       "images/core-55.jpg",
       "images/tv-angle.jpg",
       "images/lifestyle-2.jpg",
+      "images/showcase-tv.jpg",
+      "images/core-43.jpg",
     ];
+
+    const iconSvg =
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 19.5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+
     let index = 0;
     let timer = null;
 
+    function accentName(name) {
+      if (/OS$/i.test(name) && name.length > 2) {
+        return escapeHtml(name.slice(0, -2)) + '<span class="accent">' + escapeHtml(name.slice(-2)) + "</span>";
+      }
+      if (/AI/i.test(name)) {
+        return escapeHtml(name).replace(/AI/i, '<span class="accent">AI</span>');
+      }
+      const parts = String(name).split(/\s+/);
+      if (parts.length > 1) {
+        return (
+          escapeHtml(parts.slice(0, -1).join(" ")) +
+          ' <span class="accent">' +
+          escapeHtml(parts[parts.length - 1]) +
+          "</span>"
+        );
+      }
+      return escapeHtml(name);
+    }
+
+    function pillsFor(f) {
+      const defaults = [
+        "Personalised Experience",
+        "Easy Navigation",
+        "All Your Apps In One Place",
+        "Faster Performance",
+      ];
+      if (f.id === "voios") return defaults;
+      const bits = String(f.group || "")
+        .split(/[·|,/+-]/)
+        .map(function (s) {
+          return s.trim();
+        })
+        .filter(Boolean);
+      while (bits.length < 4) bits.push(defaults[bits.length]);
+      return bits.slice(0, 4);
+    }
+
     function keepTabVisible(btn) {
       if (!btn || !tabs) return;
-      // Only nudge the tabs row horizontally — never scroll the page.
       const overflowX = tabs.scrollWidth > tabs.clientWidth + 2;
       if (!overflowX) return;
       const btnLeft = btn.offsetLeft;
@@ -1775,9 +1833,30 @@
       });
       keepTabVisible(activeBtn);
       if (groupEl) groupEl.textContent = f.group;
-      if (nameEl) nameEl.textContent = f.name;
+      if (nameEl) nameEl.innerHTML = accentName(f.name);
       if (tagEl) tagEl.textContent = f.tagline;
-      if (countEl) countEl.textContent = index + 1 + " / " + features.length;
+      if (descEl) {
+        descEl.textContent =
+          f.tagline +
+          " Built into every VOIR QLED experience — so the feature you pick is the one you actually feel.";
+      }
+      if (ctaEl) ctaEl.textContent = "Explore " + f.name + " →";
+      if (countEl) {
+        countEl.textContent =
+          String(index + 1).padStart(2, "0") + " / " + String(features.length).padStart(2, "0");
+      }
+      if (dashesEl) {
+        dashesEl.querySelectorAll(".feature-panel__dash").forEach(function (dash, d) {
+          dash.classList.toggle("is-active", d === index);
+        });
+      }
+      if (pillsEl) {
+        pillsEl.innerHTML = pillsFor(f)
+          .map(function (p) {
+            return "<li>" + escapeHtml(p) + "</li>";
+          })
+          .join("");
+      }
       if (imageEl) {
         imageEl.src = images[index % images.length];
         imageEl.alt = f.name;
@@ -1791,12 +1870,36 @@
           (i === 0 ? " is-active" : "") +
           '" role="tab" data-index="' +
           i +
-          '">' +
+          '"><span class="feature-tab__icon">' +
+          iconSvg +
+          '</span><span class="feature-tab__label">' +
           escapeHtml(f.name) +
-          "</button>"
+          "</span></button>"
         );
       })
       .join("");
+
+    if (dashesEl) {
+      dashesEl.innerHTML = features
+        .map(function (_, i) {
+          return (
+            '<button type="button" class="feature-panel__dash' +
+            (i === 0 ? " is-active" : "") +
+            '" data-dash="' +
+            i +
+            '" aria-label="Feature ' +
+            (i + 1) +
+            '"></button>'
+          );
+        })
+        .join("");
+      dashesEl.addEventListener("click", function (e) {
+        const dash = e.target.closest("[data-dash]");
+        if (!dash) return;
+        show(parseInt(dash.getAttribute("data-dash"), 10));
+        restart();
+      });
+    }
 
     tabs.addEventListener("click", function (e) {
       const btn = e.target.closest(".feature-tab");
@@ -1805,12 +1908,20 @@
       restart();
     });
 
+    function step(dir) {
+      show(index + dir);
+      restart();
+    }
+
+    prevBtn && prevBtn.addEventListener("click", function () { step(-1); });
+    nextBtn && nextBtn.addEventListener("click", function () { step(1); });
+
     function restart() {
       if (timer) clearInterval(timer);
       if (prefersReduced) return;
       timer = setInterval(function () {
         show(index + 1);
-      }, 4200);
+      }, 4800);
     }
 
     show(0);
