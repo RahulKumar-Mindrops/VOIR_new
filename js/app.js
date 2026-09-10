@@ -1647,6 +1647,64 @@
     });
   }
 
+  function initSupportTabs() {
+    const tabs = el("supportTabs");
+    if (!tabs || !window.VOIR) return;
+
+    const c = window.VOIR.contacts;
+    const social = window.VOIR.social;
+    const serviceLink = el("supportServiceLink");
+    const emailLink = el("supportEmailLink");
+    const callLink = el("supportCallLink");
+    const businessLink = el("supportBusinessLink");
+    const socialHost = el("supportSocial");
+
+    if (serviceLink && c.serviceForm) serviceLink.href = c.serviceForm;
+    if (emailLink && c.email) {
+      emailLink.href = "mailto:" + c.email;
+      emailLink.textContent = c.email;
+    }
+    if (callLink && c.phoneHref) {
+      callLink.href = c.phoneHref;
+      callLink.textContent = c.phone;
+    }
+    if (businessLink && c.businessEmail) {
+      businessLink.href = "mailto:" + c.businessEmail;
+      businessLink.textContent = c.businessEmail;
+    }
+    if (socialHost && social) {
+      socialHost.innerHTML =
+        '<a href="' +
+        escapeHtml(social.instagram) +
+        '" class="footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">IG</a>' +
+        '<a href="' +
+        escapeHtml(social.facebook) +
+        '" class="footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">FB</a>';
+    }
+
+    function show(id) {
+      tabs.querySelectorAll(".support-tab").forEach(function (btn) {
+        const on = btn.getAttribute("data-support-tab") === id;
+        btn.classList.toggle("is-active", on);
+        btn.setAttribute("aria-selected", on ? "true" : "false");
+      });
+      document.querySelectorAll(".support-panel").forEach(function (panel) {
+        const on = panel.id === "support-panel-" + id;
+        panel.classList.toggle("is-active", on);
+        if (on) panel.removeAttribute("hidden");
+        else panel.setAttribute("hidden", "");
+      });
+    }
+
+    tabs.addEventListener("click", function (e) {
+      const btn = e.target.closest(".support-tab");
+      if (!btn) return;
+      show(btn.getAttribute("data-support-tab"));
+    });
+
+    show("service");
+  }
+
   /* ------------------------------------------
      Boot
   ------------------------------------------ */
@@ -1660,6 +1718,7 @@
     renderSpecPage();
     renderAbout();
     initRecruitForm();
+    initSupportTabs();
 
     prepareSplits();
     initNav();

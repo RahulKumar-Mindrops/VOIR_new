@@ -19,7 +19,7 @@ window.VOIR = {
     phoneHref: "tel:+918740816000",
     serviceForm:
       "https://docs.google.com/forms/d/1-rl8pdd3Cd1hJffZR9XPvn1MzcyXANATENd_99oelKY/viewform",
-    businessEmail: null,
+    businessEmail: "business@voir.co.in",
   },
 
   social: {

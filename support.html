@@ -33,28 +33,40 @@
     </section>
     <section class="section" id="supportCards">
       <div class="container">
-        <div class="support-grid">
-          <a class="support-card" href="https://docs.google.com/forms/d/1-rl8pdd3Cd1hJffZR9XPvn1MzcyXANATENd_99oelKY/viewform" target="_blank" rel="noopener">
+        <div class="support-tabs" id="supportTabs" role="tablist" aria-label="Support options">
+          <button type="button" class="support-tab is-active" role="tab" aria-selected="true" data-support-tab="service">Service Request</button>
+          <button type="button" class="support-tab" role="tab" aria-selected="false" data-support-tab="email">Email</button>
+          <button type="button" class="support-tab" role="tab" aria-selected="false" data-support-tab="call">Call Us</button>
+          <button type="button" class="support-tab" role="tab" aria-selected="false" data-support-tab="business">Business Enquiry</button>
+        </div>
+
+        <div class="support-panels">
+          <div class="support-panel is-active" id="support-panel-service" role="tabpanel">
             <h3>Raise an Installation / Service Request</h3>
-            <p>Opens the VOIR installation and service Google Form.</p>
-          </a>
-          <a class="support-card" href="mailto:support@voir.co.in">
+            <p>Submit an installation or service request through the VOIR Google Form. A team member will follow up.</p>
+            <a class="btn btn--primary" id="supportServiceLink" href="https://docs.google.com/forms/d/1-rl8pdd3Cd1hJffZR9XPvn1MzcyXANATENd_99oelKY/viewform" target="_blank" rel="noopener" data-magnetic data-cursor="Open">Open Google Form</a>
+          </div>
+          <div class="support-panel" id="support-panel-email" role="tabpanel" hidden>
             <h3>Email Address</h3>
-            <p>support@voir.co.in</p>
-          </a>
-          <a class="support-card" href="tel:+918740816000">
+            <p>For any enquiry, write to us and we will get back to you.</p>
+            <a class="btn btn--primary" id="supportEmailLink" href="mailto:support@voir.co.in" data-magnetic>support@voir.co.in</a>
+          </div>
+          <div class="support-panel" id="support-panel-call" role="tabpanel" hidden>
             <h3>Call Us</h3>
-            <p>+91 87408 16000</p>
-          </a>
-          <div class="support-card is-disabled">
+            <p>Speak with VOIR support during working hours.</p>
+            <a class="btn btn--primary" id="supportCallLink" href="tel:+918740816000" data-magnetic>+91 87408 16000</a>
+          </div>
+          <div class="support-panel" id="support-panel-business" role="tabpanel" hidden>
             <h3>Business Enquiry</h3>
-            <p>Business enquiry email — Details to be shared.</p>
+            <p>For partnerships, trade and business enquiries.</p>
+            <a class="btn btn--primary" id="supportBusinessLink" href="mailto:business@voir.co.in" data-magnetic>business@voir.co.in</a>
           </div>
         </div>
+
         <div class="section__header" style="margin-top:64px;margin-bottom:24px">
           <h2 class="section__title">Follow us</h2>
         </div>
-        <div class="footer__social">
+        <div class="footer__social" id="supportSocial">
           <a href="https://www.instagram.com/voir.global/" class="footer__social-link" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
           <a href="https://www.facebook.com/search/top?q=voirglobal" class="footer__social-link" target="_blank" rel="noopener" aria-label="Facebook">FB</a>
         </div>
