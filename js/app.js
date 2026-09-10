@@ -307,111 +307,244 @@
      Featured horizontal slider
   ------------------------------------------ */
 
+  function renderFeaturedSlider() {
+    const track = el("featTrack");
+    if (!track || !window.VOIR) return;
+    const picks = window.VOIR.models.filter(function (m) {
+      return ["VR55FLG14KQ", "VR32FLG12KQ", "VTN55CU2EB", "VTQ43CF2EB", "VTQ40CF2EB", "VTQ32CH2EB"].indexOf(m.id) !== -1;
+    });
+    track.innerHTML = picks
+      .map(function (m) {
+        const seriesName = window.VOIR.series[m.series].name;
+        const seriesClass = m.series === "zenith" ? "feat-slide--zenith" : "feat-slide--core";
+        return (
+          '<article class="feat-slide ' +
+          seriesClass +
+          '" data-model="' +
+          escapeHtml(m.id) +
+          '">' +
+          '<div class="feat-slide__media"><img src="' +
+          escapeHtml(m.image) +
+          '" alt="' +
+          escapeHtml(m.id) +
+          '" /></div>' +
+          '<div class="feat-slide__body">' +
+          "<span>" +
+          escapeHtml(seriesName) +
+          "</span>" +
+          "<h3>" +
+          escapeHtml(m.size) +
+          " " +
+          escapeHtml(m.id) +
+          "</h3>" +
+          "<p>" +
+          (m.qled ? "QLED" : "Non-QLED") +
+          " · " +
+          escapeHtml(m.resolutionLabel) +
+          " · " +
+          escapeHtml(m.os) +
+          "</p>" +
+          '<a href="tv.html?model=' +
+          encodeURIComponent(m.id) +
+          '" class="feat-slide__link">View Specifications →</a>' +
+          "</div></article>"
+        );
+      })
+      .join("");
+  }
+
   function initFeaturedSlider() {
     const wrap = document.getElementById("featCarousel") || document.querySelector(".featured-slider__wrap");
     const track = document.getElementById("featTrack");
     if (!wrap || !track) return;
 
-    const slides = Array.from(track.querySelectorAll(".feat-slide"));
-    if (!slides.length) return;
+    const originals = Array.from(track.querySelectorAll(".feat-slide"));
+    if (!originals.length) return;
 
-    let active = Math.min(1, slides.length - 1);
-    let currentX = 0;
+    track.innerHTML = track.innerHTML + track.innerHTML;
+    let slides = Array.from(track.querySelectorAll(".feat-slide"));
+    const count = originals.length;
+
+    let setWidth = 0;
+    let x = 0;
     let targetX = 0;
     let isDown = false;
     let startX = 0;
     let scrollStart = 0;
     let dragged = false;
+    let paused = false;
+    let resumeTimer = null;
+    let snapMode = false;
+    const autoSpeed = prefersReduced ? 0 : 0.45;
+    const ease = 0.12;
 
-    function centerOffset(index) {
-      const slide = slides[index];
-      if (!slide) return 0;
-      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-      return wrap.clientWidth / 2 - slideCenter;
+    function measure() {
+      slides = Array.from(track.querySelectorAll(".feat-slide"));
+      if (slides.length < 2) return;
+      const half = Math.floor(slides.length / 2);
+      setWidth = slides[half].offsetLeft - slides[0].offsetLeft;
     }
 
-    function setActive(index, animate = true) {
-      active = Math.max(0, Math.min(slides.length - 1, index));
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("is-active", i === active);
-        slide.classList.toggle("is-near", Math.abs(i - active) === 1);
-      });
-      targetX = centerOffset(active);
-      if (!animate) currentX = targetX;
+    function wrapX(value) {
+      if (!setWidth) return value;
+      while (value <= -setWidth) value += setWidth;
+      while (value > 0) value -= setWidth;
+      return value;
     }
 
-    function nearestIndex(x) {
-      let best = 0;
-      let bestDist = Infinity;
-      slides.forEach((_, i) => {
-        const dist = Math.abs(centerOffset(i) - x);
-        if (dist < bestDist) {
-          bestDist = dist;
-          best = i;
+    // Use layout metrics (not getBoundingClientRect) so scale never fights itself
+    function paintSlides() {
+      if (!setWidth) return;
+      const viewCenter = -x + wrap.clientWidth / 2;
+      let best = null;
+      let bestAbs = Infinity;
+
+      slides.forEach(function (slide) {
+        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+        const offset = (slideCenter - viewCenter) / Math.max(wrap.clientWidth * 0.42, 1);
+        const t = Math.max(-1, Math.min(1, offset));
+        const abs = Math.abs(t);
+        const scale = 1.04 - abs * 0.16;
+        const opacity = 1 - abs * 0.38;
+        const rotateY = t * -16;
+        const lift = (1 - abs) * 12;
+
+        slide.style.transform =
+          "translateY(" +
+          -lift +
+          "px) rotateY(" +
+          rotateY +
+          "deg) scale(" +
+          scale +
+          ")";
+        slide.style.opacity = String(opacity);
+        slide.style.zIndex = String(Math.round((1 - abs) * 20));
+
+        if (abs < bestAbs) {
+          bestAbs = abs;
+          best = slide;
         }
       });
-      return best;
+
+      slides.forEach(function (slide) {
+        slide.classList.toggle("is-active", slide === best);
+      });
     }
 
-    setActive(active, false);
+    function nearestTarget() {
+      if (!setWidth || !slides.length) return x;
+      const viewCenter = -x + wrap.clientWidth / 2;
+      let bestX = x;
+      let bestDist = Infinity;
+      // Only consider first set — clones share the same relative spacing
+      for (let i = 0; i < count; i++) {
+        const slide = slides[i];
+        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+        const desired = -(slideCenter - wrap.clientWidth / 2);
+        const dist = Math.abs(desired - x);
+        // also check +setWidth and -setWidth equivalents
+        [desired, desired - setWidth, desired + setWidth].forEach(function (candidate) {
+          const d = Math.abs(candidate - x);
+          if (d < bestDist) {
+            bestDist = d;
+            bestX = candidate;
+          }
+        });
+      }
+      return wrapX(bestX);
+    }
 
-    window.addEventListener("resize", () => {
-      setActive(active, false);
+    function pauseAuto(ms) {
+      paused = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+      if (ms) {
+        resumeTimer = setTimeout(function () {
+          paused = false;
+          snapMode = false;
+        }, ms);
+      }
+    }
+
+    function stepBy(dir) {
+      if (!setWidth || !count) return;
+      snapMode = true;
+      pauseAuto(2800);
+      const step = setWidth / count;
+      targetX = wrapX(targetX - dir * step);
+    }
+
+    measure();
+    x = wrapX(-setWidth * 0.12);
+    targetX = x;
+    paintSlides();
+
+    window.addEventListener("resize", function () {
+      measure();
+      x = wrapX(x);
+      targetX = x;
+      paintSlides();
     });
 
     const prev = document.getElementById("featPrev");
     const next = document.getElementById("featNext");
-    prev && prev.addEventListener("click", () => setActive(active - 1));
-    next && next.addEventListener("click", () => setActive(active + 1));
+    prev && prev.addEventListener("click", function () { stepBy(-1); });
+    next && next.addEventListener("click", function () { stepBy(1); });
 
-    wrap.addEventListener("pointerdown", (e) => {
+    wrap.addEventListener("pointerdown", function (e) {
       if (e.button !== 0) return;
       isDown = true;
       dragged = false;
+      snapMode = false;
+      pauseAuto(0);
       startX = e.clientX;
-      scrollStart = targetX;
+      scrollStart = x;
       wrap.classList.add("is-dragging");
       wrap.setPointerCapture(e.pointerId);
     });
 
-    wrap.addEventListener("pointermove", (e) => {
+    wrap.addEventListener("pointermove", function (e) {
       if (!isDown) return;
       const dx = e.clientX - startX;
       if (Math.abs(dx) > 6) dragged = true;
-      targetX = scrollStart + dx;
+      x = scrollStart + dx;
+      targetX = x;
     });
 
     function endDrag() {
       if (!isDown) return;
       isDown = false;
       wrap.classList.remove("is-dragging");
-      setActive(nearestIndex(targetX));
+      snapMode = true;
+      targetX = nearestTarget();
+      pauseAuto(2400);
     }
 
     wrap.addEventListener("pointerup", endDrag);
     wrap.addEventListener("pointercancel", endDrag);
+    wrap.addEventListener("mouseenter", function () {
+      if (isDown) return;
+      snapMode = true;
+      targetX = nearestTarget();
+      pauseAuto(0);
+    });
+    wrap.addEventListener("mouseleave", function () {
+      if (!isDown) pauseAuto(600);
+    });
 
-    slides.forEach((slide, i) => {
-      slide.addEventListener("click", (e) => {
-        if (dragged) {
-          e.preventDefault();
-          return;
-        }
-        if (i !== active) {
-          e.preventDefault();
-          setActive(i);
-        }
+    slides.forEach(function (slide) {
+      slide.addEventListener("click", function (e) {
+        if (dragged) e.preventDefault();
       });
     });
 
     if (!prefersReduced) {
       gsap.fromTo(
         wrap,
-        { opacity: 0, y: 48 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: wrap,
@@ -423,8 +556,21 @@
     }
 
     function tick() {
-      currentX += (targetX - currentX) * 0.14;
-      track.style.transform = `translate3d(${currentX}px, 0, 0)`;
+      if (!isDown) {
+        if (!paused && !snapMode) {
+          targetX -= autoSpeed;
+        }
+        targetX = wrapX(targetX);
+        x += (targetX - x) * (snapMode || paused ? ease : 0.2);
+        x = wrapX(x);
+        // Keep target near x during free autoplay so wrap stays stable
+        if (!paused && !snapMode) targetX = x;
+      } else {
+        x = wrapX(x);
+      }
+
+      track.style.transform = "translate3d(" + x + "px, 0, 0)";
+      paintSlides();
       requestAnimationFrame(tick);
     }
     tick();
@@ -561,7 +707,7 @@
     });
 
     // Smooth image fades for lifestyle / category media
-    gsap.utils.toArray(".cat-card__img, .lifestyle__media img, .feat-slide__media img").forEach((img) => {
+    gsap.utils.toArray(".cat-card__img, .lifestyle__media img").forEach((img) => {
       gsap.fromTo(
         img,
         { scale: 1.06, opacity: 0.85 },
@@ -571,7 +717,7 @@
           duration: 1.1,
           ease: "power2.out",
           scrollTrigger: {
-            trigger: img.closest(".cat-card, .lifestyle__card, .feat-slide") || img,
+            trigger: img.closest(".cat-card, .lifestyle__card") || img,
             start: "top 88%",
             toggleActions: "play none none none",
           },
@@ -1113,47 +1259,6 @@
       '" data-cursor="Explore">View Specifications</a>' +
       "</div></article>"
     );
-  }
-
-  function renderFeaturedSlider() {
-    const track = el("featTrack");
-    if (!track || !window.VOIR) return;
-    const picks = window.VOIR.models.filter(function (m) {
-      return ["VR55FLG14KQ", "VR32FLG12KQ", "VTN55CU2EB", "VTQ43CF2EB", "VTQ40CF2EB", "VTQ32CH2EB"].indexOf(m.id) !== -1;
-    });
-    track.innerHTML = picks
-      .map(function (m) {
-        const seriesName = window.VOIR.series[m.series].name;
-        return (
-          '<article class="feat-slide">' +
-          '<div class="feat-slide__media"><img src="' +
-          escapeHtml(m.image) +
-          '" alt="' +
-          escapeHtml(m.id) +
-          '" /></div>' +
-          '<div class="feat-slide__body">' +
-          "<span>" +
-          escapeHtml(seriesName) +
-          "</span>" +
-          "<h3>" +
-          escapeHtml(m.size) +
-          " " +
-          escapeHtml(m.id) +
-          "</h3>" +
-          "<p>" +
-          (m.qled ? "QLED" : "Non-QLED") +
-          " · " +
-          escapeHtml(m.resolutionLabel) +
-          " · " +
-          escapeHtml(m.os) +
-          "</p>" +
-          '<a href="tv.html?model=' +
-          encodeURIComponent(m.id) +
-          '" class="feat-slide__link">View Specifications →</a>' +
-          "</div></article>"
-        );
-      })
-      .join("");
   }
 
   function initFeatureTabs() {
