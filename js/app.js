@@ -1767,7 +1767,7 @@
       },
       Panel: {
         role: "pair",
-        image: "images/zenith-55.jpg",
+        image: "images/showcase-tv.jpg",
         className: "ptr--pair ptr--panel",
       },
       Aesthetics: {
@@ -1811,12 +1811,12 @@
             .join("") +
           "</ul>";
 
-        const media =
-          '<div class="ptr__media"><img src="' +
-          escapeHtml(m.image) +
-          '" alt="" loading="lazy" /></div><div class="ptr__shade" aria-hidden="true"></div>';
-        const body =
-          '<div class="ptr__body">' +
+        return (
+          '<article class="ptr ' +
+          m.className +
+          '">' +
+          '<div class="ptr__main">' +
+          '<div class="ptr__copy">' +
           '<p class="ptr__label">' +
           escapeHtml(g.group) +
           "</p>" +
@@ -1826,15 +1826,12 @@
           '<p class="ptr__desc">' +
           escapeHtml(lead ? lead.text : "") +
           "</p>" +
+          "</div>" +
+          '<div class="ptr__media"><img src="' +
+          escapeHtml(m.image) +
+          '" alt="" loading="lazy" /></div>' +
+          "</div>" +
           specs +
-          "</div>";
-
-        return (
-          '<article class="ptr ' +
-          m.className +
-          '">' +
-          media +
-          body +
           "</article>"
         );
       })
