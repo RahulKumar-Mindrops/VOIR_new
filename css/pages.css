@@ -2,17 +2,20 @@
    VOIR — white + orange theme overlays + sections
    ============================================ */
 
-.nav__logo-img,
-.footer__logo-img {
+.nav__logo-img {
   display: block;
-  height: 44px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   filter: none;
 }
 
 .footer__logo-img {
-  height: 48px;
+  display: block;
+  height: 58px;
+  width: auto;
+  object-fit: contain;
+  filter: none;
 }
 
 .nav__link.is-active {
