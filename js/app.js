@@ -2137,36 +2137,69 @@
     restart();
   }
 
+  function promiseIcon(name) {
+    const icons = {
+      eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+      speaker: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="8" width="5" height="8" rx="1"/><path d="M9 10l7-4v12l-7-4"/><path d="M17 9.5c1.2.8 2 2 2 2.5s-.8 1.7-2 2.5"/></svg>',
+      home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 11l8-7 8 7"/><path d="M6 10.5V20h12v-9.5"/></svg>',
+      palette: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.4 2.4 0 0 0 2.3-3.1 2.2 2.2 0 0 1 2-3.1H19a2 2 0 0 0 0-4h-.3A9 9 0 0 0 12 3z"/><circle cx="7.5" cy="10" r="1" fill="currentColor"/><circle cx="10" cy="7.2" r="1" fill="currentColor"/><circle cx="13.8" cy="7.5" r="1" fill="currentColor"/></svg>',
+      display: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 19h8"/><path d="M12 17v2"/></svg>',
+      panel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="5" width="17" height="12" rx="1.5"/><path d="M8 19h8M12 17v2"/><path d="M8 9.5h3.2M8 12.5h5"/></svg>',
+      chip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 4v3M12 4v3M15 4v3M9 17v3M12 17v3M15 17v3M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3"/></svg>',
+      dolby: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 7h4.5a4.5 4.5 0 0 1 0 10H5V7z"/><path d="M19 7h-4.5a4.5 4.5 0 0 0 0 10H19V7z"/></svg>',
+      waves: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 12c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M3 17c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/><path d="M3 7c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg>',
+      sliders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="8" cy="7" r="1.8" fill="currentColor"/><circle cx="14" cy="12" r="1.8" fill="currentColor"/><circle cx="10" cy="17" r="1.8" fill="currentColor"/></svg>',
+      mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+      phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="8" y="2.5" width="8" height="19" rx="2"/><path d="M11 18h2"/></svg>',
+      homesync: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M8.5 4.5h7l3.5 3.5v7l-3.5 3.5h-7L5 15V8z"/><path d="M9.5 12.5l2-2 2 2 2-2"/></svg>',
+      assistant: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="9" cy="11" r="3.2"/><circle cx="15.2" cy="8.2" r="2.1"/><circle cx="16.2" cy="14.2" r="1.5"/><circle cx="12.4" cy="16.6" r="1.1"/></svg>',
+      service: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>',
+    };
+    return icons[name] || icons.chip;
+  }
+
   function renderPromise() {
     const grid = el("promiseGrid");
     if (!grid || !window.VOIR) return;
     grid.innerHTML = window.VOIR.catalogue.pillars
       .map(function (col, i) {
-        const tone = i % 2 === 0 ? "light" : "dark";
+        const num = String(i + 1).padStart(2, "0");
         const items = col.items
           .map(function (it) {
             return (
               '<li class="promise-item">' +
+              '<span class="promise-item__icon">' +
+              promiseIcon(it.icon) +
+              "</span>" +
+              '<div class="promise-item__body">' +
               '<span class="promise-item__name">' +
               escapeHtml(it.name) +
               "</span>" +
               '<span class="promise-item__text">' +
               escapeHtml(it.text) +
               "</span>" +
+              "</div>" +
               "</li>"
             );
           })
           .join("");
         return (
-          '<article class="promise-col promise-col--' +
-          tone +
-          '" data-promise="' +
+          '<article class="promise-col" data-promise="' +
           (i + 1) +
           '">' +
+          '<span class="promise-col__num" aria-hidden="true">' +
+          num +
+          "</span>" +
+          '<div class="promise-col__badge">' +
+          promiseIcon(col.icon) +
+          "</div>" +
           '<div class="promise-col__top">' +
           '<h3 class="promise-col__title">' +
           escapeHtml(col.title) +
           "</h3>" +
+          '<p class="promise-col__tagline">' +
+          escapeHtml(col.tagline || "") +
+          "</p>" +
           '<p class="promise-col__lead">' +
           escapeHtml(col.text) +
           "</p>" +
