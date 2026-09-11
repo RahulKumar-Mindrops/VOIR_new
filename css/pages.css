@@ -1548,20 +1548,6 @@
     linear-gradient(180deg, #121212 0%, #070707 48%, #0d0d0d 100%);
 }
 
-.promise__atmosphere::before {
-  content: "";
-  position: absolute;
-  inset: 12% 8% auto;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(240, 104, 36, 0.35),
-    transparent
-  );
-  opacity: 0.7;
-}
-
 .promise__atmosphere::after {
   content: "";
   position: absolute;
