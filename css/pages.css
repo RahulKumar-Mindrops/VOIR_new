@@ -4,7 +4,7 @@
 
 .nav__logo-img {
   display: block;
-  height: 52px;
+  height: 40px;
   width: auto;
   object-fit: contain;
   filter: none;
@@ -35,6 +35,10 @@
 .nav.is-scrolled .nav__link,
 .nav.is-scrolled .nav__link:hover {
   color: var(--color-ink);
+}
+
+.nav.is-scrolled .nav__tagline {
+  color: rgba(17, 17, 17, 0.5);
 }
 
 .nav.is-scrolled .nav__link {

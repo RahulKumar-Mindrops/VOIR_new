@@ -8,10 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/main.css?v=41" />
+  <link rel="stylesheet" href="css/main.css?v=42" />
   <link rel="stylesheet" href="css/animations.css?v=10" />
-  <link rel="stylesheet" href="css/pages.css?v=48" />
-  <link rel="stylesheet" href="css/homepage.css?v=10" />
+  <link rel="stylesheet" href="css/pages.css?v=49" />
+  <link rel="stylesheet" href="css/homepage.css?v=14" />
 </head>
 <body>
   <div class="cursor" id="cursor" aria-hidden="true">
@@ -136,75 +136,112 @@
 
       <div class="tech-showcase__inner">
         <div class="tech-showcase__stats" role="list">
-          <div class="tech-stat" role="listitem">
+          <div class="tech-stat" role="listitem" data-stat="homes">
+            <span class="tech-stat__ghost" aria-hidden="true">01</span>
             <span class="tech-stat__index">01</span>
             <div class="tech-stat__value" data-count="12" data-suffix="M+">0</div>
-            <div class="tech-stat__label">Devices in homes worldwide</div>
+            <div class="tech-stat__label">Products in homes worldwide</div>
+            <div class="tech-stat__meter" aria-hidden="true"><span></span></div>
           </div>
-          <div class="tech-stat" role="listitem">
+          <div class="tech-stat" role="listitem" data-stat="satisfaction">
+            <span class="tech-stat__ghost" aria-hidden="true">02</span>
             <span class="tech-stat__index">02</span>
             <div class="tech-stat__value" data-count="98" data-suffix="%">0</div>
             <div class="tech-stat__label">Customer satisfaction score</div>
+            <div class="tech-stat__meter" aria-hidden="true"><span style="--fill:98%"></span></div>
           </div>
-          <div class="tech-stat" role="listitem">
+          <div class="tech-stat" role="listitem" data-stat="countries">
+            <span class="tech-stat__ghost" aria-hidden="true">03</span>
             <span class="tech-stat__index">03</span>
             <div class="tech-stat__value" data-count="40" data-suffix="+">0</div>
             <div class="tech-stat__label">Countries served</div>
+            <div class="tech-stat__meter" aria-hidden="true"><span style="--fill:72%"></span></div>
           </div>
-          <div class="tech-stat" role="listitem">
+          <div class="tech-stat" role="listitem" data-stat="support">
+            <span class="tech-stat__ghost" aria-hidden="true">04</span>
             <span class="tech-stat__index">04</span>
             <div class="tech-stat__value" data-count-text="24/7">24/7</div>
             <div class="tech-stat__label">Multilingual support</div>
+            <div class="tech-stat__meter" aria-hidden="true"><span style="--fill:100%"></span></div>
           </div>
         </div>
 
-        <!-- Feature cards -->
-        <div class="tech-showcase__grid">
-          <div class="tech-card tech-card--hero">
-            <div>
-              <div class="tech-card__icon">
-                <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M8 20h8M12 17v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              </div>
-              <h3 class="tech-card__name">Infinity Display</h3>
-              <p class="tech-card__desc">Edge-to-edge viewing with barely-there bezels. The room reads the picture, not the frame. Every VOIR panel is graded for uniformity — HD through 4K UHD.</p>
-            </div>
-            <div class="tech-card__visual">
-              <img src="images/showcase-tv.jpg" alt="VOIR Infinity Display" loading="lazy" />
-            </div>
-          </div>
-
-          <div class="tech-card">
-            <div class="tech-card__icon">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="tech-card__name">AI Picture Engine</h3>
-            <p class="tech-card__desc">Palette AI Suite analyses every frame in real time — adjusting brightness, contrast, colour depth and motion. The television learns what you're watching and optimises itself.</p>
-          </div>
-
-          <div class="tech-card">
-            <div class="tech-card__icon">
-              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.4"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="tech-card__name">QLED Quantum Dot</h3>
-            <p class="tech-card__desc">Zero visible dots. Full colour, exactly as it should be. Quantum-dot colour stays true at full brightness, contrast holds in a sunlit room, and the picture ages far better.</p>
-          </div>
-
-          <div class="tech-card">
-            <div class="tech-card__icon">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M4 14c2.5-3 5-4.5 8-4.5S17.5 11 20 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M7 17c1.8-2 3.5-3 5-3s3.2 1 5 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg>
-            </div>
-            <h3 class="tech-card__name">Dolby Atmos Sound</h3>
-            <p class="tech-card__desc">Cinema-grade sound that moves around you, not just at you. Immersive audio fills the room while AI Scene Tuning adapts to what you're watching.</p>
-          </div>
-
-          <div class="tech-card">
-            <div class="tech-card__icon">
-              <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="5" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M9 9h6M9 12h6M9 15h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            </div>
-            <h3 class="tech-card__name">Smart Processing</h3>
-            <p class="tech-card__desc">AI Quantum Core Processor ensures smooth navigation with no lag. Faster performance, powerful processing, and automatic adjustment based on content type.</p>
-          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         FEATURE LAB — dark editorial (Samsung-style)
+         ============================================ -->
+    <section class="feature-lab" id="features" aria-label="VOIR picture and sound features">
+      <div class="feature-lab__intro">
+        <h2 class="feature-lab__headline" data-hp-reveal>Infinity Display</h2>
+        <p class="feature-lab__lead" data-hp-reveal>
+          Edge-to-edge viewing with barely-there bezels. The room reads the picture, not the frame.
+          Every VOIR panel is graded for uniformity — HD through 4K UHD.
+        </p>
+      </div>
+
+      <div class="feature-lab__hero" data-hp-reveal>
+        <img src="images/showcase-tv.jpg" alt="VOIR Infinity Display" loading="lazy" />
+      </div>
+
+      <div class="feature-lab__modules">
+        <article class="feature-lab__module" data-hp-reveal>
+          <div class="feature-lab__copy">
+            <p class="feature-lab__eyebrow">Picture intelligence</p>
+            <h3 class="feature-lab__title">AI Picture Engine</h3>
+            <p class="feature-lab__text">
+              Palette AI Suite analyses every frame in real time — adjusting brightness, contrast,
+              colour depth and motion. The television learns what you're watching and optimises itself.
+            </p>
+          </div>
+          <div class="feature-lab__media">
+            <img src="images/tech-card-1.jpg" alt="VOIR AI Picture Engine" loading="lazy" />
+          </div>
+        </article>
+
+        <article class="feature-lab__module feature-lab__module--reverse" data-hp-reveal>
+          <div class="feature-lab__copy">
+            <p class="feature-lab__eyebrow">Colour science</p>
+            <h3 class="feature-lab__title">QLED Quantum Dot</h3>
+            <p class="feature-lab__text">
+              Zero visible dots. Full colour, exactly as it should be. Quantum-dot colour stays true
+              at full brightness, contrast holds in a sunlit room, and the picture ages far better.
+            </p>
+          </div>
+          <div class="feature-lab__media">
+            <img src="images/tech-card-2.jpg" alt="VOIR QLED Quantum Dot colour" loading="lazy" />
+          </div>
+        </article>
+
+        <article class="feature-lab__module" data-hp-reveal>
+          <div class="feature-lab__copy">
+            <p class="feature-lab__eyebrow">Immersive audio</p>
+            <h3 class="feature-lab__title">Dolby Atmos Sound</h3>
+            <p class="feature-lab__text">
+              Cinema-grade sound that moves around you, not just at you. Immersive audio fills the
+              room while AI Scene Tuning adapts to what you're watching.
+            </p>
+          </div>
+          <div class="feature-lab__media">
+            <img src="images/showcase-sound.jpg" alt="VOIR Dolby Atmos Sound" loading="lazy" />
+          </div>
+        </article>
+
+        <article class="feature-lab__module feature-lab__module--reverse" data-hp-reveal>
+          <div class="feature-lab__copy">
+            <p class="feature-lab__eyebrow">Performance</p>
+            <h3 class="feature-lab__title">Smart Processing</h3>
+            <p class="feature-lab__text">
+              AI Quantum Core Processor ensures smooth navigation with no lag. Faster performance,
+              powerful processing, and automatic adjustment based on content type.
+            </p>
+          </div>
+          <div class="feature-lab__media">
+            <img src="images/tech-card-3.jpg" alt="VOIR Smart Processing" loading="lazy" />
+          </div>
+        </article>
       </div>
     </section>
 
@@ -310,98 +347,93 @@
          SECTION 5 — OUR PROMISE
          ============================================ -->
     <section class="promise-v2" id="promise" aria-label="Our Promise">
-      <div class="promise-v2__bg" aria-hidden="true">
-        <div class="promise-v2__circuit"></div>
-        <div class="promise-v2__glow-top"></div>
-      </div>
-
       <div class="promise-v2__inner">
-        <div class="promise-v2__header">
+        <div class="promise-v2__header" data-hp-reveal>
           <p class="promise-v2__eyebrow">Our Promise</p>
-          <h2 class="promise-v2__title">Three promises, one&nbsp;television.</h2>
+          <h2 class="promise-v2__title">Three promises, one&nbsp;product.</h2>
           <p class="promise-v2__lead">We say only what the product can deliver, and we hold that promise long after the sale — parts stocked before launch, a support line a person answers, and an engineer who shows up.</p>
         </div>
 
-        <div class="promise-v2__grid">
-
-          <!-- 01 — See it -->
-          <div class="promise-v2__card">
-            <p class="promise-v2__number">01</p>
-            <h3 class="promise-v2__card-title">See it.</h3>
-            <p class="promise-v2__tagline">True to life. In every detail.</p>
-            <p class="promise-v2__text">Every VOIR is QLED. Quantum-dot colour stays true at full brightness, contrast holds in a sunlit room, and the picture ages far better than plain LED.</p>
-            <ul class="promise-v2__techs">
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Quantum Color Optimizer</span> — Wider gamut, tuned per scene so colour reads true, not loud.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Infinity Display</span> — Edgeless bezel — the room reads the picture, not the frame.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Pixel Pure Panel</span> — Every panel graded for uniformity, HD through 4K UHD.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">PQX Pro Elite Suite</span> — A stack of picture technologies working together for a richer, sharper image.</span>
-              </li>
-            </ul>
+        <div class="promise-v2__stage">
+          <div class="promise-v2__visual" aria-hidden="true">
+            <img class="promise-v2__shot is-active" data-promise-shot="see" src="images/showcase-tv.jpg" alt="" />
+            <img class="promise-v2__shot" data-promise-shot="love" src="images/showcase-sound.jpg" alt="" />
+            <img class="promise-v2__shot" data-promise-shot="live" src="images/lifestyle-1.jpg" alt="" />
           </div>
 
-          <!-- 02 — Love it -->
-          <div class="promise-v2__card">
-            <p class="promise-v2__number">02</p>
-            <h3 class="promise-v2__card-title">Love it.</h3>
-            <p class="promise-v2__tagline">Sound that moves you.</p>
-            <p class="promise-v2__text">Cinema-grade sound and picture, tuned to work together — immersive audio that fills the room and still feels intimate.</p>
-            <ul class="promise-v2__techs">
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Dolby Atmos Vision</span> — Cinema-grade picture and sound, tuned to work together.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Sound Spectre Power Boost</span> — Richer bass, sharper highs, fuller sound across the room.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">AI Scene Tuning</span> — Picture and sound adapt to what you're watching, automatically.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">VoiceCrisp</span> — Dialogue stays clear even when the action gets loud.</span>
-              </li>
-            </ul>
-          </div>
+          <div class="promise-v2__accordion" role="list">
+            <div class="promise-acc is-open" role="listitem" data-promise="see">
+              <button type="button" class="promise-acc__trigger" aria-expanded="true">
+                <span class="promise-acc__headline">True to life. In every detail.</span>
+                <span class="promise-acc__icon" aria-hidden="true"></span>
+              </button>
+              <div class="promise-acc__panel">
+                <p class="promise-acc__name">See it.</p>
+                <p class="promise-acc__text">Every VOIR is QLED. Quantum-dot colour stays true at full brightness, contrast holds in a sunlit room, and the picture ages far better than plain LED.</p>
+                <ul class="promise-acc__techs">
+                  <li><strong>Quantum Color Optimizer</strong> — Wider gamut, tuned per scene so colour reads true, not loud.</li>
+                  <li><strong>Infinity Display</strong> — Edgeless bezel — the room reads the picture, not the frame.</li>
+                  <li><strong>Pixel Pure Panel</strong> — Every panel graded for uniformity, HD through 4K UHD.</li>
+                  <li><strong>PQX Pro Elite Suite</strong> — Picture technologies working together for a richer, sharper image.</li>
+                </ul>
+              </div>
+            </div>
 
-          <!-- 03 — Live it -->
-          <div class="promise-v2__card">
-            <p class="promise-v2__number">03</p>
-            <h3 class="promise-v2__card-title">Live it.</h3>
-            <p class="promise-v2__tagline">A TV for everyday life.</p>
-            <p class="promise-v2__text">Living with a TV is different from owning one. It should wake up fast, put something on before you have finished sitting down, and still feel quick years into its life.</p>
-            <ul class="promise-v2__techs">
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">SmartTap</span> — Cast from your phone in a tap, over Wi-Fi or Bluetooth.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">HomeSync</span> — One screen. Every device. Your whole smart home at your fingertips.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Google Assistant</span> — Hold the voice remote and just ask — search, switch inputs, open an app.</span>
-              </li>
-              <li class="promise-v2__tech">
-                <span class="promise-v2__tech-dot" aria-hidden="true"></span>
-                <span><span class="promise-v2__tech-name">Service & Parts</span> — A person on the line, an engineer who shows up, spares stocked before launch.</span>
-              </li>
-            </ul>
-          </div>
+            <div class="promise-acc" role="listitem" data-promise="love">
+              <button type="button" class="promise-acc__trigger" aria-expanded="false">
+                <span class="promise-acc__headline">Sound that moves you.</span>
+                <span class="promise-acc__icon" aria-hidden="true"></span>
+              </button>
+              <div class="promise-acc__panel">
+                <p class="promise-acc__name">Love it.</p>
+                <p class="promise-acc__text">Cinema-grade sound and picture, tuned to work together — immersive audio that fills the room and still feels intimate.</p>
+                <ul class="promise-acc__techs">
+                  <li><strong>Dolby Atmos Vision</strong> — Cinema-grade picture and sound, tuned to work together.</li>
+                  <li><strong>Sound Spectre Power Boost</strong> — Richer bass, sharper highs, fuller sound across the room.</li>
+                  <li><strong>AI Scene Tuning</strong> — Picture and sound adapt to what you're watching, automatically.</li>
+                  <li><strong>VoiceCrisp</strong> — Dialogue stays clear even when the action gets loud.</li>
+                </ul>
+              </div>
+            </div>
 
+            <div class="promise-acc" role="listitem" data-promise="live">
+              <button type="button" class="promise-acc__trigger" aria-expanded="false">
+                <span class="promise-acc__headline">A product for everyday life.</span>
+                <span class="promise-acc__icon" aria-hidden="true"></span>
+              </button>
+              <div class="promise-acc__panel">
+                <p class="promise-acc__name">Live it.</p>
+                <p class="promise-acc__text">Living with a product is different from owning one. It should wake up fast, put something on before you have finished sitting down, and still feel quick years into its life.</p>
+                <ul class="promise-acc__techs">
+                  <li><strong>SmartTap</strong> — Cast from your phone in a tap, over Wi-Fi or Bluetooth.</li>
+                  <li><strong>HomeSync</strong> — One screen. Every device. Your whole smart home at your fingertips.</li>
+                  <li><strong>Google Assistant</strong> — Hold the voice remote and just ask — search, switch inputs, open an app.</li>
+                  <li><strong>Service &amp; Parts</strong> — A person on the line, an engineer who shows up, spares stocked before launch.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="promise-v2__living" data-hp-reveal>
+          <h2 class="promise-v2__living-title">Where AI becomes part of everyday living</h2>
+          <div class="promise-v2__living-stage">
+            <img src="images/smarthome.jpg" alt="VOIR smart living experience" class="promise-v2__living-img" loading="lazy" />
+            <div class="promise-v2__chips" aria-hidden="true">
+              <span class="promise-v2__chip promise-v2__chip--tl">“What’s on tonight?”</span>
+              <span class="promise-v2__chip promise-v2__chip--tr">Related content</span>
+              <span class="promise-v2__chip promise-v2__chip--bl">Top highlights</span>
+              <span class="promise-v2__chip promise-v2__chip--br">AI Mode</span>
+            </div>
+          </div>
+          <div class="promise-v2__living-copy">
+            <h3 class="promise-v2__living-name">VOIR Vision Companion</h3>
+            <p class="promise-v2__living-text">
+              A more personal way to interact with your VOIR product. Always by your side, Vision Companion
+              adapts to what you’re watching — recommending content you’ll love, answering on-screen
+              questions, and helping you discover, explore and enjoy with ease.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -437,10 +469,10 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="js/data.js?v=10"></script>
-  <script src="js/chrome.js?v=12"></script>
+  <script src="js/data.js?v=11"></script>
+  <script src="js/chrome.js?v=13"></script>
   <script src="js/cursor.js?v=3"></script>
   <script src="js/app.js?v=38"></script>
-  <script src="js/homepage.js?v=9"></script>
+  <script src="js/homepage.js?v=14"></script>
 </body>
 </html>

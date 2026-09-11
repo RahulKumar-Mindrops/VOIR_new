@@ -44,13 +44,21 @@
       .join("");
 
     const solid = active !== "home" ? " is-scrolled nav--inner" : "";
+    const tagline =
+      (window.VOIR && window.VOIR.brand && window.VOIR.brand.tagline) ||
+      "SEE IT. LOVE IT. LIVE IT.";
     return (
       '<header class="nav' +
       solid +
       '" id="nav">' +
       '<div class="nav__inner">' +
       '<a href="index.html" class="nav__logo" data-magnetic aria-label="VOIR home">' +
-      '<img src="images/logo-dark.png?v=2" alt="VOIR — SEE IT. LOVE IT. LIVE IT." class="nav__logo-img" />' +
+      '<span class="nav__logo-stack">' +
+      '<img src="images/logo-dark.png?v=2" alt="VOIR" class="nav__logo-img" />' +
+      '<span class="nav__tagline">' +
+      tagline +
+      "</span>" +
+      "</span>" +
       "</a>" +
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
@@ -96,7 +104,7 @@
       '<div class="footer__col">' +
       '<h4 class="footer__heading">Products</h4>' +
       '<ul class="footer__links">' +
-      '<li><a href="tvs.html">TVs</a></li>' +
+      '<li><a href="tvs.html">Product</a></li>' +
       "</ul></div>" +
       '<div class="footer__col">' +
       '<h4 class="footer__heading">Company</h4>' +

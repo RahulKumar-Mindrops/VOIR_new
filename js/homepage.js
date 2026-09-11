@@ -132,7 +132,6 @@
 
   function initTechShowcase() {
     var stats = document.querySelectorAll(".tech-stat");
-    var cards = document.querySelectorAll(".tech-card");
 
     function animateCount(el) {
       if (!el || el.dataset.counted === "1") return;
@@ -159,6 +158,14 @@
       requestAnimationFrame(frame);
     }
 
+    function bindGlow(stat) {
+      stat.addEventListener("pointermove", function (e) {
+        var r = stat.getBoundingClientRect();
+        stat.style.setProperty("--mx", e.clientX - r.left + "px");
+        stat.style.setProperty("--my", e.clientY - r.top + "px");
+      });
+    }
+
     if (prefersReduced) {
       stats.forEach(function (s) {
         s.classList.add("is-visible");
@@ -171,9 +178,10 @@
           }
         }
       });
-      cards.forEach(function (c) { c.classList.add("is-visible"); });
       return;
     }
+
+    stats.forEach(bindGlow);
 
     var statsObs = new IntersectionObserver(
       function (entries) {
@@ -189,21 +197,6 @@
 
     stats.forEach(function (stat) {
       statsObs.observe(stat);
-    });
-
-    var cardsObs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.15 }
-    );
-
-    cards.forEach(function (card) {
-      cardsObs.observe(card);
     });
   }
 
@@ -295,52 +288,31 @@
   ---------------------------------------- */
 
   function initPromise() {
-    var cards = document.querySelectorAll(".promise-v2__card");
-    if (!cards.length) return;
+    var items = document.querySelectorAll(".promise-acc");
+    var shots = document.querySelectorAll(".promise-v2__shot");
+    if (!items.length) return;
 
-    if (prefersReduced) {
-      cards.forEach(function (c) {
-        c.classList.add("is-visible");
-        c.querySelectorAll(".promise-v2__tech").forEach(function (t) {
-          t.style.opacity = "1";
-          t.style.transform = "none";
-        });
+    function openItem(target) {
+      var key = target.getAttribute("data-promise");
+      items.forEach(function (item) {
+        var open = item === target;
+        item.classList.toggle("is-open", open);
+        var btn = item.querySelector(".promise-acc__trigger");
+        if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
       });
-      return;
+      shots.forEach(function (shot) {
+        shot.classList.toggle("is-active", shot.getAttribute("data-promise-shot") === key);
+      });
     }
 
-    var obs = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    cards.forEach(function (card) {
-      obs.observe(card);
+    items.forEach(function (item) {
+      var btn = item.querySelector(".promise-acc__trigger");
+      if (!btn) return;
+      btn.addEventListener("click", function () {
+        if (item.classList.contains("is-open")) return;
+        openItem(item);
+      });
     });
-
-    /* Header entrance */
-    var header = document.querySelector(".promise-v2__header");
-    if (header) {
-      gsap.fromTo(
-        header,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          scrollTrigger: {
-            trigger: ".promise-v2",
-            start: "top 75%",
-          },
-        }
-      );
-    }
   }
 
   /* ----------------------------------------

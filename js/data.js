@@ -28,7 +28,7 @@ window.VOIR = {
   },
 
   nav: [
-    { href: "tvs.html", label: "TVs", id: "tvs" },
+    { href: "tvs.html", label: "Product", id: "tvs" },
     // { href: "air-coolers.html", label: "Air Coolers", id: "air-coolers" },
     // { href: "washing-machines.html", label: "Washing Machines", id: "washing-machines" },
     // { href: "accessories.html", label: "Accessories", id: "accessories" },
