@@ -3806,6 +3806,7 @@ button {
 
   .featured-slider {
     padding-bottom: 64px;
+    overflow-x: clip;
   }
 
   .featured-slider__rail {
@@ -3820,32 +3821,50 @@ button {
     margin-bottom: 16px;
   }
 
+  .featured-slider__wrap {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
   .featured-slider__track {
-    gap: 0;
-    padding: 28px 20px 36px;
+    gap: 16px;
+    padding: 20px 0 28px;
+    perspective: none;
   }
 
   .feat-slide {
-    flex-basis: min(78vw, 290px);
+    flex: 0 0 82vw;
+    width: 82vw;
+    max-width: 340px;
     height: 440px;
-    margin: 0 -12px;
+    margin: 0;
   }
 
   .featured-slider__footer {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+    width: 100%;
+    margin-top: 4px;
+    padding: 0;
   }
 
   .featured-slider__perks {
     width: 100%;
-    justify-content: center;
+    justify-content: stretch;
+    align-items: stretch;
   }
 
   .featured-slider__perks li {
-    flex: 0 1 auto;
+    flex: 1 1 auto;
+    width: 100%;
     border-right: 0;
-    justify-content: center;
-    padding: 10px 12px;
+    justify-content: flex-start;
+    padding: 12px 4px;
+    box-sizing: border-box;
+  }
+
+  .featured-slider__perks li:first-child {
+    padding-left: 4px;
   }
 
   .featured-slider__cta {
@@ -4092,16 +4111,20 @@ button {
   .featured-slider {
     padding-top: 56px;
     padding-bottom: 48px;
+    overflow-x: clip;
   }
 
   .featured-slider__track {
-    padding: 20px 12px 28px;
+    gap: 16px;
+    padding: 16px 0 24px;
   }
 
   .feat-slide {
-    flex-basis: min(82vw, 300px);
+    flex: 0 0 82vw;
+    width: 82vw;
+    max-width: 340px;
     height: 420px;
-    margin: 0 -8px;
+    margin: 0;
     border-radius: 18px;
   }
 
@@ -4111,6 +4134,7 @@ button {
 
   .feat-slide__chips {
     gap: 4px;
+    justify-content: center;
   }
 
   .feat-slide__logo {
@@ -4121,12 +4145,19 @@ button {
   .featured-slider__perks {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
   }
 
   .featured-slider__perks li {
     justify-content: flex-start;
+    width: 100%;
     border-bottom: 1px solid rgba(11, 18, 32, 0.08);
-    padding: 12px 0;
+    border-right: 0;
+    padding: 14px 2px;
+  }
+
+  .featured-slider__perks li:first-child {
+    padding-left: 2px;
   }
 
   .featured-slider__perks li:last-child {
@@ -4200,7 +4231,9 @@ button {
   }
 
   .feat-slide {
-    flex-basis: 86vw;
+    flex: 0 0 82vw;
+    width: 82vw;
+    max-width: 340px;
     height: 400px;
   }
 

@@ -573,14 +573,57 @@
     let paused = false;
     let resumeTimer = null;
     let snapMode = false;
+    const mobileMq = window.matchMedia("(max-width: 900px)");
+    function isMobileSlider() {
+      return mobileMq.matches;
+    }
     const autoSpeed = prefersReduced ? 0 : 0.45;
     const ease = 0.12;
 
     function measure() {
       slides = Array.from(track.querySelectorAll(".feat-slide"));
       if (slides.length < 2) return;
+
+      if (isMobileSlider()) {
+        // Force a stable card width, then pad sides so the active card can sit dead-center.
+        const cardW = Math.min(wrap.clientWidth - 48, Math.round(wrap.clientWidth * 0.82));
+        slides.forEach(function (slide) {
+          slide.style.flex = "0 0 " + cardW + "px";
+          slide.style.width = cardW + "px";
+          slide.style.maxWidth = cardW + "px";
+          slide.style.margin = "0";
+        });
+        track.style.gap = "16px";
+        const sidePad = Math.max(24, (wrap.clientWidth - cardW) / 2);
+        track.style.paddingLeft = sidePad + "px";
+        track.style.paddingRight = sidePad + "px";
+        track.style.paddingTop = "20px";
+        track.style.paddingBottom = "28px";
+      } else {
+        slides.forEach(function (slide) {
+          slide.style.flex = "";
+          slide.style.width = "";
+          slide.style.maxWidth = "";
+          slide.style.margin = "";
+        });
+        track.style.gap = "";
+        track.style.paddingLeft = "";
+        track.style.paddingRight = "";
+        track.style.paddingTop = "";
+        track.style.paddingBottom = "";
+      }
+
       const half = Math.floor(slides.length / 2);
       setWidth = slides[half].offsetLeft - slides[0].offsetLeft;
+    }
+
+    function centerOnSlide(slide) {
+      if (!slide || !wrap.clientWidth) return;
+      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+      const next = wrapX(-(slideCenter - wrap.clientWidth / 2));
+      x = next;
+      targetX = next;
+      snapMode = true;
     }
 
     function wrapX(value) {
@@ -594,6 +637,7 @@
     function paintSlides() {
       if (!setWidth) return;
       const viewCenter = -x + wrap.clientWidth / 2;
+      const narrow = isMobileSlider();
       let best = null;
       let bestAbs = Infinity;
       let bestIndex = 0;
@@ -603,24 +647,31 @@
         const offset = (slideCenter - viewCenter) / Math.max(wrap.clientWidth * 0.34, 1);
         const t = Math.max(-1.2, Math.min(1.2, offset));
         const abs = Math.min(1, Math.abs(t));
-        const scale = 1.14 - abs * 0.22;
-        const opacity = 1 - abs * 0.2;
-        const rotateY = t * -14;
-        const lift = (1 - abs) * 12;
-        const pull = t * -36;
 
-        slide.style.transform =
-          "translateX(" +
-          pull +
-          "px) translateY(" +
-          -lift +
-          "px) rotateY(" +
-          rotateY +
-          "deg) scale(" +
-          scale +
-          ")";
-        slide.style.opacity = String(Math.max(0.7, opacity));
-        slide.style.zIndex = String(Math.round((1 - abs) * 40));
+        if (narrow) {
+          slide.style.transform = "none";
+          slide.style.opacity = abs < 0.5 ? "1" : "0.55";
+          slide.style.zIndex = String(Math.round((1 - abs) * 40));
+        } else {
+          const scale = 1.14 - abs * 0.22;
+          const opacity = 1 - abs * 0.2;
+          const rotateY = t * -14;
+          const lift = (1 - abs) * 12;
+          const pull = t * -36;
+
+          slide.style.transform =
+            "translateX(" +
+            pull +
+            "px) translateY(" +
+            -lift +
+            "px) rotateY(" +
+            rotateY +
+            "deg) scale(" +
+            scale +
+            ")";
+          slide.style.opacity = String(Math.max(0.7, opacity));
+          slide.style.zIndex = String(Math.round((1 - abs) * 40));
+        }
 
         if (abs < bestAbs) {
           bestAbs = abs;
@@ -682,7 +733,8 @@
     function stepBy(dir) {
       if (!setWidth || !count) return;
       snapMode = true;
-      pauseAuto(2800);
+      pauseAuto(isMobileSlider() ? 0 : 2800);
+      if (isMobileSlider()) paused = true;
       const step = setWidth / count;
       targetX = wrapX(targetX - dir * step);
     }
@@ -694,21 +746,38 @@
       slides.find(function (s) {
         return s.getAttribute("data-model") === startId;
       }) || slides[Math.min(3, count - 1)];
-    if (startSlide) {
-      const slideCenter = startSlide.offsetLeft + startSlide.offsetWidth / 2;
-      x = wrapX(-(slideCenter - wrap.clientWidth / 2));
-    } else {
-      x = wrapX(-setWidth * 0.12);
+
+    function bootPosition() {
+      measure();
+      if (startSlide && startSlide.isConnected) {
+        centerOnSlide(startSlide);
+      } else {
+        x = wrapX(-setWidth * 0.12);
+        targetX = x;
+      }
+      if (isMobileSlider()) {
+        snapMode = true;
+        paused = true;
+      } else {
+        snapMode = true;
+        pauseAuto(3600);
+      }
+      paintSlides();
     }
-    targetX = x;
-    snapMode = true;
-    pauseAuto(3600);
-    paintSlides();
+
+    bootPosition();
+    requestAnimationFrame(bootPosition);
 
     window.addEventListener("resize", function () {
+      const current =
+        track.querySelector(".feat-slide.is-active") ||
+        slides.find(function (s) {
+          return s.getAttribute("data-model") === startId;
+        }) ||
+        slides[0];
       measure();
-      x = wrapX(x);
-      targetX = x;
+      if (current) centerOnSlide(current);
+      if (isMobileSlider()) paused = true;
       paintSlides();
     });
 
@@ -728,11 +797,11 @@
           Math.round((di / Math.max(dotsHost.children.length - 1, 1)) * (count - 1))
         );
         snapMode = true;
-        pauseAuto(2800);
+        if (isMobileSlider()) paused = true;
+        else pauseAuto(2800);
         const slide = slides[targetIndex];
         if (!slide) return;
-        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
-        targetX = wrapX(-(slideCenter - wrap.clientWidth / 2));
+        centerOnSlide(slide);
       });
     }
 
@@ -762,7 +831,8 @@
       wrap.classList.remove("is-dragging");
       snapMode = true;
       targetX = nearestTarget();
-      pauseAuto(2400);
+      if (isMobileSlider()) paused = true;
+      else pauseAuto(2400);
     }
 
     wrap.addEventListener("pointerup", endDrag);
@@ -774,6 +844,7 @@
       pauseAuto(0);
     });
     wrap.addEventListener("mouseleave", function () {
+      if (isMobileSlider()) return;
       if (!isDown) pauseAuto(600);
     });
 
@@ -803,14 +874,14 @@
 
     function tick() {
       if (!isDown) {
-        if (!paused && !snapMode) {
+        // Mobile stays snapped — no free autoplay drift.
+        if (!isMobileSlider() && !paused && !snapMode) {
           targetX -= autoSpeed;
         }
         targetX = wrapX(targetX);
-        x += (targetX - x) * (snapMode || paused ? ease : 0.2);
+        x += (targetX - x) * (snapMode || paused || isMobileSlider() ? ease : 0.2);
         x = wrapX(x);
-        // Keep target near x during free autoplay so wrap stays stable
-        if (!paused && !snapMode) targetX = x;
+        if (!isMobileSlider() && !paused && !snapMode) targetX = x;
       } else {
         x = wrapX(x);
       }
