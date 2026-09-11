@@ -909,6 +909,8 @@ button {
   overflow: hidden;
   padding-top: clamp(72px, 9vw, 104px);
   padding-bottom: clamp(56px, 7vw, 80px);
+  border-left: 2px solid #f06824;
+  border-right: 2px solid #f06824;
 }
 
 .featured-slider__bg {
@@ -968,8 +970,8 @@ button {
 .featured-slider__rail::before {
   content: "";
   display: block;
-  width: 28px;
-  height: 2px;
+  width: 18px;
+  height: 1.5px;
   margin: 0 auto 14px;
   background: #f06824;
   transform: rotate(90deg);
@@ -1073,7 +1075,7 @@ button {
 .featured-slider__stage {
   position: relative;
   z-index: 1;
-  width: min(1240px, 100%);
+  width: min(1120px, 100%);
   margin: 0 auto;
 }
 
@@ -1126,9 +1128,9 @@ button {
 .feat-slide.is-active {
   border-color: transparent;
   box-shadow:
-    0 0 0 3px rgba(240, 104, 36, 0.75),
-    0 0 36px 10px rgba(240, 104, 36, 0.38),
-    0 24px 48px rgba(240, 104, 36, 0.22),
+    0 0 0 1px rgba(240, 104, 36, 0.85),
+    0 0 28px 6px rgba(240, 104, 36, 0.28),
+    0 20px 40px rgba(240, 104, 36, 0.16),
     0 14px 32px rgba(11, 18, 32, 0.1);
   opacity: 1;
   z-index: 40;
@@ -4000,8 +4002,8 @@ button {
 
   .feat-slide.is-active {
     box-shadow:
-      0 0 0 2px rgba(240, 104, 36, 0.55),
-      0 14px 36px rgba(240, 104, 36, 0.2);
+      0 0 0 1px rgba(240, 104, 36, 0.75),
+      0 12px 28px rgba(240, 104, 36, 0.16);
   }
 
   .featured-slider__nav {

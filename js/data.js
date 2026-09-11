@@ -53,7 +53,7 @@ window.VOIR = {
     { id: "deeppulse", name: "DeepPulse", tagline: "Bass you feel, not just hear.", group: "AI Bass Booster" },
     { id: "soniclift", name: "SonicLift", tagline: "Lifts every sound so nothing gets lost in the mix.", group: "AI Sound Booster" },
     { id: "voicecrisp", name: "VoiceCrisp", tagline: "Keeps dialogue crisp and clear, even over loud scenes.", group: "AI ClearVoice" },
-    { id: "voios", name: "VoiOS", tagline: "The TV that hears your voice.", group: "Smart OS" },
+    { id: "voios", name: "VoiOS", tagline: "A TV that knows you better.", group: "Smart OS" },
     { id: "watchanything", name: "WatchAnything", tagline: "Every app. Every show. One place to Watch Anything.", group: "Content discovery + live channels" },
     { id: "airshare", name: "AirShare", tagline: "Why look down when you can AirShare it up? Bigger screen, same moment.", group: "Phone casting" },
     { id: "smarttap", name: "SmartTap", tagline: "Your phone. Your remote. One SmartTap away.", group: "Phone remote control" },

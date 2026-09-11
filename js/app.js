@@ -1780,60 +1780,129 @@
     // Showcase row matches the mock density — first 10, still all via arrows if needed
     const features = source.length > 10 ? source.slice(0, 10) : source;
 
+    // Unique dark lifestyle visuals per slide
     const images = [
-      "images/tv-hero.jpg",
-      "images/zenith-55.jpg",
-      "images/core-40.jpg",
-      "images/lifestyle-1.jpg",
-      "images/zenith-32.jpg",
-      "images/core-55.jpg",
-      "images/tv-angle.jpg",
-      "images/lifestyle-2.jpg",
       "images/showcase-tv.jpg",
-      "images/core-43.jpg",
+      "images/tech-card-1.jpg",
+      "images/tv-hero.jpg",
+      "images/bg-hero.jpg",
+      "images/tech-card-2.jpg",
+      "images/slide-1.jpg",
+      "images/hero-tv.jpg",
+      "images/tech-card-3.jpg",
+      "images/category-tvs.jpg",
+      "images/slide-3.jpg",
     ];
 
-    const iconSvg =
-      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 19.5h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
+    const frame = function (inner) {
+      return (
+        '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+        '<rect x="3" y="7" width="12" height="10" rx="1.6" stroke="currentColor" stroke-width="1.6"/>' +
+        '<path d="M8 5.5h10.5A1.5 1.5 0 0 1 20 7v8.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>' +
+        '<circle cx="7.2" cy="10.2" r="1.05" fill="currentColor"/>' +
+        inner +
+        "</svg>"
+      );
+    };
+
+    const tabIcons = [
+      frame('<path d="M4.8 15.2l2.6-2.4 1.7 1.5 2.5-2.8 2.2 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'),
+      frame('<path d="M5.2 13.2h7.6M5.2 15.4h5.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/>'),
+      frame('<path d="M10.8 12.4l.85 1.85 1.95.15-1.5 1.35.5 1.9-1.8-1-1.8 1 .5-1.9-1.5-1.35 1.95-.15.85-1.85z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/>'),
+      frame('<path d="M4.8 13c1.35-1.35 2.55-1.35 3.9 0s2.55 1.35 3.9 0M4.8 15.4c1.35-1.35 2.55-1.35 3.9 0s2.55 1.35 3.9 0" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/>'),
+      frame('<path d="M6 15.5V13.1M8.5 15.5v-4.1M11 15.5v-2.3" stroke="currentColor" stroke-width="1.55" stroke-linecap="round"/>'),
+      frame('<path d="M4.8 15.2l2.6-2.4 1.7 1.5 2.5-2.8 2.2 3.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'),
+      frame('<circle cx="9.2" cy="13.8" r="2" stroke="currentColor" stroke-width="1.35"/><path d="M9.2 11.8v4M7.2 13.8h4" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>'),
+      frame('<circle cx="9.2" cy="13.6" r="1.7" stroke="currentColor" stroke-width="1.35"/><path d="M9.2 10.6v.7M9.2 15.9v.7M6.2 13.6h.7M11.5 13.6h.7" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>'),
+      frame('<path d="M5 14.2l4.2-2.4 4.2 2.4-4.2 2.4L5 14.2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M5.8 12.4l3.4-1.9 3.4 1.9" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>'),
+      frame('<path d="M4.8 15.4l2.8-3.2 1.8 1.6 2.8-3.6 2 5.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'),
+    ];
+
+    const pillIcons = [
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 19.2c1.2-3.2 3.4-4.8 6.5-4.8s5.3 1.6 6.5 4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M12 3.5v2.2M12 18.3v2.2M3.5 12h2.2M18.3 12h2.2M6.2 6.2l1.6 1.6M16.2 16.2l1.6 1.6M17.8 6.2l-1.6 1.6M7.8 16.2l-1.6 1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.2" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.2" stroke="currentColor" stroke-width="1.7"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.2" stroke="currentColor" stroke-width="1.7"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.2" stroke="currentColor" stroke-width="1.7"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 19.5a7.5 7.5 0 1 0-7.2-9.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 12l4.2-4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>',
+    ];
+
+    // Per-slide copy matching the VoiOS card structure
+    const slideMeta = {
+      voios: {
+        group: "Smart OS",
+        desc: "Personalised recommendations, effortless navigation, and all your favourite apps in one place — so every night feels made for you.",
+        pills: ["Personalised Experience", "Easy Navigation", "All Your Apps In One Place", "Faster Performance"],
+      },
+      quartz: {
+        group: "Display",
+        desc: "A zero-dot panel with wide colour gamut — so every scene looks full, smooth, and true, without the screen getting in the way.",
+        pills: ["Zero Visible Dots", "Wide Colour Gamut", "True-to-Life Picture", "Cinematic Clarity"],
+      },
+      swiftmind: {
+        group: "CPU",
+        desc: "A faster brain for your TV — apps open quicker, menus stay smooth, and everyday use feels light from the first tap.",
+        pills: ["Faster Thinking", "Quicker Loading", "Smoother Navigation", "Lag-Free Everyday Use"],
+      },
+      truehue: {
+        group: "GPU",
+        desc: "Pixel-by-pixel colour processing that keeps tones natural and rich — so what you watch looks closer to how it was meant to look.",
+        pills: ["True Colour Processing", "Pixel-Level Tuning", "Natural Tones", "Rich Detail"],
+      },
+      optiram: {
+        group: "Memory",
+        desc: "Smart cache clearing keeps performance feeling fresh — fast on day one, and still fast years into living with it.",
+        pills: ["Auto Cache Clearing", "Lasting Speed", "Smooth Multitasking", "Always Ready"],
+      },
+      palette: {
+        group: "Picture AI",
+        desc: "A full picture-quality suite that paints every frame with balance — colour, contrast, and clarity working together.",
+        pills: ["AI Picture Tuning", "Balanced Colour", "Sharper Scenes", "Cinema-Ready Look"],
+      },
+      huesense: {
+        group: "Colour",
+        desc: "Intelligent colour enhancement that keeps hues honest and vivid — so outfits, skies, and skin tones always look right.",
+        pills: ["Accurate Colour", "Vivid Yet Natural", "Scene-Aware Tuning", "True Skin Tones"],
+      },
+      glowsense: {
+        group: "Brightness",
+        desc: "AI brightness that adapts like a lighting director — bright rooms stay clear, dark scenes stay deep and comfortable.",
+        pills: ["Adaptive Brightness", "Day & Night Ready", "Comfort Viewing", "Room-Aware Glow"],
+      },
+      depthsense: {
+        group: "Contrast",
+        desc: "Contrast that adds real depth — darker darks, brighter brights, and a picture that feels dimensional, not flat.",
+        pills: ["Deeper Blacks", "Brighter Highlights", "Added Dimension", "Cinematic Contrast"],
+      },
+      detailsense: {
+        group: "Sharpness",
+        desc: "Fine-detail sharpening that notices what others miss — textures stay crisp without looking forced or noisy.",
+        pills: ["Fine Detail", "Clean Sharpness", "Texture Clarity", "Edge Precision"],
+      },
+    };
 
     let index = 0;
     let timer = null;
 
     function accentName(name) {
-      if (/OS$/i.test(name) && name.length > 2) {
+      // Keep compound names whole so long titles like DepthSense never split/overlap
+      if (/OS$/i.test(name) && name.length > 2 && !/\s/.test(name)) {
         return escapeHtml(name.slice(0, -2)) + '<span class="accent">' + escapeHtml(name.slice(-2)) + "</span>";
       }
-      if (/AI/i.test(name)) {
-        return escapeHtml(name).replace(/AI/i, '<span class="accent">AI</span>');
-      }
-      const parts = String(name).split(/\s+/);
-      if (parts.length > 1) {
-        return (
-          escapeHtml(parts.slice(0, -1).join(" ")) +
-          ' <span class="accent">' +
-          escapeHtml(parts[parts.length - 1]) +
-          "</span>"
-        );
+      if (/\bAI\b/i.test(name)) {
+        return escapeHtml(name).replace(/\bAI\b/i, '<span class="accent">AI</span>');
       }
       return escapeHtml(name);
     }
 
-    function pillsFor(f) {
-      const defaults = [
-        "Personalised Experience",
-        "Easy Navigation",
-        "All Your Apps In One Place",
-        "Faster Performance",
-      ];
-      if (f.id === "voios") return defaults;
-      const bits = String(f.group || "")
-        .split(/[·|,/+-]/)
-        .map(function (s) {
-          return s.trim();
-        })
-        .filter(Boolean);
-      while (bits.length < 4) bits.push(defaults[bits.length]);
-      return bits.slice(0, 4);
+    function metaFor(f) {
+      return (
+        slideMeta[f.id] || {
+          group: f.group,
+          desc:
+            f.tagline +
+            " Built into every VOIR QLED experience — so the feature you pick is the one you actually feel.",
+          pills: ["Personalised Experience", "Easy Navigation", "All Your Apps In One Place", "Faster Performance"],
+        }
+      );
     }
 
     function keepTabVisible(btn) {
@@ -1851,9 +1920,16 @@
       }
     }
 
-    function show(i) {
+    const panel = el("featurePanel");
+    const imageElB = el("featureImageNext");
+    const copyEl = panel ? panel.querySelector(".feature-panel__copy") : null;
+    let switching = false;
+    let activeImage = imageEl;
+
+    function paintContent(i) {
       index = (i + features.length) % features.length;
       const f = features[index];
+      const meta = metaFor(f);
       let activeBtn = null;
       tabs.querySelectorAll(".feature-tab").forEach(function (btn, idx) {
         const on = idx === index;
@@ -1861,34 +1937,126 @@
         if (on) activeBtn = btn;
       });
       keepTabVisible(activeBtn);
-      if (groupEl) groupEl.textContent = f.group;
+      if (groupEl) groupEl.textContent = meta.group;
       if (nameEl) nameEl.innerHTML = accentName(f.name);
       if (tagEl) tagEl.textContent = f.tagline;
-      if (descEl) {
-        descEl.textContent =
-          f.tagline +
-          " Built into every VOIR QLED experience — so the feature you pick is the one you actually feel.";
-      }
+      if (descEl) descEl.textContent = meta.desc;
       if (ctaEl) ctaEl.textContent = "Explore " + f.name + " →";
       if (countEl) {
         countEl.textContent =
           String(index + 1).padStart(2, "0") + " / " + String(features.length).padStart(2, "0");
       }
       if (dashesEl) {
+        const dashCount = dashesEl.querySelectorAll(".feature-panel__dash").length || 5;
+        const activeDash =
+          features.length <= 1
+            ? 0
+            : Math.round((index / (features.length - 1)) * (dashCount - 1));
         dashesEl.querySelectorAll(".feature-panel__dash").forEach(function (dash, d) {
-          dash.classList.toggle("is-active", d === index);
+          dash.classList.toggle("is-active", d === activeDash);
         });
       }
       if (pillsEl) {
-        pillsEl.innerHTML = pillsFor(f)
-          .map(function (p) {
-            return "<li>" + escapeHtml(p) + "</li>";
+        pillsEl.innerHTML = meta.pills
+          .map(function (p, pi) {
+            return (
+              "<li>" +
+              (pillIcons[pi % pillIcons.length] || "") +
+              escapeHtml(p) +
+              "</li>"
+            );
           })
           .join("");
       }
-      if (imageEl) {
-        imageEl.src = images[index % images.length];
-        imageEl.alt = f.name;
+    }
+
+    function crossfadeImage(src, alt) {
+      if (!imageEl || !imageElB) {
+        if (imageEl) {
+          imageEl.src = src;
+          imageEl.alt = alt;
+        }
+        return;
+      }
+      if (
+        activeImage &&
+        activeImage.classList.contains("is-active") &&
+        (activeImage.getAttribute("src") || "").indexOf(src.replace(/^\.\//, "")) !== -1
+      ) {
+        activeImage.alt = alt || "";
+        return;
+      }
+      const incoming = activeImage === imageEl ? imageElB : imageEl;
+      const outgoing = activeImage;
+      const apply = function () {
+        incoming.alt = alt || "";
+        incoming.classList.add("is-active");
+        outgoing.classList.remove("is-active");
+        activeImage = incoming;
+      };
+      incoming.src = src;
+      if (incoming.complete) {
+        apply();
+      } else {
+        incoming.onload = apply;
+        incoming.onerror = apply;
+      }
+    }
+
+    function paint(i) {
+      paintContent(i);
+      const f = features[index];
+      crossfadeImage(images[index % images.length], f.name);
+    }
+
+    function show(i) {
+      const next = (i + features.length) % features.length;
+      if (next === index && nameEl && nameEl.textContent) {
+        paint(next);
+        return;
+      }
+      if (prefersReduced || !panel) {
+        paint(next);
+        return;
+      }
+      if (switching) {
+        paintContent(next);
+        crossfadeImage(images[next % images.length], features[next].name);
+        index = next;
+        return;
+      }
+
+      switching = true;
+      const f = features[next];
+      const src = images[next % images.length];
+
+      // Image crossfades without going blank; copy eases softly (never fully hides)
+      crossfadeImage(src, f.name);
+
+      if (typeof gsap !== "undefined" && copyEl) {
+        gsap.killTweensOf(copyEl);
+        gsap
+          .timeline({
+            onComplete: function () {
+              switching = false;
+            },
+          })
+          .to(copyEl, { opacity: 0.35, duration: 0.22, ease: "power1.out" })
+          .add(function () {
+            paintContent(next);
+          })
+          .to(copyEl, { opacity: 1, duration: 0.4, ease: "power2.out" });
+      } else if (copyEl) {
+        copyEl.style.transition = "opacity 0.35s ease";
+        copyEl.style.opacity = "0.35";
+        window.setTimeout(function () {
+          paintContent(next);
+          copyEl.style.opacity = "1";
+          switching = false;
+        }, 220);
+      } else {
+        paintContent(next);
+        switching = false;
       }
     }
 
@@ -1900,7 +2068,7 @@
           '" role="tab" data-index="' +
           i +
           '"><span class="feature-tab__icon">' +
-          iconSvg +
+          (tabIcons[i % tabIcons.length] || tabIcons[0]) +
           '</span><span class="feature-tab__label">' +
           escapeHtml(f.name) +
           "</span></button>"
@@ -1909,23 +2077,28 @@
       .join("");
 
     if (dashesEl) {
-      dashesEl.innerHTML = features
-        .map(function (_, i) {
-          return (
-            '<button type="button" class="feature-panel__dash' +
-            (i === 0 ? " is-active" : "") +
-            '" data-dash="' +
-            i +
-            '" aria-label="Feature ' +
-            (i + 1) +
-            '"></button>'
-          );
-        })
-        .join("");
+      // Match mock: 5 progress marks + count (01 / 10)
+      const dashCount = 5;
+      dashesEl.innerHTML = Array.from({ length: dashCount }, function (_, i) {
+        return (
+          '<button type="button" class="feature-panel__dash' +
+          (i === 0 ? " is-active" : "") +
+          '" data-dash="' +
+          i +
+          '" aria-label="Feature group ' +
+          (i + 1) +
+          '"></button>'
+        );
+      }).join("");
       dashesEl.addEventListener("click", function (e) {
         const dash = e.target.closest("[data-dash]");
         if (!dash) return;
-        show(parseInt(dash.getAttribute("data-dash"), 10));
+        const group = parseInt(dash.getAttribute("data-dash"), 10);
+        const mapped = Math.min(
+          features.length - 1,
+          Math.round((group / (dashCount - 1)) * (features.length - 1))
+        );
+        show(mapped);
         restart();
       });
     }
@@ -1953,7 +2126,13 @@
       }, 4800);
     }
 
-    show(0);
+    // Preload dark slide images for smoother swaps
+    images.forEach(function (src) {
+      const img = new Image();
+      img.src = src;
+    });
+
+    paint(0);
     restart();
   }
 
