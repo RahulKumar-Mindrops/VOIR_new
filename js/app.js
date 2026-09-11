@@ -1374,14 +1374,15 @@
       }
     });
 
-    /* Promise cards */
+    /* Promise cards — fade only so cards stay level */
     const promiseCards = gsap.utils.toArray("#promiseGrid > *");
     if (promiseCards.length) {
       gsap.from(promiseCards, {
-        y: 40,
-        duration: 0.95,
-        stagger: 0.12,
-        ease: "expo.out",
+        autoAlpha: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power2.out",
+        clearProps: "transform",
         scrollTrigger: {
           trigger: "#promiseGrid",
           start: "top 82%",
@@ -2139,37 +2140,30 @@
   function renderPromise() {
     const grid = el("promiseGrid");
     if (!grid || !window.VOIR) return;
-    const marks = ["01", "02", "03"];
     grid.innerHTML = window.VOIR.catalogue.pillars
       .map(function (col, i) {
+        const tone = i % 2 === 0 ? "light" : "dark";
         const items = col.items
           .map(function (it) {
             return (
               '<li class="promise-item">' +
-              '<span class="promise-item__dot" aria-hidden="true"></span>' +
-              '<div class="promise-item__body">' +
               '<span class="promise-item__name">' +
               escapeHtml(it.name) +
               "</span>" +
               '<span class="promise-item__text">' +
               escapeHtml(it.text) +
               "</span>" +
-              "</div>" +
               "</li>"
             );
           })
           .join("");
         return (
-          '<article class="promise-col" data-promise="' +
+          '<article class="promise-col promise-col--' +
+          tone +
+          '" data-promise="' +
           (i + 1) +
           '">' +
-          '<span class="promise-col__watermark" aria-hidden="true">' +
-          marks[i] +
-          "</span>" +
           '<div class="promise-col__top">' +
-          '<span class="promise-col__index">' +
-          marks[i] +
-          "</span>" +
           '<h3 class="promise-col__title">' +
           escapeHtml(col.title) +
           "</h3>" +
