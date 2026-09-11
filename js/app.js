@@ -2218,7 +2218,7 @@
       },
       Aesthetics: {
         role: "pair",
-        image: "images/remote.jpg",
+        image: "images/tv-angle.jpg",
         className: "ptr--pair ptr--aesthetics",
       },
     };
