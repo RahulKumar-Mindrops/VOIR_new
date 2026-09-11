@@ -23,11 +23,8 @@
 
   function initHero() {
     const video = document.getElementById("heroVideo");
-    const mask = document.querySelector(".hero-cinematic__video-mask");
-    const eyebrow = document.querySelector(".hero-cinematic__eyebrow");
     const title = document.querySelector(".hero-cinematic__title");
-    const sub = document.querySelector(".hero-cinematic__sub");
-    const scroll = document.querySelector(".hero-cinematic__scroll");
+    const screen = document.querySelector(".hero-cinematic__screen");
 
     /* Ensure video plays */
     if (video) {
@@ -35,7 +32,7 @@
     }
 
     if (prefersReduced) {
-      [eyebrow, title, sub, scroll].forEach(function (el) {
+      [title, screen].forEach(function (el) {
         if (el) {
           el.style.opacity = "1";
           el.style.transform = "none";
@@ -47,17 +44,13 @@
     /* Entrance timeline */
     const tl = gsap.timeline({
       defaults: { ease: "power3.out" },
-      delay: 0.3,
+      delay: 0.25,
     });
 
-    if (eyebrow)
-      tl.to(eyebrow, { opacity: 1, y: 0, duration: 0.8 }, 0);
     if (title)
-      tl.to(title, { opacity: 1, y: 0, duration: 1, ease: "power4.out" }, 0.15);
-    if (sub)
-      tl.to(sub, { opacity: 1, y: 0, duration: 0.8 }, 0.4);
-    if (scroll)
-      tl.to(scroll, { opacity: 1, duration: 0.6 }, 0.7);
+      tl.to(title, { opacity: 1, y: 0, duration: 1, ease: "power4.out" }, 0);
+    if (screen)
+      tl.to(screen, { opacity: 1, y: 0, duration: 1.05, ease: "power3.out" }, 0.2);
 
     /* Ken Burns — slow scale on the video */
     if (video) {
@@ -74,29 +67,15 @@
       );
     }
 
-    /* Parallax on scroll — video scales up, content fades */
-    if (mask) {
-      gsap.to(mask, {
-        scale: 1.05,
+    /* Parallax on scroll — screen rises gently */
+    if (screen) {
+      gsap.to(screen, {
+        y: -40,
         scrollTrigger: {
           trigger: ".hero-cinematic",
           start: "top top",
           end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-    }
-
-    var heroContent = document.querySelector(".hero-cinematic__content");
-    if (heroContent) {
-      gsap.to(heroContent, {
-        y: -80,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: ".hero-cinematic",
-          start: "60% top",
-          end: "bottom top",
-          scrub: 1,
+          scrub: 1.2,
         },
       });
     }
@@ -108,28 +87,38 @@
 
   function initStory() {
     var blocks = document.querySelectorAll(".story__block");
+    var processor = document.getElementById("storyProcessorVideo");
+    var aiVideo = document.getElementById("storyAiVideo");
+
+    if (processor) {
+      processor.play().catch(function () {});
+    }
+    if (aiVideo) {
+      aiVideo.play().catch(function () {});
+    }
+
     if (!blocks.length) return;
 
     if (prefersReduced) {
       blocks.forEach(function (b) {
-        b.classList.add("is-visible");
+        b.style.opacity = "1";
+        b.style.transform = "none";
       });
       return;
     }
 
-    blocks.forEach(function (block, i) {
+    blocks.forEach(function (block) {
       gsap.fromTo(
         block,
-        { opacity: 0, y: 60 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.9,
           ease: "power3.out",
           scrollTrigger: {
             trigger: block,
-            start: "top 80%",
-            end: "top 40%",
+            start: "top 85%",
             toggleActions: "play none none reverse",
           },
         }
@@ -145,29 +134,63 @@
     var stats = document.querySelectorAll(".tech-stat");
     var cards = document.querySelectorAll(".tech-card");
 
+    function animateCount(el) {
+      if (!el || el.dataset.counted === "1") return;
+      if (el.hasAttribute("data-count-text")) {
+        el.textContent = el.getAttribute("data-count-text");
+        el.dataset.counted = "1";
+        return;
+      }
+      var target = parseFloat(el.getAttribute("data-count") || "0");
+      var suffix = el.getAttribute("data-suffix") || "";
+      if (!target) return;
+      el.dataset.counted = "1";
+      var start = 0;
+      var duration = 1100;
+      var t0 = null;
+      function frame(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / duration);
+        var eased = 1 - Math.pow(1 - p, 3);
+        var val = Math.round(start + (target - start) * eased);
+        el.textContent = val + suffix;
+        if (p < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
     if (prefersReduced) {
-      stats.forEach(function (s) { s.classList.add("is-visible"); });
+      stats.forEach(function (s) {
+        s.classList.add("is-visible");
+        var v = s.querySelector(".tech-stat__value");
+        if (v) {
+          if (v.hasAttribute("data-count-text")) {
+            v.textContent = v.getAttribute("data-count-text");
+          } else if (v.hasAttribute("data-count")) {
+            v.textContent = v.getAttribute("data-count") + (v.getAttribute("data-suffix") || "");
+          }
+        }
+      });
       cards.forEach(function (c) { c.classList.add("is-visible"); });
       return;
     }
 
-    /* Intersection Observer for stats */
     var statsObs = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-visible");
+            animateCount(entry.target.querySelector(".tech-stat__value"));
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.25 }
     );
 
     stats.forEach(function (stat) {
       statsObs.observe(stat);
     });
 
-    /* Intersection Observer for cards */
     var cardsObs = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -326,8 +349,7 @@
 
   function initCinema() {
     var vids = [
-      document.getElementById("cinemaVideoV2"),
-      document.getElementById("techBgVideo")
+      document.getElementById("cinemaVideoV2")
     ];
 
     vids.forEach(function (video) {

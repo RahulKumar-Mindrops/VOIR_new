@@ -2100,32 +2100,32 @@
 
 .page-about .nav.is-scrolled,
 .page-about .nav--inner {
-  background: rgba(12, 12, 14, 0.92);
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: #fff;
+  border-bottom-color: rgba(0, 0, 0, 0.08);
 }
 
 .page-about .nav.is-scrolled .nav__logo,
 .page-about .nav.is-scrolled .nav__link,
 .page-about .nav--inner .nav__logo,
 .page-about .nav--inner .nav__link {
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(0, 0, 0, 0.72);
 }
 
 @media (max-width: 900px) {
   .page-about .nav.is-menu-open,
   .page-about .nav.is-menu-open.is-scrolled,
   .page-about .nav.is-menu-open.nav--inner {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background: #fff;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .page-about .nav.is-menu-open .nav__toggle span {
-    background: #ffffff !important;
+    background: #000 !important;
   }
 
   .nav-drawer__link {
-    color: #ffffff;
+    color: #0b1220;
   }
 }
 
@@ -2138,7 +2138,7 @@
 
 .page-about .nav.is-scrolled .nav__toggle span,
 .page-about .nav--inner .nav__toggle span {
-  background: #fff;
+  background: #000;
 }
 
 .leadership {

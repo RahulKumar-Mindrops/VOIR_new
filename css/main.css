@@ -376,7 +376,9 @@ button {
   right: 0;
   z-index: 1000;
   height: var(--nav-height);
-  transition: transform 0.5s var(--ease-out-expo), background 0.4s ease, backdrop-filter 0.4s ease;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  transition: transform 0.5s var(--ease-out-expo), background 0.4s ease, border-color 0.4s ease;
 }
 
 .nav.is-hidden {
@@ -386,10 +388,10 @@ button {
 .nav.is-menu-open {
   transform: none !important;
   z-index: 10060;
-  background: rgba(0, 0, 0, 0.35);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .nav-drawer {
@@ -397,10 +399,10 @@ button {
 }
 
 .nav.is-scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
+  background: #fff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .nav__inner {
@@ -511,7 +513,7 @@ button {
   display: block;
   height: 2px;
   width: 100%;
-  background: #fff;
+  background: #000;
   border-radius: 2px;
   transition: transform 0.35s var(--ease-out-expo), opacity 0.25s ease;
 }
@@ -869,34 +871,29 @@ button {
   background: #f06824;
 }
 
-/* Nav on dark hero */
+/* White nav bar — dark logo/links (always) */
+.nav .nav__logo,
 .nav:not(.is-scrolled) .nav__logo,
-.nav:not(.is-scrolled) .nav__link {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.nav:not(.is-scrolled) .nav__link:hover {
-  color: #fff;
-}
-
-.nav:not(.is-scrolled) .nav__toggle span {
-  background: #fff;
-}
-
 .nav.is-scrolled .nav__logo {
-  color: var(--color-ink);
+  color: #000;
 }
 
+.nav .nav__link,
+.nav:not(.is-scrolled) .nav__link,
 .nav.is-scrolled .nav__link {
-  color: var(--color-text-secondary);
+  color: rgba(0, 0, 0, 0.72);
 }
 
+.nav .nav__link:hover,
+.nav:not(.is-scrolled) .nav__link:hover,
 .nav.is-scrolled .nav__link:hover {
-  color: var(--color-text-primary);
+  color: #000;
 }
 
+.nav .nav__toggle span,
+.nav:not(.is-scrolled) .nav__toggle span,
 .nav.is-scrolled .nav__toggle span {
-  background: var(--color-ink);
+  background: #000;
 }
 
 /* ============================================
@@ -3726,7 +3723,7 @@ button {
 
   .nav.is-menu-open .nav__logo {
     z-index: 10061;
-    color: #f06824;
+    color: #000;
   }
 
   .nav.is-menu-open .nav__toggle {
@@ -3734,7 +3731,7 @@ button {
   }
 
   .nav.is-menu-open .nav__toggle span {
-    background: #ffffff;
+    background: #000;
   }
 
   body.nav-drawer-open {

@@ -7,3 +7,6 @@ Thumbs.db
 node_modules/
 .idea/
 .vscode/
+
+# Local video scratch (not for deploy)
+videos/_candidates/
