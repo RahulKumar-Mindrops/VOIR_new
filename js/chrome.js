@@ -20,10 +20,21 @@
       { href: "support.html", label: "Support", id: "support" },
       { href: "contact.html", label: "Contact Us", id: "contact" },
     ];
+    const homeHeroNav = [
+      { href: "tvs.html", label: "TVs", id: "tvs" },
+      { href: "#hero", label: "The Experience", id: "experience" },
+      { href: "#technology", label: "Technology", id: "technology" },
+      { href: "about.html", label: "Our Story", id: "about" },
+      { href: "#story", label: "Why VOIR", id: "why" },
+      { href: "support.html", label: "Support", id: "support" },
+      { href: "tvs.html", label: "Where to Buy", id: "buy" },
+    ];
     const links =
-      window.VOIR && window.VOIR.nav && window.VOIR.nav.length
-        ? window.VOIR.nav
-        : fallbackNav;
+      active === "home"
+        ? homeHeroNav
+        : window.VOIR && window.VOIR.nav && window.VOIR.nav.length
+          ? window.VOIR.nav
+          : fallbackNav;
     const items = links
       .map(function (l) {
         const isActive = l.id === active;
@@ -55,20 +66,38 @@
       .join("");
 
     const solid = active !== "home" ? " is-scrolled nav--inner" : "";
+    const homeClass = active === "home" ? " nav--hero" : "";
+    const logo =
+      '<a href="index.html" class="nav__logo" aria-label="VOIR home">' +
+      '<img src="images/whitelogo.png?v=1" alt="VOIR" class="nav__logo-img" width="180" height="65" />' +
+      "</a>";
+    const search =
+      active === "home"
+        ? '<button type="button" class="nav__search" id="navSearch" aria-label="Search">' +
+          '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true">' +
+          '<circle cx="11" cy="11" r="6.25" stroke="currentColor" stroke-width="1.4"/>' +
+          '<path d="M16.2 16.2L20 20" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+          "</svg></button>"
+        : "";
+    const toggleSpans =
+      active === "home" ? "<span></span><span></span>" : "<span></span><span></span><span></span>";
+
     return (
       '<header class="nav' +
       solid +
+      homeClass +
       '" id="nav">' +
       '<div class="nav__inner">' +
-      '<a href="index.html" class="nav__logo" aria-label="VOIR home">' +
-      '<img src="images/updatedlog.png?v=4" alt="VOIR" class="nav__logo-img" />' +
-      "</a>" +
+      logo +
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
       "</nav>" +
+      '<div class="nav__actions">' +
+      search +
       '<button type="button" class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navDrawer">' +
-      "<span></span><span></span><span></span>" +
+      toggleSpans +
       "</button>" +
+      "</div>" +
       "</div></header>" +
       '<div class="nav-drawer" id="navDrawer" hidden>' +
       '<nav class="nav-drawer__list" aria-label="Mobile">' +
@@ -99,7 +128,7 @@
       '<div class="footer__top">' +
       '<div class="footer__col footer__col--brand">' +
       '<a href="index.html" class="footer__logo">' +
-      '<img src="images/updatedlog.png?v=4" alt="VOIR" class="footer__logo-img" />' +
+      '<img src="images/whitelogo.png?v=1" alt="VOIR" class="footer__logo-img" width="200" height="72" />' +
       "</a>" +
       "</div>" +
       '<div class="footer__col">' +
