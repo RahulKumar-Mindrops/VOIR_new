@@ -1707,7 +1707,7 @@ body.page-home .section__eyebrow {
 .promise-v2 {
   position: relative;
   background: #000;
-  padding: 120px 0 130px;
+  padding: 120px 0 0;
   overflow: hidden;
   color: #fff;
 }
@@ -1926,83 +1926,182 @@ body.page-home .section__eyebrow {
   display: none;
 }
 
-/* Living / AI companion band */
+/* Living / brand film cinematic band */
 .promise-v2__living {
-  text-align: center;
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.promise-v2__living-title {
-  font-family: var(--font-title);
-  font-size: clamp(1.85rem, 3.8vw, 2.8rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin: 0 auto 40px;
-  max-width: 16ch;
-  color: #fff;
-}
-
-.promise-v2__living-stage {
   position: relative;
-  margin: 0 auto 40px;
-  border-radius: 8px;
-  overflow: visible;
+  width: 100%;
+  margin: 88px 0 0;
+  padding: 0;
+  max-width: none;
+  text-align: center;
 }
 
-.promise-v2__living-img {
+.promise-v2__living-frame {
+  position: relative;
+  width: 100%;
+  min-height: clamp(480px, 70vh, 780px);
+  overflow: hidden;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+}
+
+.promise-v2__living-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+  display: block;
+  z-index: 0;
+  transform: scale(1.02);
+}
+
+.promise-v2__living-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 48%, rgba(0, 0, 0, 0.28), transparent 70%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, transparent 28%, transparent 72%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.promise-v2__living-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 48px 24px;
+  max-width: 720px;
+}
+
+.promise-v2__living-logo {
+  display: block;
+  width: min(240px, 52vw);
+  height: auto;
+  margin: 0 0 18px;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+}
+
+.promise-v2__living-tagline {
+  margin: 0 0 16px;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+.promise-v2__living-line {
+  margin: 0 0 28px;
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(0.92rem, 1.5vw, 1.1rem);
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.55);
+}
+
+.promise-v2__film-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.promise-v2__film-btn:hover,
+.promise-v2__film-btn:focus-visible {
+  opacity: 0.82;
+  outline: none;
+}
+
+.promise-v2__film-btn:hover .promise-v2__film-play,
+.promise-v2__film-btn:focus-visible .promise-v2__film-play {
+  transform: scale(1.06);
+}
+
+.promise-v2__film-play {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  transition: transform 0.35s ease;
+}
+
+.promise-v2__film-play svg {
+  margin-left: 2px;
+}
+
+.promise-v2__film-label {
+  font-family: "Outfit", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.brand-film-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.brand-film-modal[hidden] {
+  display: none !important;
+}
+
+.brand-film-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.brand-film-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(1100px, 100%);
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.brand-film-modal__close {
+  position: absolute;
+  top: -42px;
+  right: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.brand-film-modal__video {
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: 8px;
-  background: #111;
-}
-
-.promise-v2__chips {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.promise-v2__chip {
-  position: absolute;
-  padding: 10px 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(18, 18, 22, 0.55);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-  white-space: nowrap;
-}
-
-.promise-v2__chip--tl { top: 12%; left: 4%; }
-.promise-v2__chip--tr { top: 18%; right: 6%; }
-.promise-v2__chip--bl { bottom: 16%; left: 10%; }
-.promise-v2__chip--br { bottom: 22%; right: 8%; }
-
-.promise-v2__living-copy {
-  max-width: 54ch;
-  margin: 0 auto;
-}
-
-.promise-v2__living-name {
-  font-family: var(--font-title);
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: 0 0 14px;
-  color: #fff;
-}
-
-.promise-v2__living-text {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
+  background: #000;
+  max-height: 80vh;
 }
 
 /* ============================================
@@ -2421,7 +2520,7 @@ body.page-home .footer__social-link svg {
   }
 
   .promise-v2 {
-    padding: 64px 0 72px;
+    padding: 64px 0 0;
   }
 
   .promise-v2__inner {
@@ -2466,17 +2565,38 @@ body.page-home .footer__social-link svg {
     max-width: none;
   }
 
-  .promise-v2__living-title {
-    max-width: none;
-    font-size: clamp(1.35rem, 6vw, 1.85rem);
+  .promise-v2__living {
+    margin-top: 56px;
   }
 
-  .promise-v2__chips {
-    display: none;
+  .promise-v2__living-frame {
+    min-height: clamp(360px, 58vh, 560px);
   }
 
-  .promise-v2__living-text {
-    font-size: 0.95rem;
+  .promise-v2__living-logo {
+    width: min(180px, 52vw);
+    margin-bottom: 14px;
+  }
+
+  .promise-v2__living-tagline {
+    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+  }
+
+  .promise-v2__living-line {
+    font-size: 0.92rem;
+    margin-bottom: 22px;
+    max-width: 28ch;
+  }
+
+  .promise-v2__film-play {
+    width: 38px;
+    height: 38px;
+  }
+
+  .promise-v2__film-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
   }
 }
 

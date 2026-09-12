@@ -580,6 +580,49 @@
   }
 
   /* ----------------------------------------
+     BRAND FILM — Living banner modal
+  ---------------------------------------- */
+
+  function initBrandFilm() {
+    var openBtn = document.getElementById("brandFilmOpen");
+    var modal = document.getElementById("brandFilmModal");
+    var video = document.getElementById("brandFilmVideo");
+    if (!openBtn || !modal || !video) return;
+
+    var lastFocus = null;
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      var play = video.play();
+      if (play && typeof play.catch === "function") play.catch(function () {});
+      var closer = modal.querySelector("[data-brand-film-close]");
+      if (closer) closer.focus();
+    }
+
+    function closeModal() {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (e) {}
+      modal.hidden = true;
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    }
+
+    openBtn.addEventListener("click", openModal);
+    modal.querySelectorAll("[data-brand-film-close]").forEach(function (el) {
+      el.addEventListener("click", closeModal);
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !modal.hidden) closeModal();
+    });
+  }
+
+  /* ----------------------------------------
      GENERIC REVEAL — data-hp-reveal
   ---------------------------------------- */
 
@@ -691,6 +734,7 @@
     initFeatureLab();
     initTvSeries();
     initPromise();
+    initBrandFilm();
     initReveals();
   }
 
