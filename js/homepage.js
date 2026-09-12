@@ -417,34 +417,6 @@
   }
 
   /* ----------------------------------------
-     CINEMA — Video play/pause on visibility
-  ---------------------------------------- */
-
-  function initCinema() {
-    var vids = [
-      document.getElementById("cinemaVideoV2")
-    ];
-
-    vids.forEach(function (video) {
-      if (!video) return;
-      var obs = new IntersectionObserver(
-        function (entries) {
-          entries.forEach(function (entry) {
-            if (entry.isIntersecting) {
-              video.play().catch(function () {});
-            } else {
-              video.pause();
-            }
-          });
-        },
-        { threshold: 0.2 }
-      );
-
-      obs.observe(video);
-    });
-  }
-
-  /* ----------------------------------------
      GENERIC REVEAL — data-hp-reveal
   ---------------------------------------- */
 
@@ -483,7 +455,6 @@
     initTechShowcase();
     initTvSeries();
     initPromise();
-    initCinema();
     initReveals();
   }
 

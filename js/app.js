@@ -2468,7 +2468,7 @@
         '<p class="section__eyebrow">Vantage Series</p>' +
         '<h2 class="section__title" style="font-size:clamp(1.6rem,3vw,2.2rem)">Coming soon</h2>' +
         '<p class="section__lead">Models, sizes, and full specifications for Vantage Series will appear here first.</p>' +
-        '<a href="index.html#cinema" class="btn btn--primary" data-magnetic>Back to homepage</a>' +
+        '<a href="tvs.html" class="btn btn--primary" data-magnetic>Browse all TVs</a>' +
         "</div>";
       return;
     }

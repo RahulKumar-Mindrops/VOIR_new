@@ -1503,82 +1503,6 @@ body.page-home .section__eyebrow {
 }
 
 /* ============================================
-   SECTION 6 — CINEMATIC TV SHOWCASE
-   ============================================ */
-
-.cinema-v2 {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  background: #000;
-}
-
-.cinema-v2__video-wrap {
-  position: absolute;
-  inset: 0;
-}
-
-.cinema-v2__video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.cinema-v2__overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.4) 100%);
-  pointer-events: none;
-}
-
-.cinema-v2__content {
-  position: absolute;
-  bottom: 60px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  text-align: center;
-  width: 90%;
-  max-width: 600px;
-}
-
-.cinema-v2__tagline {
-  font-family: var(--font-title);
-  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-  font-weight: 300;
-  color: rgba(255,255,255,0.7);
-  letter-spacing: 0.02em;
-  margin: 0 0 16px;
-}
-
-.cinema-v2__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #fff;
-  padding: 12px 24px;
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 999px;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  text-decoration: none;
-  transition: border-color 0.3s ease, background 0.3s ease;
-}
-
-.cinema-v2__cta:hover {
-  border-color: rgba(255,255,255,0.5);
-  background: rgba(0,0,0,0.5);
-}
-
-
-/* ============================================
    HOMEPAGE FOOTER OVERRIDE
    ============================================ */
 
@@ -1782,14 +1706,6 @@ body.page-home .footer__bg {
 
   .promise-v2__chips {
     display: none;
-  }
-
-  .cinema-v2__content {
-    bottom: 40px;
-  }
-
-  .cinema-v2__tagline {
-    font-size: 1.1rem;
   }
 }
 
