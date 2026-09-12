@@ -210,14 +210,70 @@
     var line = document.querySelector(".tv-series__tab-line");
     if (!tabs.length || !panels.length) return;
 
+    function getPanelVideo(panel) {
+      return panel ? panel.querySelector(".tv-series__video") : null;
+    }
+
+    function pauseSeriesVideos() {
+      panels.forEach(function (panel) {
+        var video = getPanelVideo(panel);
+        if (!video) return;
+        video.pause();
+        video.classList.remove("is-playing");
+      });
+    }
+
+    function playSeriesVideo(panel) {
+      var video = getPanelVideo(panel);
+      if (!video) return;
+
+      var tryPlay = function () {
+        video.muted = true;
+        var playPromise = video.play();
+        if (playPromise && typeof playPromise.then === "function") {
+          playPromise
+            .then(function () {
+              video.classList.add("is-ready", "is-playing");
+            })
+            .catch(function () {
+              /* Autoplay may be blocked until interaction */
+            });
+        } else {
+          video.classList.add("is-ready", "is-playing");
+        }
+      };
+
+      if (video.readyState >= 2) {
+        tryPlay();
+      } else {
+        video.addEventListener(
+          "loadeddata",
+          function onReady() {
+            video.classList.add("is-ready");
+            tryPlay();
+          },
+          { once: true }
+        );
+        video.load();
+      }
+    }
+
     function activateTab(id) {
       tabs.forEach(function (tab) {
         tab.classList.toggle("is-active", tab.dataset.series === id);
       });
 
+      pauseSeriesVideos();
+
       panels.forEach(function (panel) {
         var isActive = panel.dataset.series === id;
         panel.classList.toggle("is-active", isActive);
+        if (isActive) {
+          /* Slight delay lets the fade transition start cleanly */
+          window.setTimeout(function () {
+            playSeriesVideo(panel);
+          }, 80);
+        }
       });
 
       /* Move underline */
@@ -227,11 +283,22 @@
           var nav = document.querySelector(".tv-series__nav");
           var navRect = nav.getBoundingClientRect();
           var tabRect = activeTab.getBoundingClientRect();
-          line.style.left = (tabRect.left - navRect.left) + "px";
+          line.style.top = "auto";
+          line.style.bottom = "0px";
+          line.style.left = tabRect.left - navRect.left + "px";
           line.style.width = tabRect.width + "px";
         }
       }
     }
+
+    /* Fade-in when each series video can play */
+    panels.forEach(function (panel) {
+      var video = getPanelVideo(panel);
+      if (!video) return;
+      video.addEventListener("canplay", function () {
+        video.classList.add("is-ready");
+      });
+    });
 
     tabs.forEach(function (tab) {
       tab.addEventListener("click", function () {
@@ -239,10 +306,10 @@
       });
     });
 
-    /* Initialize underline position */
+    /* Initialize underline + active video */
     var firstActive = document.querySelector(".tv-series__tab.is-active");
-    if (firstActive && line) {
-      setTimeout(function() {
+    if (firstActive) {
+      setTimeout(function () {
         activateTab(firstActive.dataset.series);
       }, 100);
     }
@@ -266,7 +333,8 @@
         );
 
         gsap.fromTo(
-          section.querySelector(".tv-series__nav"),
+          section.querySelector(".tv-series__toolbar") ||
+            section.querySelector(".tv-series__nav"),
           { opacity: 0, y: 20 },
           {
             opacity: 1,
