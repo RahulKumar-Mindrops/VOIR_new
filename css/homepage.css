@@ -1226,8 +1226,8 @@ body.page-home .section__eyebrow {
 
 .promise-v2__header {
   text-align: center;
-  margin: 0 auto 64px;
-  max-width: 640px;
+  margin: 0 auto 48px;
+  max-width: 720px;
 }
 
 .promise-v2__eyebrow {
@@ -1241,12 +1241,14 @@ body.page-home .section__eyebrow {
 
 .promise-v2__title {
   font-family: var(--font-title);
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(1.5rem, 3.2vw, 2.75rem);
   font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: #fff;
   margin: 0 0 18px;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .promise-v2__lead {
@@ -1258,19 +1260,23 @@ body.page-home .section__eyebrow {
 
 .promise-v2__stage {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 48px 56px;
-  align-items: center;
-  margin-bottom: 120px;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 36px 40px;
+  align-items: start;
+  max-width: 920px;
+  margin: 0 auto 100px;
 }
 
 .promise-v2__visual {
   position: relative;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  width: 100%;
+  aspect-ratio: 4 / 3;
   background: #111;
-  min-height: 420px;
+  min-height: 0;
+  max-height: none;
+  align-self: start;
 }
 
 .promise-v2__shot {
@@ -1280,26 +1286,33 @@ body.page-home .section__eyebrow {
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 0.55s ease, transform 0.8s ease;
+  z-index: 0;
+  transition: opacity 0.55s ease;
+  will-change: opacity;
+  pointer-events: none;
 }
 
 .promise-v2__shot.is-active {
   opacity: 1;
-  transform: scale(1);
+  z-index: 1;
 }
 
 .promise-v2__accordion {
   display: flex;
   flex-direction: column;
+  min-height: 400px;
 }
 
 .promise-acc {
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.promise-acc.is-open {
+  flex: 1 1 auto;
 }
 
 .promise-acc:last-child {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .promise-acc__trigger {
@@ -1307,8 +1320,8 @@ body.page-home .section__eyebrow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 20px;
-  padding: 22px 0;
+  gap: 16px;
+  padding: 18px 0 14px;
   background: none;
   border: 0;
   cursor: pointer;
@@ -1317,112 +1330,97 @@ body.page-home .section__eyebrow {
   font: inherit;
 }
 
+.promise-acc__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
 .promise-acc__headline {
   font-family: var(--font-title);
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
-  font-weight: 500;
+  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.3;
-  color: rgba(255, 255, 255, 0.88);
+  color: #fff;
+}
+
+.promise-acc__name {
+  margin: 0;
+  font-family: var(--font-body, inherit);
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .promise-acc__icon {
   position: relative;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
   margin-top: 6px;
 }
 
 .promise-acc__icon::before,
 .promise-acc__icon::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  background: rgba(255, 255, 255, 0.75);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  content: none;
 }
 
 .promise-acc__icon::before {
-  width: 14px;
-  height: 1.5px;
-  transform: translate(-50%, -50%);
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.85);
+  transform: translate(-50%, -60%) rotate(45deg);
+  transition: transform 0.3s ease;
+  background: none;
 }
 
-.promise-acc__icon::after {
-  width: 1.5px;
-  height: 14px;
-  transform: translate(-50%, -50%);
-}
-
-.promise-acc.is-open .promise-acc__icon::after {
-  transform: translate(-50%, -50%) scaleY(0);
+.promise-acc.is-open .promise-acc__icon::before {
+  top: 55%;
+  transform: translate(-50%, -40%) rotate(-135deg);
 }
 
 .promise-acc__panel {
-  max-height: 0;
-  overflow: hidden;
+  display: grid;
+  grid-template-rows: 0fr;
   opacity: 0;
-  transition: max-height 0.45s ease, opacity 0.3s ease, padding 0.3s ease;
-  padding: 0;
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease;
+}
+
+.promise-acc__panel-inner {
+  overflow: hidden;
+  min-height: 0;
 }
 
 .promise-acc.is-open .promise-acc__panel {
-  max-height: 560px;
+  grid-template-rows: 1fr;
   opacity: 1;
-  padding-bottom: 8px;
 }
 
-.promise-acc__name {
-  margin: 0 0 10px;
-  font-family: var(--font-title);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #f06824;
+.promise-acc.is-open .promise-acc__panel-inner {
+  padding-bottom: 18px;
 }
 
 .promise-acc__text {
-  margin: 0 0 18px;
-  font-size: 0.95rem;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.58);
-  max-width: 44ch;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.62);
+  max-width: 48ch;
 }
 
 .promise-acc__techs {
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.promise-acc__techs li {
-  font-size: 0.84rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.48);
-  padding-left: 14px;
-  position: relative;
-}
-
-.promise-acc__techs li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(240, 104, 36, 0.8);
-}
-
-.promise-acc__techs strong {
-  color: rgba(255, 255, 255, 0.78);
-  font-weight: 560;
+  display: none;
 }
 
 /* Living / AI companion band */
@@ -1695,13 +1693,18 @@ body.page-home .footer__bg {
 
   .promise-v2__stage {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 28px;
     margin-bottom: 88px;
+    max-width: none;
   }
 
   .promise-v2__visual {
     aspect-ratio: 16 / 10;
-    min-height: 280px;
+    max-width: 520px;
+  }
+
+  .promise-v2__accordion {
+    min-height: 0;
   }
 }
 
