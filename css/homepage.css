@@ -1241,7 +1241,7 @@ body.page-home .section__eyebrow {
 
 .promise-v2__title {
   font-family: var(--font-title);
-  font-size: clamp(1.5rem, 3.2vw, 2.75rem);
+  font-size: clamp(1.45rem, 3.2vw, 2.75rem);
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -1509,10 +1509,36 @@ body.page-home .section__eyebrow {
 body.page-home .footer {
   background: #ffffff;
   border-top: 1px solid rgba(26, 18, 12, 0.1);
+  color: rgba(26, 18, 12, 0.72);
+  --color-ink: #1a120c;
+  --color-accent: #f06824;
+  --color-text-primary: #1a120c;
+  --color-text-secondary: rgba(26, 18, 12, 0.62);
+  --color-text-muted: rgba(26, 18, 12, 0.45);
+  --color-border: rgba(26, 18, 12, 0.1);
 }
 
 body.page-home .footer__bg {
   display: none;
+}
+
+body.page-home .footer__social-link {
+  color: #1a120c;
+  border-color: rgba(26, 18, 12, 0.22);
+  background: #fff;
+}
+
+body.page-home .footer__social-link:hover {
+  color: #f06824;
+  border-color: #f06824;
+  background: rgba(240, 104, 36, 0.1);
+}
+
+body.page-home .footer__social-link svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  color: inherit;
 }
 
 

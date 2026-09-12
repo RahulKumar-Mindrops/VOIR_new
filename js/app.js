@@ -147,26 +147,29 @@
         ? preloader.querySelector(".preloader__progress-wrap")
         : null;
 
-      if (!preloader || prefersReduced) {
-        if (preloader) preloader.remove();
+      const done = function () {
         document.body.classList.remove("is-loading");
+        if (preloader && preloader.parentNode) {
+          preloader.remove();
+        }
         resolve();
+      };
+
+      if (!preloader || prefersReduced || !window.gsap) {
+        done();
         return;
       }
 
       document.body.classList.add("is-loading");
 
       let settled = false;
-      const finish = () => {
+      const finish = function () {
         if (settled) return;
         settled = true;
-        document.body.classList.remove("is-loading");
-        preloader.classList.add("is-done");
-        gsap.set(preloader, { display: "none" });
-        resolve();
+        done();
       };
 
-      const setLoadProgress = (raw) => {
+      const setLoadProgress = function (raw) {
         const v = Math.max(0, Math.min(100, Math.round(raw)));
         const remain = 100 - v;
         if (logoFill) {
@@ -176,101 +179,73 @@
         if (percent) percent.textContent = v + "%";
       };
 
-      gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
-      gsap.set(progressWrap, { opacity: 0, scaleX: 0.88 });
-      gsap.set(percent, { opacity: 0, y: 10 });
-      gsap.set(brand, { opacity: 0, y: 18 });
-      setLoadProgress(0);
+      try {
+        if (progress) gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
+        if (progressWrap) gsap.set(progressWrap, { opacity: 0, scaleX: 0.88 });
+        if (percent) gsap.set(percent, { opacity: 0, y: 10 });
+        if (brand) gsap.set(brand, { opacity: 0, y: 18 });
+        setLoadProgress(0);
 
-      const counter = { value: 0 };
-      const tl = gsap.timeline({ onComplete: finish });
+        const counter = { value: 0 };
+        const tl = gsap.timeline({
+          onComplete: finish,
+          onError: finish,
+        });
 
-      /* Brand settles in (ghost visible first) */
-      tl.to(brand, {
-        opacity: 1,
-        y: 0,
-        duration: 0.75,
-        ease: "power3.out",
-      });
+        if (brand) {
+          tl.to(brand, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power3.out",
+          });
+        }
 
-      /* Progress track + percent */
-      tl.to(
-        progressWrap,
-        {
-          opacity: 1,
-          scaleX: 1,
-          duration: 0.55,
-          ease: "power2.out",
-        },
-        "-=0.3"
-      );
+        if (progressWrap) {
+          tl.to(
+            progressWrap,
+            {
+              opacity: 1,
+              scaleX: 1,
+              duration: 0.4,
+              ease: "power2.out",
+            },
+            "-=0.2"
+          );
+        }
 
-      tl.to(
-        percent,
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.45,
-          ease: "power2.out",
-        },
-        "<0.05"
-      );
+        if (percent) {
+          tl.to(
+            percent,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.35,
+              ease: "power2.out",
+            },
+            "<"
+          );
+        }
 
-      /* Fill white through VOIR + bar + % together */
-      tl.to(
-        counter,
-        {
+        tl.to(counter, {
           value: 100,
-          duration: 2.35,
+          duration: 1.6,
           ease: "power2.inOut",
-          onUpdate: () => setLoadProgress(counter.value),
-        },
-        "-=0.15"
-      );
+          onUpdate: function () {
+            setLoadProgress(counter.value);
+          },
+        });
 
-      /* Soft flash at full */
-      tl.to(brand, {
-        opacity: 0.92,
-        duration: 0.2,
-        yoyo: true,
-        repeat: 1,
-        ease: "sine.inOut",
-      });
-
-      /* Exit */
-      tl.to(
-        brand,
-        {
-          y: -22,
+        tl.to(preloader, {
           opacity: 0,
-          duration: 0.5,
+          duration: 0.45,
           ease: "power2.in",
-        },
-        "+=0.18"
-      );
+        });
+      } catch (err) {
+        finish();
+      }
 
-      tl.to(
-        [progressWrap, percent],
-        {
-          opacity: 0,
-          y: -12,
-          duration: 0.4,
-          ease: "power2.in",
-        },
-        "<"
-      );
-
-      tl.to(
-        preloader,
-        {
-          clipPath: "inset(0 0 100% 0)",
-          duration: 0.95,
-          ease: "power4.inOut",
-        },
-        "-=0.12"
-      );
-
-      window.setTimeout(finish, 6000);
+      window.setTimeout(finish, 3200);
     });
   }
 

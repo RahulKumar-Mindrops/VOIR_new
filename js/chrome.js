@@ -101,7 +101,6 @@
       '<a href="index.html" class="footer__logo">' +
       '<img src="images/updatedlog.png?v=4" alt="VOIR" class="footer__logo-img" />' +
       "</a>" +
-      '<p class="footer__about">Thoughtful technology for brighter homes.</p>' +
       "</div>" +
       '<div class="footer__col">' +
       '<h4 class="footer__heading">Products</h4>' +
