@@ -4,7 +4,7 @@
 
 .nav__logo-img {
   display: block;
-  height: 40px;
+  height: 28px;
   width: auto;
   object-fit: contain;
   filter: none;
@@ -19,7 +19,7 @@
 }
 
 .nav__link.is-active {
-  color: var(--color-accent);
+  color: #f06824;
 }
 
 .nav__link.is-active span::after {
@@ -34,7 +34,7 @@
 .nav.is-scrolled .nav__logo,
 .nav.is-scrolled .nav__link,
 .nav.is-scrolled .nav__link:hover {
-  color: var(--color-ink);
+  color: #000;
 }
 
 .nav.is-scrolled .nav__tagline {
@@ -42,12 +42,12 @@
 }
 
 .nav.is-scrolled .nav__link {
-  color: var(--color-text-secondary);
+  color: rgba(0, 0, 0, 0.78);
 }
 
 .nav.is-scrolled .nav__link:hover,
 .nav.is-scrolled .nav__link.is-active {
-  color: var(--color-accent);
+  color: #f06824;
 }
 
 .nav.is-scrolled .nav__toggle span {
@@ -171,11 +171,11 @@
 .footer__links a:hover,
 .footer__legal a:hover,
 .footer__newsletter input {
-  color: #fff;
+  color: var(--color-accent);
 }
 
 .footer__social-link {
-  color: #fff;
+  color: var(--color-ink);
 }
 
 .btn--ghost {
@@ -2753,7 +2753,7 @@ body.leader-modal-open {
   }
 
   .nav__logo-img {
-    height: 34px;
+    height: 24px;
   }
 
   .page-hero .hero__title {

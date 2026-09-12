@@ -28,12 +28,12 @@ window.VOIR = {
   },
 
   nav: [
+    { href: "index.html", label: "Home", id: "home" },
     { href: "tvs.html", label: "Product", id: "tvs" },
-    // { href: "air-coolers.html", label: "Air Coolers", id: "air-coolers" },
-    // { href: "washing-machines.html", label: "Washing Machines", id: "washing-machines" },
-    // { href: "accessories.html", label: "Accessories", id: "accessories" },
+    { href: "innovation.html", label: "Innovation", id: "innovation" },
     { href: "about.html", label: "About", id: "about" },
     { href: "support.html", label: "Support", id: "support" },
+    { href: "contact.html", label: "Contact Us", id: "contact" },
   ],
 
   features: [

@@ -69,7 +69,7 @@ body.page-home .nav.is-menu-open {
 
 body.page-home .nav__logo,
 body.page-home .nav__link {
-  color: #000;
+  color: #000 !important;
 }
 
 body.page-home .nav__tagline {
@@ -77,12 +77,18 @@ body.page-home .nav__tagline {
 }
 
 body.page-home .nav__link {
-  color: rgba(0, 0, 0, 0.72);
+  color: rgba(0, 0, 0, 0.78) !important;
 }
 
 body.page-home .nav__link:hover,
 body.page-home .nav__link.is-active {
-  color: #000;
+  color: #f06824 !important;
+}
+
+body.page-home .nav__links {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
 }
 
 body.page-home .nav__toggle span {
@@ -1375,8 +1381,8 @@ body.page-home .section__eyebrow {
    ============================================ */
 
 body.page-home .footer {
-  background: #050505;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  background: #ffffff;
+  border-top: 1px solid rgba(26, 18, 12, 0.1);
 }
 
 body.page-home .footer__bg {

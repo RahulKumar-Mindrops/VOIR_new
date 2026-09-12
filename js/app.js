@@ -284,25 +284,17 @@
     const drawer = document.getElementById("navDrawer");
     if (!nav) return;
 
-    let lastY = 0;
-
     ScrollTrigger.create({
       start: 0,
       end: "max",
       onUpdate: (self) => {
         const y = self.scroll();
-        if (nav.classList.contains("is-menu-open")) {
-          nav.classList.remove("is-hidden");
-          lastY = y;
-          return;
-        }
+        if (nav.classList.contains("is-menu-open")) return;
 
         if (y > 60) nav.classList.add("is-scrolled");
         else if (!nav.classList.contains("nav--inner")) nav.classList.remove("is-scrolled");
 
-        if (y > lastY + 4 && y > 120) nav.classList.add("is-hidden");
-        else if (y < lastY - 4) nav.classList.remove("is-hidden");
-        lastY = y;
+        nav.classList.remove("is-hidden");
       },
     });
 

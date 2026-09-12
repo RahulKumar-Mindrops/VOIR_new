@@ -12,7 +12,18 @@
   }
 
   function navMarkup(active) {
-    const links = (window.VOIR && window.VOIR.nav) || [];
+    const fallbackNav = [
+      { href: "index.html", label: "Home", id: "home" },
+      { href: "tvs.html", label: "Product", id: "tvs" },
+      { href: "innovation.html", label: "Innovation", id: "innovation" },
+      { href: "about.html", label: "About", id: "about" },
+      { href: "support.html", label: "Support", id: "support" },
+      { href: "contact.html", label: "Contact Us", id: "contact" },
+    ];
+    const links =
+      window.VOIR && window.VOIR.nav && window.VOIR.nav.length
+        ? window.VOIR.nav
+        : fallbackNav;
     const items = links
       .map(function (l) {
         const isActive = l.id === active;
@@ -44,21 +55,13 @@
       .join("");
 
     const solid = active !== "home" ? " is-scrolled nav--inner" : "";
-    const tagline =
-      (window.VOIR && window.VOIR.brand && window.VOIR.brand.tagline) ||
-      "SEE IT. LOVE IT. LIVE IT.";
     return (
       '<header class="nav' +
       solid +
       '" id="nav">' +
       '<div class="nav__inner">' +
-      '<a href="index.html" class="nav__logo" data-magnetic aria-label="VOIR home">' +
-      '<span class="nav__logo-stack">' +
-      '<img src="images/logo-dark.png?v=2" alt="VOIR" class="nav__logo-img" />' +
-      '<span class="nav__tagline">' +
-      tagline +
-      "</span>" +
-      "</span>" +
+      '<a href="index.html" class="nav__logo" aria-label="VOIR home">' +
+      '<img src="images/updatedlog.png?v=4" alt="VOIR" class="nav__logo-img" />' +
       "</a>" +
       '<nav class="nav__links" id="navLinks" aria-label="Primary">' +
       items +
@@ -96,9 +99,8 @@
       '<div class="footer__top">' +
       '<div class="footer__col footer__col--brand">' +
       '<a href="index.html" class="footer__logo">' +
-      '<img src="images/logo-dark.png?v=2" alt="VOIR — SEE IT. LOVE IT. LIVE IT." class="footer__logo-img" />' +
+      '<img src="images/updatedlog.png?v=4" alt="VOIR" class="footer__logo-img" />' +
       "</a>" +
-      '<p class="footer__tagline">SEE IT. LOVE IT. LIVE IT.</p>' +
       '<p class="footer__about">Thoughtful technology for brighter homes.</p>' +
       "</div>" +
       '<div class="footer__col">' +
