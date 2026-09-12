@@ -95,6 +95,30 @@ body.page-home .nav__toggle span {
   background: #000;
 }
 
+/* Keep homepage nav collapsed on small screens (override desktop flex above) */
+@media (max-width: 900px) {
+  body.page-home .nav__links {
+    display: none !important;
+  }
+
+  body.page-home .nav__toggle {
+    display: flex;
+  }
+
+  body.page-home .nav-drawer {
+    background: rgba(255, 255, 255, 0.96);
+  }
+
+  body.page-home .nav-drawer__link {
+    color: #0b1220;
+  }
+
+  body.page-home .nav-drawer__link.is-active,
+  body.page-home .nav-drawer__link:hover {
+    color: #f06824;
+  }
+}
+
 /* ---------- Homepage Buttons Override ---------- */
 body.page-home .btn--primary {
   background: #fff;
@@ -204,9 +228,16 @@ body.page-home .section__eyebrow {
   color: #fff;
   margin: 0;
   max-width: 100%;
-  white-space: nowrap;
+  white-space: normal;
+  text-wrap: balance;
   opacity: 0;
   transform: translateY(24px);
+}
+
+@media (min-width: 901px) {
+  .hero-cinematic__title {
+    white-space: nowrap;
+  }
 }
 
 .hero-cinematic__screen {
@@ -1137,6 +1168,9 @@ body.page-home .section__eyebrow {
 }
 
 .tv-series__compare {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.9rem;
   font-weight: 500;
   color: rgba(17, 17, 17, 0.42);
@@ -1247,8 +1281,15 @@ body.page-home .section__eyebrow {
   letter-spacing: -0.02em;
   color: #fff;
   margin: 0 0 18px;
-  white-space: nowrap;
+  white-space: normal;
+  text-wrap: balance;
   overflow: visible;
+}
+
+@media (min-width: 901px) {
+  .promise-v2__title {
+    white-space: nowrap;
+  }
 }
 
 .promise-v2__lead {
@@ -1543,7 +1584,7 @@ body.page-home .footer__social-link svg {
 
 
 /* ============================================
-   RESPONSIVE Ã¢â‚¬â€ TABLET
+   RESPONSIVE — TABLET
    ============================================ */
 
 @media (max-width: 1024px) {
@@ -1651,6 +1692,7 @@ body.page-home .footer__social-link svg {
   .promise-v2__visual {
     aspect-ratio: 16 / 10;
     max-width: 520px;
+    margin-inline: auto;
   }
 
   .promise-v2__accordion {
@@ -1660,19 +1702,31 @@ body.page-home .footer__social-link svg {
 
 
 /* ============================================
-   RESPONSIVE Ã¢â‚¬â€ MOBILE
+   RESPONSIVE — MOBILE
    ============================================ */
 
 @media (max-width: 768px) {
+  .hero-cinematic {
+    min-height: auto;
+    padding-bottom: 24px;
+  }
+
   .hero-cinematic__stage {
     width: calc(100% - 28px);
-    padding: 20px 0 32px;
-    gap: 20px;
+    padding: 16px 0 28px;
+    gap: 18px;
+    justify-content: flex-start;
   }
 
   .hero-cinematic__title {
-    font-size: clamp(1.05rem, 4.6vw, 1.55rem);
-    white-space: nowrap;
+    font-size: clamp(1.35rem, 6.2vw, 1.85rem);
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    padding-inline: 4px;
+  }
+
+  .hero-cinematic__screen {
+    width: 100%;
   }
 
   .hero-cinematic__frame {
@@ -1683,87 +1737,323 @@ body.page-home .footer__social-link svg {
       0 24px 60px rgba(0, 0, 0, 0.6);
   }
 
-  .tech-showcase {
-    padding: 72px 0 88px;
-  }
-
-  .tech-showcase__stats {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-
-  .tech-stat {
-    padding: 24px 18px 22px;
-  }
-
-  .tech-stat__ghost {
-    font-size: 4rem;
-  }
-
-  .tv-series {
-    padding: 88px 0;
-  }
-
-  .tv-series__tab {
-    padding: 8px 14px;
-    font-size: 0.9rem;
-  }
-
-  .tv-series__nav {
-    margin-bottom: 0;
-    gap: 6px;
-  }
-
-  .tv-series__features {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .tv-series__actions {
-    gap: 14px;
-  }
-
-  .promise-v2 {
-    padding: 88px 0 96px;
-  }
-
-  .promise-v2__living-title {
-    max-width: none;
-  }
-
-  .promise-v2__chips {
-    display: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-cinematic__title {
-    margin-bottom: 22px;
-    font-size: clamp(1.05rem, 5vw, 1.45rem);
+  .story {
+    padding: 56px 0 48px;
   }
 
   .story__inner {
-    padding: 0 16px;
+    padding: 0 18px;
+  }
+
+  .story__lead {
+    margin-bottom: 28px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .story__heading {
+    margin-bottom: 28px;
+    font-size: clamp(1.45rem, 6.5vw, 2rem);
+  }
+
+  .story__media-full {
+    width: calc(100% - 20px);
+    margin-bottom: 32px;
+    border-radius: 10px;
+  }
+
+  .story__inner--spec {
+    margin-top: 4px;
+    margin-bottom: 40px;
+  }
+
+  .story__spec-text {
+    font-size: 0.92rem;
+  }
+
+  .story__tagline {
+    font-size: clamp(1.25rem, 5.8vw, 1.7rem);
+  }
+
+  .tech-showcase {
+    padding: 64px 0 72px;
   }
 
   .tech-showcase__inner {
     padding: 0 16px;
   }
 
+  .tech-showcase__stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .tech-stat {
+    padding: 20px 14px 18px;
+  }
+
+  .tech-stat__value {
+    font-size: clamp(1.75rem, 7vw, 2.25rem);
+  }
+
+  .tech-stat__ghost {
+    font-size: 3.2rem;
+  }
+
+  .tech-stat__label {
+    font-size: 0.78rem;
+    max-width: none;
+    min-height: 0;
+  }
+
+  .feature-lab {
+    padding: 64px 0 72px;
+  }
+
+  .feature-lab__intro,
+  .feature-lab__hero,
+  .feature-lab__modules {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .feature-lab__intro {
+    margin-bottom: 32px;
+  }
+
+  .feature-lab__headline {
+    font-size: clamp(1.55rem, 7vw, 2.1rem);
+  }
+
+  .feature-lab__lead {
+    font-size: 0.95rem;
+  }
+
+  .feature-lab__hero {
+    margin-bottom: 48px;
+  }
+
+  .feature-lab__modules {
+    gap: 48px;
+  }
+
+  .feature-lab__text {
+    max-width: none;
+    font-size: 0.95rem;
+  }
+
+  .tv-series {
+    padding: 64px 0 72px;
+  }
+
   .tv-series__inner {
     padding: 0 16px;
   }
 
+  .tv-series__header {
+    margin-bottom: 28px;
+  }
+
+  .tv-series__title {
+    font-size: clamp(1.65rem, 7vw, 2.25rem);
+  }
+
+  .tv-series__lead {
+    font-size: 0.95rem;
+  }
+
+  .tv-series__toolbar {
+    margin-bottom: 28px;
+    gap: 12px;
+  }
+
+  .tv-series__nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0;
+    padding-bottom: 8px;
+  }
+
   .tv-series__tab {
-    padding: 8px 14px;
-    font-size: 0.8125rem;
+    flex: 1 1 0;
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    min-height: 44px;
+  }
+
+  .tv-series__dot {
+    display: none;
+  }
+
+  .tv-series__motto {
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+  }
+
+  .tv-series__series-name {
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+  }
+
+  .tv-series__specs {
+    gap: 8px;
+  }
+
+  .tv-series__spec {
+    font-size: 0.72rem;
+    padding: 6px 10px;
+  }
+
+  .tv-series__sizes {
+    gap: 8px;
+  }
+
+  .tv-series__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .tv-series__cta,
+  .tv-series__compare {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    min-height: 48px;
+  }
+
+  .tv-series__features {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 12px;
+  }
+
+  .promise-v2 {
+    padding: 64px 0 72px;
   }
 
   .promise-v2__inner {
     padding: 0 16px;
   }
 
+  .promise-v2__header {
+    margin-bottom: 32px;
+  }
+
+  .promise-v2__title {
+    font-size: clamp(1.45rem, 6.5vw, 2rem);
+  }
+
+  .promise-v2__lead {
+    font-size: 0.95rem;
+  }
+
+  .promise-v2__stage {
+    gap: 22px;
+    margin-bottom: 64px;
+  }
+
+  .promise-v2__visual {
+    max-width: none;
+    aspect-ratio: 16 / 11;
+    border-radius: 8px;
+  }
+
+  .promise-acc__trigger {
+    padding: 16px 0 12px;
+    min-height: 52px;
+    gap: 12px;
+  }
+
+  .promise-acc__headline {
+    font-size: 1.05rem;
+  }
+
+  .promise-acc__text {
+    font-size: 0.86rem;
+    max-width: none;
+  }
+
+  .promise-v2__living-title {
+    max-width: none;
+    font-size: clamp(1.35rem, 6vw, 1.85rem);
+  }
+
+  .promise-v2__chips {
+    display: none;
+  }
+
+  .promise-v2__living-text {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-cinematic__stage {
+    width: calc(100% - 20px);
+    padding: 12px 0 24px;
+    gap: 14px;
+  }
+
+  .hero-cinematic__title {
+    font-size: clamp(1.2rem, 6.8vw, 1.55rem);
+  }
+
+  .hero-cinematic__frame {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.14),
+      0 0 0 4px rgba(20, 20, 22, 0.95),
+      0 18px 40px rgba(0, 0, 0, 0.55);
+  }
+
+  .story__inner {
+    padding: 0 14px;
+  }
+
+  .story__media-full {
+    width: calc(100% - 16px);
+  }
+
+  .tech-showcase__inner,
+  .feature-lab__intro,
+  .feature-lab__hero,
+  .feature-lab__modules,
+  .tv-series__inner,
+  .promise-v2__inner {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
   .tech-showcase__stats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .tech-stat {
+    padding: 22px 18px 20px;
+  }
+
+  .tech-stat__label {
+    max-width: 28ch;
+  }
+
+  .tv-series__tab {
+    padding: 10px 6px;
+    font-size: 0.8125rem;
+  }
+
+  .tv-series__features {
+    grid-template-columns: 1fr;
+  }
+
+  .tv-series__feature {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    align-items: start;
+  }
+
+  .tv-series__feature-icon {
+    grid-row: 1 / span 2;
   }
 }
 
